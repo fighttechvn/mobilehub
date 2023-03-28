@@ -17,6 +17,8 @@ dependencies:
   
   mobilehub_core:
     path: ../mobilehub_core
+
+  
   mobilehub_ui_core:
     path: ../mobilehub_ui_core
   
