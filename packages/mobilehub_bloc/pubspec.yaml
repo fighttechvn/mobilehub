@@ -16,13 +16,9 @@ dependencies:
     sdk: flutter
   
   mobilehub_core:
-    git:
-      url: https://github.com/fighttech-vn/mobilehub.git
-      path: packages/mobilehub_core
+    path: ../mobilehub_core
   mobilehub_ui_core:
-    git:
-      url: https://github.com/fighttech-vn/mobilehub.git
-      path: packages/mobilehub_ui_core
+    path: ../mobilehub_ui_core
 
   # feature
   universal_platform: ^1.0.0+1
@@ -32,12 +28,6 @@ dependencies:
 
   # state management
   flutter_bloc: ^8.1.1
-
-dependency_overrides:
-  mobilehub_core:
-    path: ../mobilehub_core
-  mobilehub_ui_core:
-    path: ../mobilehub_ui_core
 
 dev_dependencies:
   flutter_test:
