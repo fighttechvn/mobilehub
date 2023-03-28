@@ -85,3 +85,4 @@ resources_raw
 ios/ExportOptions.plist
 packages/mobilehub_core/.flutter-plugins-dependencies
 packages/mobilehub_ui_core/.flutter-plugins-dependencies
+packages/mobilehub_bloc/.flutter-plugins-dependencies
