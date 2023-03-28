@@ -1,0 +1,4 @@
+name: mobilehub_workspace
+
+packages:
+  - packages/**
