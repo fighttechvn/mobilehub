@@ -73,16 +73,20 @@ class _SliverLayoutNestedScrollViewState
                     padding: const EdgeInsets.only(left: 16),
                     child: Stack(
                       children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: Navigator.of(context).pop,
-                              child: const Icon(
-                                Icons.arrow_back_sharp,
-                                color: Color(0xff333333),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                key: const ValueKey('btnSliverlayoutBack'),
+                                onTap: Navigator.of(context).pop,
+                                child: const Icon(
+                                  Icons.arrow_back_sharp,
+                                  color: Color(0xff333333),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         if (widget.header != null) widget.header!,
                       ],
