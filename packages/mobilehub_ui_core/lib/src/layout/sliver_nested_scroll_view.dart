@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class SliverLayoutNestedScrollView extends StatefulWidget {
-  final Widget body;
+  final Widget Function(ScrollController) bodyBuilder;
   final String? cover;
   final Widget? header;
 
   const SliverLayoutNestedScrollView({
     super.key,
-    required this.body,
+    required this.bodyBuilder,
     this.header,
     this.cover,
   });
@@ -22,11 +22,11 @@ class _SliverLayoutNestedScrollViewState
     extends State<SliverLayoutNestedScrollView> {
   final mainScrollController = ScrollController();
   final bgScrollController = ScrollController();
-
+  final ValueNotifier<double> _posined = ValueNotifier(0.0);
   @override
   void initState() {
     mainScrollController.addListener(() {
-      bgScrollController.jumpTo(mainScrollController.position.pixels);
+      _posined.value = mainScrollController.position.pixels;
     });
     super.initState();
   }
@@ -35,32 +35,30 @@ class _SliverLayoutNestedScrollViewState
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CustomScrollView(
-          controller: bgScrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  if (widget.cover?.isNotEmpty ?? false)
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top + 88.0,
-                      child: Center(
-                        child: ImageWidget(
-                          widget.cover!,
-                          width: MediaQuery.of(context).size.width,
+        ValueListenableBuilder<double>(
+            valueListenable: _posined,
+            builder: (_, pos, __) {
+              return Positioned(
+                top: -pos,
+                child: Column(
+                  children: [
+                    if (widget.cover?.isNotEmpty ?? false)
+                      SizedBox(
+                        height: MediaQuery.of(context).padding.top + 88.0,
+                        child: Center(
+                          child: ImageWidget(
+                            widget.cover!,
+                            width: MediaQuery.of(context).size.width,
+                          ),
                         ),
                       ),
-                    ),
-                  SizedBox(height: MediaQuery.of(context).size.height),
-                ],
-              ),
-            ),
-          ],
-        ),
+                  ],
+                ),
+              );
+            }),
         SafeArea(
           bottom: false,
           child: NestedScrollView(
-            controller: mainScrollController,
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
             ),
@@ -95,7 +93,7 @@ class _SliverLayoutNestedScrollViewState
                 ),
               ];
             },
-            body: widget.body,
+            body: widget.bodyBuilder(mainScrollController),
           ),
         ),
       ],
