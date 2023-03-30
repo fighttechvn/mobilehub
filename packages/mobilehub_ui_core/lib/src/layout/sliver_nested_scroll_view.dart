@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
 
 class SliverLayoutNestedScrollView extends StatefulWidget {
   final Widget Function(ScrollController) bodyBuilder;
-  final String? cover;
+  final Widget? cover;
   final Widget? header;
 
   const SliverLayoutNestedScrollView({
@@ -22,11 +21,12 @@ class _SliverLayoutNestedScrollViewState
     extends State<SliverLayoutNestedScrollView> {
   final mainScrollController = ScrollController();
   final bgScrollController = ScrollController();
-  final ValueNotifier<double> _posined = ValueNotifier(0.0);
+  final _posinedCtr = ValueNotifier<double>(0.0);
+
   @override
   void initState() {
     mainScrollController.addListener(() {
-      _posined.value = mainScrollController.position.pixels;
+      _posinedCtr.value = mainScrollController.position.pixels;
     });
     super.initState();
   }
@@ -36,20 +36,17 @@ class _SliverLayoutNestedScrollViewState
     return Stack(
       children: [
         ValueListenableBuilder<double>(
-            valueListenable: _posined,
+            valueListenable: _posinedCtr,
             builder: (_, pos, __) {
               return Positioned(
                 top: -pos,
                 child: Column(
                   children: [
-                    if (widget.cover?.isNotEmpty ?? false)
+                    if (widget.cover != null)
                       SizedBox(
                         height: MediaQuery.of(context).padding.top + 88.0,
                         child: Center(
-                          child: ImageWidget(
-                            widget.cover!,
-                            width: MediaQuery.of(context).size.width,
-                          ),
+                          child: widget.cover!,
                         ),
                       ),
                   ],
