@@ -1,5 +1,6 @@
 library mobilehub_ui_core;
 
+export 'src/animations/call/calling_effect.dart';
 export 'src/animations/switching_layout.dart';
 export 'src/layout/sliver_nested_scroll_view.dart';
 export 'src/skeletons/attribution_widget_skeleton.dart';
