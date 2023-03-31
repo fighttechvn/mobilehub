@@ -23,12 +23,25 @@ class _SliverLayoutNestedScrollViewState
   final bgScrollController = ScrollController();
   final _posinedCtr = ValueNotifier<double>(0.0);
 
+  void _listenerScrollToUpdate() {
+    final scrollMain = mainScrollController.position.pixels;
+    final scrollBG = bgScrollController.position.pixels;
+
+    _posinedCtr.value = scrollMain != 0 ? scrollMain : scrollBG;
+  }
+
   @override
   void initState() {
-    mainScrollController.addListener(() {
-      _posinedCtr.value = mainScrollController.position.pixels;
-    });
+    bgScrollController.addListener(_listenerScrollToUpdate);
+    mainScrollController.addListener(_listenerScrollToUpdate);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    bgScrollController.removeListener(_listenerScrollToUpdate);
+    mainScrollController.removeListener(_listenerScrollToUpdate);
+    super.dispose();
   }
 
   @override
@@ -36,23 +49,21 @@ class _SliverLayoutNestedScrollViewState
     return Stack(
       children: [
         ValueListenableBuilder<double>(
-            valueListenable: _posinedCtr,
-            builder: (_, pos, __) {
-              return Positioned(
-                top: -pos,
-                child: Column(
-                  children: [
-                    if (widget.cover != null)
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top + 88.0,
-                        child: Center(
-                          child: widget.cover!,
-                        ),
+          valueListenable: _posinedCtr,
+          builder: (_, pos, __) {
+            return Positioned(
+              top: -pos,
+              child: (widget.cover != null)
+                  ? SizedBox(
+                      height: MediaQuery.of(context).padding.top + 88.0,
+                      child: Center(
+                        child: widget.cover!,
                       ),
-                  ],
-                ),
-              );
-            }),
+                    )
+                  : const SizedBox(),
+            );
+          },
+        ),
         SafeArea(
           bottom: false,
           child: NestedScrollView(
@@ -60,6 +71,7 @@ class _SliverLayoutNestedScrollViewState
               parent: AlwaysScrollableScrollPhysics(),
             ),
             floatHeaderSlivers: false,
+            controller: bgScrollController,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
