@@ -91,7 +91,7 @@ class _ListBlockBuilderWidgetState<B extends StateStreamable<GetListState>, T>
 
         final bodyWidget = CustomScrollView(
           slivers: <Widget>[
-            if (UniversalPlatform.isAndroid == false)
+            if (widget.enableRefresh && UniversalPlatform.isAndroid == false)
               SliverRefreshIndicatorWidget(
                 onRefresh: _onRefresh,
                 offsetPadding: offsetRefreshLoadingIOS,
@@ -106,7 +106,7 @@ class _ListBlockBuilderWidgetState<B extends StateStreamable<GetListState>, T>
           ],
         );
 
-        if (UniversalPlatform.isAndroid && widget.enableRefresh) {
+        if (widget.enableRefresh && UniversalPlatform.isAndroid) {
           return RefreshIndicator(
             onRefresh: _onRefresh,
             edgeOffset: offsetRefreshLoadingAndroid,
