@@ -28,7 +28,10 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
   FutureOr<void> _mapGetListDataEvent(
       GetListDataEvent event, Emitter<GetListState> emit) async {
     try {
-      emit(GetListDataLoading<T>());
+       final stateCurrent = state;
+      if (stateCurrent is! GetListDataSuccess<T>) {
+        emit(GetListDataLoading<T>());
+      }
 
       final data = await _usecase();
 
@@ -166,7 +169,10 @@ class GetListBlocParam3<T, P1, P2, P3>
   FutureOr<void> _mapGetListDataParam3Event(
       GetListDataParam3Event event, Emitter<GetListState> emit) async {
     try {
-      emit(GetListDataLoading<T>());
+      final stateCurrent = state;
+      if (stateCurrent is! GetListDataSuccess<T>) {
+        emit(GetListDataLoading<T>());
+      }
 
       final data =
           await _usecaseParam3(event.param1, event.param2, event.param3);
