@@ -28,7 +28,7 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
   FutureOr<void> _mapGetListDataEvent(
       GetListDataEvent event, Emitter<GetListState> emit) async {
     try {
-       final stateCurrent = state;
+      final stateCurrent = state;
       if (stateCurrent is! GetListDataSuccess<T>) {
         emit(GetListDataLoading<T>());
       }
