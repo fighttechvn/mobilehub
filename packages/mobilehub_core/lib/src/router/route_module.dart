@@ -11,10 +11,14 @@ abstract class RouteModule extends InjectorGet {
 
 abstract class RouteModuleBuilder extends InjectorGet {
   List<RouteModule> get routes;
+  List<RouteModuleBuilder> get routerModules => <RouteModuleBuilder>[];
 
   Map<String, WidgetBuilder> getAll(RouteSettings settings) {
     final result = <String, WidgetBuilder>{};
     for (final e in routes) {
+      result.addAll(e.getAll(settings));
+    }
+    for (final e in routerModules) {
       result.addAll(e.getAll(settings));
     }
     return result;
