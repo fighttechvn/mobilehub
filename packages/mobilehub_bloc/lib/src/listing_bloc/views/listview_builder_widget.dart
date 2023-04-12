@@ -128,7 +128,7 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
       listScrollController = ListScrollController();
     }
     if (widget.autoFetchWhenInit) {
-      _fetchListData(widget.offsetDefault);
+      _fetchListData(widget.offsetDefault, TypeFetchPaging.refresh);
     }
   }
 

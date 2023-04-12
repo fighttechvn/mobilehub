@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-import '../loading_widget.dart';
+import '../../widgets/loading_widget.dart';
 
 typedef CallbackRefresh = Future<void> Function();
 typedef ListBuillder = Widget Function(BuildContext context, int index);
