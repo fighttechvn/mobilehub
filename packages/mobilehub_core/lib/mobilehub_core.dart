@@ -1,5 +1,6 @@
 library mobilehub_core;
 
+export 'src/core/core_file.dart';
 export 'src/dependency_injection/mobilehub_core_micro.dart';
 export 'src/dependency_injection/mobilehub_core_micro.module.dart';
 export 'src/easy_debounce.dart';

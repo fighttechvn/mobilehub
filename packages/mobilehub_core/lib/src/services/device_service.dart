@@ -35,4 +35,6 @@ class DeviceService {
       await FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
     }
   }
+
+  dynamic getFile(String path) => getFile(path);
 }
