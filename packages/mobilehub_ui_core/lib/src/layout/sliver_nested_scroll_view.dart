@@ -4,12 +4,14 @@ class SliverLayoutNestedScrollView extends StatefulWidget {
   final Widget Function(ScrollController) bodyBuilder;
   final Widget? cover;
   final Widget? header;
+  final Widget? actionAppBar;
 
   const SliverLayoutNestedScrollView({
     super.key,
     required this.bodyBuilder,
     this.header,
     this.cover,
+    this.actionAppBar,
   });
 
   @override
@@ -83,6 +85,7 @@ class _SliverLayoutNestedScrollViewState
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
                                 key: const ValueKey('btnSliverlayoutBack'),
@@ -92,6 +95,8 @@ class _SliverLayoutNestedScrollViewState
                                   color: Color(0xff333333),
                                 ),
                               ),
+                              if (widget.actionAppBar != null)
+                                widget.actionAppBar!,
                             ],
                           ),
                         ),
