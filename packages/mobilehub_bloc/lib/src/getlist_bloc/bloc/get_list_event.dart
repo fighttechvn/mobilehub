@@ -55,6 +55,15 @@ class RemoveItemFromListEvent<T> extends GetListEvent {
   List<Object?> get props => [where];
 }
 
+class AddItemIntoListEvent<T> extends GetListEvent {
+  final T item;
+
+  AddItemIntoListEvent(this.item);
+
+  @override
+  List<Object?> get props => [item];
+}
+
 class RemoveItemEvent<T> extends GetListEvent {
   final T item;
 
