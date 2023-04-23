@@ -29,3 +29,9 @@ class GetDetailError<T> extends GetDetailState {
   @override
   List<Object?> get props => [error];
 }
+
+class GetDetailErrorHasData<T> extends GetDetailDataSuccess {
+  final dynamic error;
+
+  GetDetailErrorHasData(super.data, this.error);
+}

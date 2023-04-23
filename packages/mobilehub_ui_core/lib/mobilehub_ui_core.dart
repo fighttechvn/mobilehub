@@ -10,6 +10,7 @@ export 'src/list/sliver/sliver_refresh_indicator_widget.dart';
 export 'src/page/pageview/preload_page_view.dart';
 export 'src/skeletons/attribution_widget_skeleton.dart';
 export 'src/skeletons/skeleton_filtered_widget.dart';
+export 'src/web/hover/x_hover.dart';
 export 'src/widgets/checkbox/check_box_form_field.dart';
 export 'src/widgets/checkbox/checkbox_widget.dart';
 export 'src/widgets/checkbox/group_check_box.dart';

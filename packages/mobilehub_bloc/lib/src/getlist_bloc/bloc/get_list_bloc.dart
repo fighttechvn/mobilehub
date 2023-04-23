@@ -74,6 +74,7 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
   GetListBlocParam1(this._usecaseParam1) : super(GetListBlocInitial()) {
     on<GetListDataParam1Event>(_mapGetDetailDataParam1Event);
     on<RemoveItemFromListEvent>(_mapRemoveItemFromListEvent);
+    on<AddItemIntoListEvent>(_mapAddItemIntoListEvent);
   }
 
   FutureOr<void> _mapGetDetailDataParam1Event(
@@ -96,6 +97,17 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
     if (currentState is GetListDataSuccess) {
       final result = List.from(currentState.data);
       result.removeWhere(event.where);
+      emit(GetListDataSuccess<T>(result.map((e) => e as T).toList()));
+    }
+  }
+
+  FutureOr<void> _mapAddItemIntoListEvent(
+      AddItemIntoListEvent event, Emitter<GetListState> emit) {
+    final currentState = state;
+
+    if (currentState is GetListDataSuccess) {
+      final result = List.from(currentState.data);
+      result.add(event.item);
       emit(GetListDataSuccess<T>(result.map((e) => e as T).toList()));
     }
   }
