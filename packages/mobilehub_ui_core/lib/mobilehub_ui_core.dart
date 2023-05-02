@@ -17,3 +17,4 @@ export 'src/widgets/checkbox/group_check_box.dart';
 export 'src/widgets/checkbox/group_check_box_widget.dart';
 export 'src/widgets/countdown/time_countdown.dart';
 export 'src/widgets/loading_widget.dart';
+export 'src/widgets/text_input_multi_select/text_input_multi_select.dart';
