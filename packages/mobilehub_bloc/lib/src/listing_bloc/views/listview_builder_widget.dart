@@ -34,6 +34,7 @@ class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final PageStorageKey? pageStorageKey;
   final ScrollPhysics? physics;
   final String keyName;
+  final bool enableSliverOverlapInjector;
 
   const ListViewBuilderWidget.listview({
     Key? key,
@@ -59,6 +60,7 @@ class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.sliverTitle,
     this.physics,
     required this.keyName,
+    this.enableSliverOverlapInjector = true,
   }) : super(key: key);
 
   @override
@@ -158,7 +160,9 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
             state is GetListDataLoading || state is GetListBlocInitial;
 
         final bodyWidget = CustomScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: widget.enableSliverOverlapInjector
+              ? const NeverScrollableScrollPhysics()
+              : null,
           key: PageStorageKey<String>('namexxx:name${widget.keyName}'),
           slivers: <Widget>[
             if (UniversalPlatform.isAndroid == false)
@@ -166,10 +170,12 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
                 onRefresh: _onRefresh,
                 offsetPadding: offsetRefreshLoadingIOS,
               ),
-            SliverOverlapInjector(
-              // This is the flip side of the SliverOverlapAbsorber above.
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            ),
+            if (widget.enableSliverOverlapInjector)
+              SliverOverlapInjector(
+                // This is the flip side of the SliverOverlapAbsorber above.
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              ),
             if (isLoading)
               const SliverFillRemaining(child: LoadingWidget())
             else if (listData.isNotEmpty)
