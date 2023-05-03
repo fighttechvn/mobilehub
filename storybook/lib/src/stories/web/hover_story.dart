@@ -52,7 +52,7 @@ class HoverStory extends Story {
                     onTap: () {},
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: Theme.of(context).primaryColor),
+                      border: Border.all(color: Theme.of(context).primaryColor),
                     ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8.0,

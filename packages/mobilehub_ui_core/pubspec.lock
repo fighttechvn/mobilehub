@@ -85,10 +85,10 @@ packages:
     dependency: transitive
     description:
       name: extended_image_library
-      sha256: b1de389378589e4dffb3564d782373238f19064037458092c49b3043b2791b2b
+      sha256: "550743b43ab093aed35ef234500fcc7a304cbac1eca47b0cc991e07e88750758"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.1"
+    version: "3.4.2"
   fake_async:
     dependency: transitive
     description:
@@ -167,10 +167,10 @@ packages:
     dependency: "direct main"
     description:
       name: imagewidget
-      sha256: "47ce9e2b673f59e778fbdadc1c8f0eec41542c29501fd4457e67cc288194db56"
+      sha256: bca6164dbad5255895eb289de25bc00c7d600330ceed464472f3378868cc7759
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.0.10"
   js:
     dependency: transitive
     description:
@@ -247,10 +247,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: da97262be945a72270513700a92b39dd2f4a54dad55d061687e2e37a6390366a
+      sha256: "2cec049d282c7f13c594b4a73976b0b4f2d7a1838a6dd5aaf7bd9719196bee86"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.25"
+    version: "2.0.27"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -279,10 +279,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_windows
-      sha256: f53720498d5a543f9607db4b0e997c4b5438884de25b0f73098cc2671a51b130
+      sha256: d3f80b32e83ec208ac95253e0cd4d298e104fbc63cb29c5c69edaed43b0c69d6
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.5"
+    version: "2.1.6"
   petitparser:
     dependency: transitive
     description:
@@ -327,10 +327,10 @@ packages:
     dependency: "direct main"
     description:
       name: scrollable_positioned_list
-      sha256: ca7fcaa743db712d4f7b1580526f494d0093c77a721a65705ee51fbeac7a2bd3
+      sha256: "45806e0d64aa9dcbf4ced336eabff766dd7ba734014fd71c89bc08241c02bfc5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.5"
+    version: "0.3.6"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -444,10 +444,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: a6f0236dbda0f63aa9a25ad1ff9a9d8a4eaaa5012da0dc59d21afdb1dc361ca4
+      sha256: dd8f9344bc305ae2923e3d11a2a911d9a4e2c7dd6fe0ed10626d63211a69676e
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.4"
+    version: "4.1.3"
   xdg_directories:
     dependency: transitive
     description:
