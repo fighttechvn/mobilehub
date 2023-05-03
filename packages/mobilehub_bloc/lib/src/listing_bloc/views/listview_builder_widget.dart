@@ -33,7 +33,7 @@ class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final Widget? footer;
   final PageStorageKey? pageStorageKey;
   final ScrollPhysics? physics;
-  final String keyName;
+  final String? keyName;
   final bool enableSliverOverlapInjector;
 
   const ListViewBuilderWidget.listview({
@@ -59,7 +59,7 @@ class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.pageStorageKey,
     this.sliverTitle,
     this.physics,
-    required this.keyName,
+    this.keyName,
     this.enableSliverOverlapInjector = true,
   }) : super(key: key);
 
@@ -163,7 +163,8 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
           physics: widget.enableSliverOverlapInjector
               ? const NeverScrollableScrollPhysics()
               : null,
-          key: PageStorageKey<String>('namexxx:name${widget.keyName}'),
+          key: PageStorageKey<String>(
+              'namexxx:name${widget.keyName ?? hashCode}'),
           slivers: <Widget>[
             if (UniversalPlatform.isAndroid == false)
               SliverRefreshIndicatorWidget(
