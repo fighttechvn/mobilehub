@@ -13,6 +13,7 @@ export 'src/skeletons/skeleton_filtered_widget.dart';
 export 'src/web/hover/x_hover.dart';
 export 'src/widgets/checkbox/check_box_form_field.dart';
 export 'src/widgets/checkbox/checkbox_widget.dart';
+export 'src/widgets/checkbox/circular_check_box.dart';
 export 'src/widgets/checkbox/group_check_box.dart';
 export 'src/widgets/checkbox/group_check_box_widget.dart';
 export 'src/widgets/countdown/time_countdown.dart';

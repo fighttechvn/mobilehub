@@ -9,6 +9,7 @@ import '../../usecase/usecase_add.dart';
 import '../../usecase/usecase_delete.dart';
 
 part 'get_list_event.dart';
+
 part 'get_list_state.dart';
 
 typedef LoadListFuture<T> = Future<List<T>> Function();

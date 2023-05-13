@@ -10,6 +10,8 @@ import '../../mobilehub_constants.dart';
 import '../../widgets/empty_widget.dart';
 import '../listing_builder_widget.dart';
 
+typedef SliverTitleBuillder<T> = Widget Function(List<T> listItems);
+
 class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     extends StatefulWidget {
   final P param;
@@ -29,7 +31,7 @@ class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final Widget? errorWidget;
   final Widget emptyWidget;
   final Widget? title;
-  final Widget? sliverTitle;
+  final SliverTitleBuillder? sliverTitle;
   final Widget? footer;
   final PageStorageKey? pageStorageKey;
   final ScrollPhysics? physics;
@@ -177,6 +179,8 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               ),
+            if (widget.sliverTitle != null)
+              SliverToBoxAdapter(child: widget.sliverTitle!(listData)),
             if (isLoading)
               const SliverFillRemaining(child: LoadingWidget())
             else if (listData.isNotEmpty)

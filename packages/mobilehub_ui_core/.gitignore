@@ -10,6 +10,15 @@
 .svn/
 migrate_working_dir/
 
+**/ios/Flutter/flutter_export_environment.sh
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/Flutter-Debug.xcconfig
+**/macos/Flutter/Flutter-Release.xcconfig
+**/macos/Flutter/Flutter-Profile.xcconfig
+**/macos/Flutter/ephemeral/Flutter-Generated.xcconfig
+**/macos/Flutter/ephemeral/flutter_export_environment.sh
+**/ios/Flutter/Generated.xcconfig
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -27,4 +36,11 @@ migrate_working_dir/
 .dart_tool/
 .packages
 build/
+<<<<<<< HEAD
+
+#ignore on project
+flutter
+.fvm
+=======
 coverage/
+>>>>>>> 56e55d7185c83aa376325097ba1a9a600cbc168d

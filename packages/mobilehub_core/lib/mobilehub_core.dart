@@ -12,6 +12,7 @@ export 'src/mixins/validation_mixin.dart';
 export 'src/networking/certificate_http_overrides.dart';
 export 'src/router/navigator_page.dart';
 export 'src/router/route_module.dart';
+export 'src/router/route_observer.dart';
 export 'src/services/device_service.dart';
 export 'src/services/storage_service.dart';
 export 'src/stateful/base_statefull.dart';
