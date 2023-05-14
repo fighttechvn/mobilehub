@@ -11,6 +11,7 @@ analyzer:
     - "**/*.freezed.dart"
     - "**/*.config.dart"
     - "**/*.module.dart"
+    - "lib/dist/*.dart"
 
 linter:
   rules:

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:clipboard/clipboard.dart';
+import 'package:easy_file/easy_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:injectable/injectable.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-import '../core/core_file.dart';
 
 bool get isMobile => UniversalPlatform.isIOS || UniversalPlatform.isAndroid;
 bool get isAndroid => UniversalPlatform.isAndroid;

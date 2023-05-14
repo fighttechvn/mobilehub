@@ -36,11 +36,9 @@ migrate_working_dir/
 .dart_tool/
 .packages
 build/
-<<<<<<< HEAD
 
 #ignore on project
 flutter
 .fvm
-=======
 coverage/
->>>>>>> 56e55d7185c83aa376325097ba1a9a600cbc168d
+dist/

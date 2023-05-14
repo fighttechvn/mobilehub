@@ -6,6 +6,7 @@ analyzer:
   errors:
     todo: ignore
   exclude:
+    - "lib/dist/*.dart"
 
 linter:
   rules:

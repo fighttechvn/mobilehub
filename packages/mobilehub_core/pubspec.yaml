@@ -1,6 +1,6 @@
 name: mobilehub_core
 description: A new Flutter package project.
-version: 0.0.1
+version: 0.0.2
 homepage: https://flutter.dev
 
 environment:
@@ -28,7 +28,8 @@ dependencies:
   timeago: ^3.3.0
   path_provider: ^2.0.13
   shared_preferences: ^2.0.13
-
+  easy_file: ^0.0.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
