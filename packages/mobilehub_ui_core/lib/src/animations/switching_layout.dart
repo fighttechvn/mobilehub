@@ -37,6 +37,7 @@ class _LayoutSwitchingState extends State<LayoutSwitching> {
         return widget.direction.transitionBuilder(
           child,
           animation,
+          child.key.toString().contains('false'),
         );
       },
       child: SizedBox(
@@ -51,6 +52,7 @@ extension _SwitchDirectionExt on SwitchingAnimation {
   Widget transitionBuilder(
     Widget child,
     Animation<double> animation,
+    bool isReverse,
   ) {
     switch (this) {
       case SwitchingAnimation.swipeRTL:
@@ -58,12 +60,14 @@ extension _SwitchDirectionExt on SwitchingAnimation {
         return _buildHorizontalAnim(
           child,
           animation,
+          isReverse,
         );
       case SwitchingAnimation.swipeBTT:
       case SwitchingAnimation.swipeTTB:
         return _buildVerticalAnim(
           child,
           animation,
+          isReverse,
         );
       default:
     }
@@ -73,33 +77,32 @@ extension _SwitchDirectionExt on SwitchingAnimation {
   Widget _buildHorizontalAnim(
     Widget child,
     Animation<double> animation,
+    bool isReverse,
   ) {
-    Offset begin, end;
+    Offset begin;
+    const end = Offset.zero;
     if (this == SwitchingAnimation.swipeLTR) {
-      if (animation.isDismissed ||
-          animation.status == AnimationStatus.reverse) {
+      if (isReverse) {
         begin = const Offset(-1, 0);
-        end = const Offset(0, 0);
       } else {
         begin = const Offset(1, 0);
-        end = const Offset(0, 0);
       }
     } else {
-      if (animation.isDismissed ||
-          animation.status == AnimationStatus.reverse) {
+      if (isReverse) {
         begin = const Offset(1, 0);
-        end = const Offset(0, 0);
       } else {
         begin = const Offset(-1, 0);
-        end = const Offset(0, 0);
       }
     }
 
     return SlideTransition(
-      position: Tween<Offset>(
-        begin: begin,
-        end: end,
-      ).animate(animation),
+      position: animation.drive(
+        Tween(begin: begin, end: end).chain(
+          CurveTween(
+            curve: Curves.linear,
+          ),
+        ),
+      ),
       child: child,
     );
   }
@@ -107,33 +110,34 @@ extension _SwitchDirectionExt on SwitchingAnimation {
   Widget _buildVerticalAnim(
     Widget child,
     Animation<double> animation,
+    bool isReverse,
   ) {
-    Offset begin, end;
+    Offset begin;
+    const end = Offset.zero;
     if (this == SwitchingAnimation.swipeBTT) {
-      if (animation.isDismissed ||
-          animation.status == AnimationStatus.reverse) {
-        begin = const Offset(0, 1);
-        end = const Offset(0, 0);
+      begin = const Offset(0.0, 1.0);
+      if (isReverse) {
+        // Reverse the direction for reverse animation
+        begin = const Offset(0.0, -1.0);
       } else {
-        begin = const Offset(0, -1);
-        end = const Offset(0, 0);
+        begin = const Offset(0.0, 1.0);
       }
     } else {
-      if (animation.isDismissed ||
-          animation.status == AnimationStatus.reverse) {
-        begin = const Offset(0, -1);
-        end = const Offset(0, 0);
+      if (isReverse) {
+        // Reverse the direction for reverse animation
+        begin = const Offset(0.0, 1.0);
       } else {
-        begin = const Offset(0, 1);
-        end = const Offset(0, 0);
+        begin = const Offset(0.0, -1.0);
       }
     }
-
     return SlideTransition(
-      position: Tween<Offset>(
-        begin: begin,
-        end: end,
-      ).animate(animation),
+      position: animation.drive(
+        Tween(begin: begin, end: end).chain(
+          CurveTween(
+            curve: Curves.linear,
+          ),
+        ),
+      ),
       child: child,
     );
   }
