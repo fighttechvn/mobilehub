@@ -20,4 +20,5 @@ export 'src/widgets/countdown/time_countdown.dart';
 export 'src/widgets/hidable_button_nav.dart';
 export 'src/widgets/loading_widget.dart';
 export 'src/widgets/measure_size.dart';
+export 'src/widgets/nested_scroll_view_notification.dart';
 export 'src/widgets/text_input_multi_select/text_input_multi_select.dart';

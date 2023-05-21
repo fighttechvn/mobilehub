@@ -9,34 +9,10 @@ class HidableBottomScrollListener extends ChangeNotifier {
 
   ScrollController? activeScroll;
 
+  final _controllers = <ScrollController>[];
+
   HidableBottomScrollListener(List<ScrollController> controllers) {
-    for (final controller in controllers) {
-      controller.addListener(() {
-        // Prevent bouncing physic
-        if (controller.offset < 50) {
-          return;
-        }
-        if (activeScroll != null && activeScroll != controller) {
-          _last = 0;
-          bottom = _height;
-        }
-
-        activeScroll = controller;
-
-        final current = controller.offset;
-        bottom += _last - current;
-        if (bottom <= -_height) {
-          bottom = -_height;
-        }
-        if (bottom >= 0) {
-          bottom = 0;
-        }
-        _last = current;
-        if (bottom <= 0 && bottom >= -_height) {
-          notifyListeners();
-        }
-      });
-    }
+    controllers.forEach(addController);
   }
 
   double get height => _height;
@@ -46,12 +22,56 @@ class HidableBottomScrollListener extends ChangeNotifier {
     bottom = 0;
     notifyListeners();
   }
+
+  void addController(ScrollController controller) {
+    if (_controllers.contains(controller)) {
+      _controllers.remove(controller);
+      controller.removeListener(() => listenOnCtrl(controller));
+    }
+    _controllers.add(controller);
+    controller.addListener(() => listenOnCtrl(controller));
+  }
+
+  void listenOnCtrl(ScrollController controller) {
+    // Prevent bouncing physic
+    final offset = controller.positions.last.pixels;
+    if (offset < 50) {
+      return;
+    }
+    if (activeScroll != null && activeScroll != controller) {
+      _last = 0;
+      bottom = _height;
+    }
+
+    activeScroll = controller;
+
+    final current = offset;
+    bottom += _last - current;
+    if (bottom <= -_height) {
+      bottom = -_height;
+    }
+    if (bottom >= 0) {
+      bottom = 0;
+    }
+    _last = current;
+    if (bottom <= 0 && bottom >= -_height) {
+      notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    for (final controller in _controllers) {
+      controller.removeListener(() => listenOnCtrl(controller));
+    }
+    super.dispose();
+  }
 }
 
 class HidableBottomNav extends StatefulWidget {
   const HidableBottomNav({
     super.key,
-    required this.scrollControllers,
+    this.scrollControllers = const [],
     required this.child,
   });
   final List<ScrollController> scrollControllers;
@@ -68,6 +88,16 @@ class HidableBottomNavState extends State<HidableBottomNav> {
 
   void show() {
     listener.setHeight(listener.height);
+  }
+
+  void addListener(ScrollController p1) {
+    listener.addController(p1);
+  }
+
+  @override
+  void dispose() {
+    listener.dispose();
+    super.dispose();
   }
 
   @override

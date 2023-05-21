@@ -168,6 +168,10 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
           key: PageStorageKey<String>(
               'namexxx:name${widget.keyName ?? hashCode}'),
           slivers: <Widget>[
+            if (widget.title != null)
+              SliverToBoxAdapter(
+                child: widget.title,
+              ),
             if (UniversalPlatform.isAndroid == false)
               SliverRefreshIndicatorWidget(
                 onRefresh: _onRefresh,
