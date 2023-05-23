@@ -5,17 +5,16 @@ import 'package:easy_file/easy_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:injectable/injectable.dart';
-import 'package:universal_platform/universal_platform.dart';
 
-bool get isMobile => UniversalPlatform.isIOS || UniversalPlatform.isAndroid;
-bool get isAndroid => UniversalPlatform.isAndroid;
-bool get isIOS => UniversalPlatform.isIOS;
+import '../helpers/platform_helper.dart';
 
 @injectable
 class DeviceService {
-  Future<void> copy(String text) => FlutterClipboard.copy(text);
+  PlatformUniversal get _platform => PlatformUniversal();
 
-  bool get isAndroid => UniversalPlatform.isAndroid;
+  bool get isAndroid => _platform.isAndroid;
+
+  Future<void> copy(String text) => FlutterClipboard.copy(text);
 
   Future<void> setStatusBar({Color? color}) async {
     await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);

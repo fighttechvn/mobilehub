@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'checkbox_widget.dart';
 import 'group_check_box_widget.dart';
 
 class CheckboxFormField<T> extends FormField<T> {
@@ -13,6 +14,7 @@ class CheckboxFormField<T> extends FormField<T> {
     double spacing = 8.0,
     bool isRadioType = false,
     bool autovalidate = false,
+    CheckboxBuilder? checkBoxbuilder,
     AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
   }) : super(
             key: key,
@@ -25,6 +27,7 @@ class CheckboxFormField<T> extends FormField<T> {
                 values: values,
                 numberOfRow: numberOfRow,
                 isRadioType: isRadioType,
+                checkBoxbuilder: checkBoxbuilder,
                 onSelected: (T? value) {
                   onSelected?.call(value);
                   // ignore: invalid_use_of_protected_member
