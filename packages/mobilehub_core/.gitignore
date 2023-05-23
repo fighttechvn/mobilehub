@@ -43,3 +43,4 @@ flutter
 .fvm
 coverage/
 dist/
+pubspec.lock

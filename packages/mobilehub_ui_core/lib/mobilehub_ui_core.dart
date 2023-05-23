@@ -17,6 +17,7 @@ export 'src/widgets/checkbox/circular_check_box.dart';
 export 'src/widgets/checkbox/group_check_box.dart';
 export 'src/widgets/checkbox/group_check_box_widget.dart';
 export 'src/widgets/countdown/time_countdown.dart';
+export 'src/widgets/expandable_fab.dart';
 export 'src/widgets/hidable_button_nav.dart';
 export 'src/widgets/loading_widget.dart';
 export 'src/widgets/measure_size.dart';

@@ -39,10 +39,7 @@ class _HideBottomNavScreenState extends State<HideBottomNavScreen> {
     _hdNavKey.currentState?.show();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
+  Widget get layout1 => ListView.builder(
         controller: controller,
         itemBuilder: (context, index) {
           return Container(
@@ -50,7 +47,49 @@ class _HideBottomNavScreenState extends State<HideBottomNavScreen> {
             color: index % 2 == 0 ? Colors.yellow : Colors.green,
           );
         },
-      ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DateTime.now().microsecondsSinceEpoch % 2 == 0
+          ? layout1
+          : CustomScrollView(
+              controller: controller,
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                const SliverAppBar(
+                  backgroundColor: Colors.green,
+                  title: Text('Ticky appbar'),
+                  floating: true,
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      if (index == 0) {
+                        return Container(
+                          height: 150,
+                          color: index % 2 == 0 ? Colors.yellow : Colors.green,
+                        );
+                      }
+                      return Card(
+                        margin: const EdgeInsets.all(15),
+                        child: Container(
+                          color: Colors.blue[100 * (index % 9 + 1)],
+                          height: 80,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Item $index',
+                            style: const TextStyle(fontSize: 30),
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: 1000, // 1000 list items
+                  ),
+                ),
+              ],
+            ),
       bottomNavigationBar: HidableBottomNav(
         scrollControllers: [
           controller,

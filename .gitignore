@@ -90,3 +90,4 @@ packages/mobilehub_bloc/.flutter-plugins-dependencies
 packages/mobilehub_bloc/.flutter-plugins
 packages/mobilehub_core/.flutter-plugins
 packages/mobilehub_ui_core/.flutter-plugins
+pubspec.lock

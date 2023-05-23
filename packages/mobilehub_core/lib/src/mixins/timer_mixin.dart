@@ -54,11 +54,17 @@ mixin TimerMixin<T extends StatefulWidget> on State<T> {
             timer.cancel();
             onCompleteTimer();
           } else {
-            final startTime = _time;
-            if (startTime != null) {
-              timeCtr.value = startTime - DateTimeHelper.timestamp;
-            }
+            timeCtr.value = timeCtr.value - 1;
           }
+          // if (timeCtr.value <= 0) {
+          //   timer.cancel();
+          //   onCompleteTimer();
+          // } else {
+          //   final startTime = _time;
+          //   if (startTime != null) {
+          //     timeCtr.value = startTime - DateTimeHelper.timestamp;
+          //   }
+          // }
         },
       );
     } else {

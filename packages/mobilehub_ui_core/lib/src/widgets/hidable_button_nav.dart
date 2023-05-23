@@ -35,7 +35,7 @@ class HidableBottomScrollListener extends ChangeNotifier {
   void listenOnCtrl(ScrollController controller) {
     // Prevent bouncing physic
     final offset = controller.positions.last.pixels;
-    if (offset < 50) {
+    if (offset <= 0) {
       return;
     }
     if (activeScroll != null && activeScroll != controller) {
