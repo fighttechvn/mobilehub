@@ -4,24 +4,37 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ValueNotifierSaved<T> {
   final String key;
   final SharedPreferences _sharedPreferences;
+  final T defaultValue;
 
   ValueNotifierSaved(
     this.key,
     this._sharedPreferences,
+    this.defaultValue,
   ) {
     final tType = T.toString();
     if (tType == 'String?' || tType == 'String') {
-      final val = _sharedPreferences.getString(key);
+      var val = _sharedPreferences.getString(key);
+      if (val == null && tType == 'String') {
+        val = defaultValue as String;
+      }
       _controller = ValueNotifier<T>(val as T);
     } else if (tType == 'int?' || tType == 'int') {
-      final val = _sharedPreferences.getInt(key);
+      var val = _sharedPreferences.getInt(key);
+      if (val == null && tType == 'int') {
+        val = defaultValue as int;
+      }
       _controller = ValueNotifier<T>(val as T);
     } else if (tType == 'double?' || tType == 'double') {
-      final val = _sharedPreferences.getDouble(key);
-
+      var val = _sharedPreferences.getDouble(key);
+      if (val == null && tType == 'double') {
+        val = defaultValue as double;
+      }
       _controller = ValueNotifier<T>(val as T);
     } else if (tType == 'bool?' || tType == 'bool') {
-      final val = _sharedPreferences.getBool(key);
+      var val = _sharedPreferences.getBool(key);
+      if (val == null && tType == 'bool') {
+        val = defaultValue as bool;
+      }
       _controller = ValueNotifier<T>(val as T);
     }
 
