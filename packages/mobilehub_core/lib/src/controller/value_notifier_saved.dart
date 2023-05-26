@@ -12,7 +12,7 @@ class ValueNotifierSaved<T> {
     this.defaultValue,
   }) {
     final tType = T.toString();
-    if (tType == 'String') {
+    if (tType.contains('?') == false) {
       assert(defaultValue != null, 'must set default value for strong type');
     }
 
