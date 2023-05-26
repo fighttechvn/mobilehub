@@ -38,11 +38,11 @@ dev_dependencies:
   # flutter packages pub run build_runner build --delete-conflicting-outputs
   injectable_generator:
   retrofit_generator:
-  build_runner: 2.1.11
+  build_runner:
   json_serializable: ^6.1.4
   freezed: ^2.1.0+1
 
-  mockito: ^5.1.0
+  mockito: ^5.4.1
   bloc_test: ^9.0.3
 
 # For information on the generic Dart part of this file, see the
