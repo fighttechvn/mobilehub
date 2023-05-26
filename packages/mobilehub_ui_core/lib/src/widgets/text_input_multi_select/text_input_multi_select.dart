@@ -324,9 +324,9 @@ class MultiSelectorState<T> extends State<MultiSelector<T>>
     final mediaScreen = MediaQuery.of(context);
     final centerHeightScreen = mediaScreen.size.height / 2;
 
-    final viewInsets = EdgeInsets.fromWindowPadding(
-        WidgetsBinding.instance.window.viewInsets,
-        WidgetsBinding.instance.window.devicePixelRatio);
+    final viewInsets = EdgeInsets.fromViewPadding(
+        View.of(context).viewInsets,
+        View.of(context).devicePixelRatio);
 
     /// Math
     /// 1. nữa trên màn hình thì show dưới
@@ -433,7 +433,7 @@ extension EdgeInsetsExt on EdgeInsets {
   }
 }
 
-extension WindowPaddingExt on WindowPadding {
+extension WindowPaddingExt on ViewPadding {
   String getString() {
     return 'top: $top, bottom: $bottom, right: $right, left: $left';
   }

@@ -11,11 +11,11 @@ class ButtonStory extends Story {
     return [
       WidgetMap(
         title: 'Button',
-        builder: (context) => Column(
+        builder: (context) => const Column(
           children: [
             spacingBox,
             Row(
-              children: const [
+              children: [
                 Text('Button'),
               ],
             ),

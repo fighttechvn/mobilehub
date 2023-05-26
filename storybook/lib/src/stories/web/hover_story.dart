@@ -32,8 +32,8 @@ class HoverStory extends Story {
                       onPressed: () {},
                       icon: const Icon(Icons.add),
                     ),
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Icon(Icons.zoom_in_map),
                         SizedBox(width: 13.0),
                         Text('Zooo'),
@@ -62,8 +62,8 @@ class HoverStory extends Story {
                       onPressed: () {},
                       icon: const Icon(Icons.add),
                     ),
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Icon(Icons.zoom_in_map),
                         SizedBox(width: 13.0),
                         Text('Zooo'),

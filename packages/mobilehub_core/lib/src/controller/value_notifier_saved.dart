@@ -4,14 +4,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ValueNotifierSaved<T> {
   final String key;
   final SharedPreferences _sharedPreferences;
-  final T defaultValue;
+  final T? defaultValue;
 
   ValueNotifierSaved(
     this.key,
-    this._sharedPreferences,
+    this._sharedPreferences, {
     this.defaultValue,
-  ) {
+  }) {
     final tType = T.toString();
+    if (tType == 'String') {
+      assert(defaultValue != null, 'must set default value for strong type');
+    }
+
     if (tType == 'String?' || tType == 'String') {
       var val = _sharedPreferences.getString(key);
       if (val == null && tType == 'String') {
