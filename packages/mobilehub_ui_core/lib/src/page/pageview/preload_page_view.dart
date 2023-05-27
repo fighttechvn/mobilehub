@@ -328,7 +328,6 @@ class _PagePosition extends ScrollPositionWithSingleContext
       axisDirection: axisDirection ?? this.axisDirection,
       viewportFraction: viewportFraction ?? this.viewportFraction,
       devicePixelRatio: devicePixelRatio ?? this.devicePixelRatio,
-
     );
   }
 }

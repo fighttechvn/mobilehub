@@ -325,8 +325,7 @@ class MultiSelectorState<T> extends State<MultiSelector<T>>
     final centerHeightScreen = mediaScreen.size.height / 2;
 
     final viewInsets = EdgeInsets.fromViewPadding(
-        View.of(context).viewInsets,
-        View.of(context).devicePixelRatio);
+        View.of(context).viewInsets, View.of(context).devicePixelRatio);
 
     /// Math
     /// 1. nữa trên màn hình thì show dưới
