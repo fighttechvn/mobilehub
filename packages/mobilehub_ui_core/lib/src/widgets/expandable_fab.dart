@@ -9,12 +9,14 @@ class ExpandableFab extends StatefulWidget {
     this.buttonColor = Colors.white,
     required this.closedIcon,
     this.openedIcon,
+    this.size,
   });
 
   final List<Widget> actions;
   final Color buttonColor;
   final Widget closedIcon;
   final Widget? openedIcon;
+  final Size? size;
 
   @override
   State<StatefulWidget> createState() {
@@ -77,22 +79,26 @@ class ExpandableFabState extends State<ExpandableFab>
         curve: Curves.fastOutSlowIn,
       ),
     );
-    return FloatingActionButton(
-      backgroundColor: widget.buttonColor,
-      onPressed: animate,
-      child: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, child) {
-          return Opacity(
-            opacity: animation.value.abs(),
-            child: Transform.scale(
-              scale: animation.value.abs(),
-              child:
-                  animation.value <= 0 ? child : (widget.openedIcon ?? child),
-            ),
-          );
-        },
-        child: widget.closedIcon,
+    return SizedBox(
+      width: widget.size?.width,
+      height: widget.size?.height,
+      child: FloatingActionButton(
+        backgroundColor: widget.buttonColor,
+        onPressed: animate,
+        child: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            return Opacity(
+              opacity: animation.value.abs(),
+              child: Transform.scale(
+                scale: animation.value.abs(),
+                child:
+                    animation.value <= 0 ? child : (widget.openedIcon ?? child),
+              ),
+            );
+          },
+          child: widget.closedIcon,
+        ),
       ),
     );
   }
