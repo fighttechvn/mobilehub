@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'slide_animation/dot_slide_widget.dart';
+import 'dot_slide_widget.dart';
 
 const _heightWidget = 40.0;
 const _heightLineSlide = 30.0;
 
-class SlideAnimation extends StatefulWidget {
-  const SlideAnimation({
+class SlideAnimationWidget extends StatefulWidget {
+  const SlideAnimationWidget({
     super.key,
     this.showDotValue = false,
     required this.value,
@@ -18,10 +18,10 @@ class SlideAnimation extends StatefulWidget {
   final void Function(double)? onChanged;
 
   @override
-  State<SlideAnimation> createState() => _SlideAnimationState();
+  State<SlideAnimationWidget> createState() => _SlideAnimationWidgetState();
 }
 
-class _SlideAnimationState extends State<SlideAnimation> {
+class _SlideAnimationWidgetState extends State<SlideAnimationWidget> {
   double get _valueDefault => widget.value > 1
       ? 1
       : widget.value < 0
