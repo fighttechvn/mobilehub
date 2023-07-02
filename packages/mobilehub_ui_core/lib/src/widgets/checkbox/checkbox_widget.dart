@@ -2,18 +2,21 @@
 
 import 'package:flutter/material.dart';
 
-typedef CheckboxBuilder = Widget Function(bool isSelected);
+typedef CheckboxBuilder<T> = Widget Function(bool isSelected, T data);
 
-class CheckBoxWidget extends StatefulWidget {
+class CheckBoxWidget<T> extends StatefulWidget {
   final double size;
   final Color borderColor;
   final bool isSelected;
   final bool hasUnselect;
   final Function(bool isSelected)? onSelected;
   final String? text;
+  final Widget? textWidget;
   final Color? activeColor;
   final Color? inactiveColor;
-  final CheckboxBuilder? builder;
+  final CheckboxBuilder<T>? builder;
+  final TextStyle? style;
+  final T data;
 
   const CheckBoxWidget({
     Key? key,
@@ -26,13 +29,16 @@ class CheckBoxWidget extends StatefulWidget {
     this.activeColor,
     this.inactiveColor,
     this.builder,
+    this.style,
+    required this.data,
+    this.textWidget,
   }) : super(key: key);
 
   @override
-  State<CheckBoxWidget> createState() => _CheckBoxWidgetState();
+  State<CheckBoxWidget<T>> createState() => _CheckBoxWidgetState<T>();
 }
 
-class _CheckBoxWidgetState extends State<CheckBoxWidget> {
+class _CheckBoxWidgetState<T> extends State<CheckBoxWidget<T>> {
   late bool _isSelected;
 
   @override
@@ -43,7 +49,7 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant CheckBoxWidget oldWidget) {
+  void didUpdateWidget(covariant CheckBoxWidget<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.isSelected != oldWidget.isSelected) {
       _isSelected = widget.isSelected;
@@ -66,13 +72,19 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
       },
       child: Container(
         color: Colors.transparent,
-        child: (widget.text?.isNotEmpty ?? false)
+        child: (widget.text?.isNotEmpty ?? false) || widget.textWidget != null
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _buildCheckBoxCustom(),
                   const SizedBox(width: 10),
-                  Text(widget.text!),
+                  widget.textWidget ??
+                      ((widget.text?.isNotEmpty ?? false)
+                          ? Text(
+                              widget.text!,
+                              style: widget.style,
+                            )
+                          : const SizedBox())
                 ],
               )
             : _buildCheckBoxCustom(),
@@ -82,7 +94,7 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
 
   Widget _buildCheckBoxCustom() {
     if (widget.builder != null) {
-      return widget.builder!.call(_isSelected);
+      return widget.builder!.call(_isSelected, widget.data);
     }
 
     return Container(

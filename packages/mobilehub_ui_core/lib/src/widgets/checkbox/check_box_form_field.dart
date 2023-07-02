@@ -6,7 +6,7 @@ import 'group_check_box_widget.dart';
 class CheckboxFormField<T> extends FormField<T> {
   CheckboxFormField({
     Key? key,
-    required Set<T> values,
+    required List<T> values,
     T? initialValue,
     int? numberOfRow,
     FormFieldValidator<T>? validator,
@@ -14,8 +14,10 @@ class CheckboxFormField<T> extends FormField<T> {
     double spacing = 8.0,
     bool isRadioType = false,
     bool autovalidate = false,
-    CheckboxBuilder? checkBoxbuilder,
+    CheckboxBuilder<T>? checkBoxbuilder,
     AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
+    GroupCheckBoxBuilder<T>? groupCheckBoxBuilder,
+    required Widget Function(T data, bool isSelected) builderTitle,
   }) : super(
             key: key,
             validator: validator,
@@ -23,11 +25,13 @@ class CheckboxFormField<T> extends FormField<T> {
             initialValue: initialValue,
             builder: (FormFieldState<T> state) {
               return GroupCheckBoxWidget<T>(
+                builderTitle: builderTitle,
                 defaultValue: initialValue,
                 values: values,
                 numberOfRow: numberOfRow,
                 isRadioType: isRadioType,
                 checkBoxbuilder: checkBoxbuilder,
+                groupCheckBoxBuilder: groupCheckBoxBuilder,
                 onSelected: (T? value) {
                   onSelected?.call(value);
                   // ignore: invalid_use_of_protected_member
