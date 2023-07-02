@@ -23,6 +23,21 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
     this.checkBoxbuilder,
     this.groupCheckBoxBuilder,
     this.direction = Axis.horizontal,
+  })  : builderTitle = null,
+        super(key: key);
+
+  const GroupCheckBoxWidget.custom({
+    Key? key,
+    this.onSelected,
+    this.defaultValue,
+    required this.values,
+    this.numberOfRow,
+    this.spacing = 8,
+    this.error,
+    this.isRadioType = false,
+    this.checkBoxbuilder,
+    this.groupCheckBoxBuilder,
+    this.direction = Axis.horizontal,
     required this.builderTitle,
   }) : super(key: key);
 
@@ -36,7 +51,7 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
   final CheckboxBuilder<T>? checkBoxbuilder;
   final GroupCheckBoxBuilder<T>? groupCheckBoxBuilder;
   final Axis direction;
-  final Widget Function(T data, bool isSelected) builderTitle;
+  final Widget Function(T data, bool isSelected)? builderTitle;
 
   @override
   State<GroupCheckBoxWidget<T>> createState() => _GroupCheckBoxWidgetState();
@@ -82,7 +97,8 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
             itemBuilder: (context, index) {
               final item = widget.values.elementAt(index);
               final isSelected = _selectedValue == item;
-              final titleWidget = widget.builderTitle(item, isSelected);
+              final titleWidget = widget.builderTitle?.call(item, isSelected) ??
+                  Text(item.toString());
 
               final widgetItem = CheckBoxWidget<T>(
                 textWidget: titleWidget,
@@ -121,7 +137,9 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
               children: List.generate(widget.values.length, (index) {
                 final item = widget.values.toList()[index];
                 final isSelected = _selectedValue == item;
-                final titleWidget = widget.builderTitle(item, isSelected);
+                final titleWidget =
+                    widget.builderTitle?.call(item, isSelected) ??
+                        Text(item.toString());
 
                 final widgetCheckBox = CheckBoxWidget<T>(
                   textWidget: titleWidget,

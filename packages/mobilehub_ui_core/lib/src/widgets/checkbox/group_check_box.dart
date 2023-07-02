@@ -23,7 +23,6 @@ class GroupCheckBox<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return GroupCheckBoxWidget<T>(
       spacing: 0,
-      builderTitle: builderTitle,
       defaultValue: defaultValue,
       direction: Axis.vertical,
       values: values,

@@ -6,6 +6,56 @@ import 'group_check_box_widget.dart';
 class CheckboxFormField<T> extends FormField<T> {
   CheckboxFormField({
     Key? key,
+    required Set<T> values,
+    T? initialValue,
+    int? numberOfRow,
+    FormFieldValidator<T>? validator,
+    ValueChanged<T?>? onSelected,
+    double spacing = 8.0,
+    bool isRadioType = false,
+    bool autovalidate = false,
+    CheckboxBuilder<T>? checkBoxbuilder,
+    AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
+    GroupCheckBoxBuilder<T>? groupCheckBoxBuilder,
+  }) : super(
+            key: key,
+            validator: validator,
+            autovalidateMode: autovalidateMode,
+            initialValue: initialValue,
+            builder: (FormFieldState<T> state) {
+              return GroupCheckBoxWidget<T>(
+                defaultValue: initialValue,
+                values: values.toList(),
+                numberOfRow: numberOfRow,
+                isRadioType: isRadioType,
+                checkBoxbuilder: checkBoxbuilder,
+                groupCheckBoxBuilder: groupCheckBoxBuilder,
+                onSelected: (T? value) {
+                  onSelected?.call(value);
+                  // ignore: invalid_use_of_protected_member
+                  state.setValue(value);
+                  state.validate();
+                },
+                spacing: spacing,
+                error: state.hasError && (state.errorText?.isNotEmpty ?? false)
+                    ? Builder(
+                        builder: (BuildContext context) => Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            state.errorText!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      )
+                    : null,
+              );
+            });
+
+  CheckboxFormField.custom({
+    Key? key,
     required List<T> values,
     T? initialValue,
     int? numberOfRow,
@@ -17,14 +67,14 @@ class CheckboxFormField<T> extends FormField<T> {
     CheckboxBuilder<T>? checkBoxbuilder,
     AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
     GroupCheckBoxBuilder<T>? groupCheckBoxBuilder,
-    required Widget Function(T data, bool isSelected) builderTitle,
+    required Widget Function(T data, bool isSelected)? builderTitle,
   }) : super(
             key: key,
             validator: validator,
             autovalidateMode: autovalidateMode,
             initialValue: initialValue,
             builder: (FormFieldState<T> state) {
-              return GroupCheckBoxWidget<T>(
+              return GroupCheckBoxWidget<T>.custom(
                 builderTitle: builderTitle,
                 defaultValue: initialValue,
                 values: values,
