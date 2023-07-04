@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:clipboard/clipboard.dart';
 import 'package:easy_file/easy_file.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,4 +38,11 @@ class DeviceService {
   }
 
   dynamic readFile(String path) => getFile(path);
+
+  ///
+  /// loadString('packages/aiimi_data/assets/raw/onboarding.json')
+  ///
+  Future<String> loadString(String path) async {
+    return rootBundle.loadString(path);
+  }
 }
