@@ -10,6 +10,7 @@ class XHover extends StatefulWidget {
   final Decoration? decoration;
   final bool alwaysShowHoverItem;
   final MouseCursor cursor;
+
   const XHover({
     Key? key,
     required this.child,
@@ -28,12 +29,11 @@ class XHover extends StatefulWidget {
 }
 
 class _XHoverState extends State<XHover> {
-  late ValueNotifier<bool> _valueNotifier;
+  final _valueNotifier = ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
-    _valueNotifier = ValueNotifier(false);
   }
 
   @override

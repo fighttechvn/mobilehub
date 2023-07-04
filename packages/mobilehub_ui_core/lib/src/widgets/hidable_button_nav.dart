@@ -24,17 +24,15 @@ class HidableBottomScrollListener extends ChangeNotifier {
   }
 
   void addController(ScrollController controller) {
-    if (_controllers.contains(controller)) {
-      _controllers.remove(controller);
-      controller.removeListener(() => listenOnCtrl(controller));
+    if (!_controllers.contains(controller)) {
+      _controllers.add(controller);
+      controller.addListener(() => listenOnCtrl(controller));
     }
-    _controllers.add(controller);
-    controller.addListener(() => listenOnCtrl(controller));
   }
 
   void listenOnCtrl(ScrollController controller) {
     // Prevent bouncing physic
-    final pos = controller.positions.last;
+    final pos = controller.positions.first;
     final offset = pos.pixels;
     if (offset <= 0 || offset > pos.maxScrollExtent) {
       return;
