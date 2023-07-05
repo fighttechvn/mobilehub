@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ButtonWidget extends StatelessWidget {
+class ElevatedButtonShadow extends StatelessWidget {
   final String? label;
   final double? borderRadius;
   final TextStyle? textStyleLabel;
@@ -11,7 +11,7 @@ class ButtonWidget extends StatelessWidget {
   final Color? color;
   final EdgeInsetsGeometry? padding;
 
-  const ButtonWidget({
+  const ElevatedButtonShadow({
     Key? key,
     this.label,
     this.onPressed,
@@ -26,6 +26,9 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(label == null || child == null,
+        'Cannot provide both a child and a label');
+
     return Container(
       width: width,
       decoration: BoxDecoration(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../mobilehub_ui_core.dart';
+import '../../animations/circle_progress_indicator/animated_circle_progress_indicator.dart';
+import 'elevated_button_shadow.dart';
+
 
 class ButtonCircleIndicatorWidget extends StatelessWidget {
   final void Function()? onTap;
@@ -30,7 +32,7 @@ class ButtonCircleIndicatorWidget extends StatelessWidget {
         value: value,
         strokeWidth: 2,
         size: size,
-        child: ButtonWidget(
+        child: ElevatedButtonShadow(
           height: size - spacer,
           width: size - spacer,
           color: Theme.of(context).primaryColor,

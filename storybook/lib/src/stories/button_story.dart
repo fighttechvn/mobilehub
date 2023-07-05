@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 
 import '../storybook/storybook.dart';
 
@@ -22,7 +23,21 @@ class ButtonStory extends Story {
             spacingBox,
           ],
         ),
-      )
+      ),
+      WidgetMap(
+        title: 'ButtonWidget',
+        builder: (context) => Center(
+          child: Column(
+            children: [
+              const ElevatedButtonShadow(label: 'label'),
+              ElevatedButtonShadow(
+                label: 'label',
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
     ];
   }
 }
