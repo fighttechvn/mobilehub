@@ -25,6 +25,7 @@ export 'src/widgets/countdown/time_countdown.dart';
 export 'src/widgets/countdown/timer_countdown_day_widget.dart';
 export 'src/widgets/expandable_fab.dart';
 export 'src/widgets/hidable_button_nav.dart';
+export 'src/widgets/keyboard/auto_hide_keyboard.dart';
 export 'src/widgets/loading_widget.dart';
 export 'src/widgets/measure_size.dart';
 export 'src/widgets/nested_scroll_view_notification.dart';
