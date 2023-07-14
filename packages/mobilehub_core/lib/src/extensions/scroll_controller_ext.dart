@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 extension ScrollControllerExt on ScrollController {
   void scrollToTopOrRefresh([bool isPullToRefresh = true]) {
+    if (positions.isEmpty) {
+      return;
+    }
+    
     if (position.extentBefore == 0 && isPullToRefresh) {
       animateTo(
         -100,
