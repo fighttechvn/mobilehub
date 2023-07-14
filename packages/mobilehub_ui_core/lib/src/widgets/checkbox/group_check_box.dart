@@ -5,9 +5,10 @@ import 'group_check_box_widget.dart';
 
 class GroupCheckBox<T> extends StatelessWidget {
   final ValueChanged<T?>? onSelected;
-  final Set<T> values;
+  final List<T> values;
   final T? defaultValue;
   final bool showDivider;
+  final Widget Function(T data, bool isSelected) builderTitle;
 
   const GroupCheckBox({
     Key? key,
@@ -15,6 +16,7 @@ class GroupCheckBox<T> extends StatelessWidget {
     this.onSelected,
     this.defaultValue,
     this.showDivider = true,
+    required this.builderTitle,
   }) : super(key: key);
 
   @override
@@ -25,11 +27,11 @@ class GroupCheckBox<T> extends StatelessWidget {
       direction: Axis.vertical,
       values: values,
       onSelected: onSelected,
-      checkBoxbuilder: (bool isSelected) {
+      checkBoxbuilder: (bool isSelected, T data) {
         return RadioButtonWidget(isSelected: isSelected);
       },
-      groupCheckBoxBuilder:
-          (int index, CheckBoxWidget item, BoxConstraints constraints) {
+      groupCheckBoxBuilder: (int index, CheckBoxWidget item,
+          BoxConstraints constraints, bool isSelected, T data) {
         BoxBorder? divider;
         if (showDivider == true) {
           divider = index < values.length - 1

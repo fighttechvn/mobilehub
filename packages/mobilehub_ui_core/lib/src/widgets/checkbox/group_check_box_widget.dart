@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'checkbox_widget.dart';
 
-typedef GroupCheckBoxBuilder = Widget Function(
-    int index, CheckBoxWidget item, BoxConstraints constraints);
+typedef GroupCheckBoxBuilder<T> = Widget Function(
+  int index,
+  CheckBoxWidget<T> item,
+  BoxConstraints constraints,
+  bool isSelected,
+  T data,
+);
 
 class GroupCheckBoxWidget<T> extends StatefulWidget {
   const GroupCheckBoxWidget({
@@ -18,18 +23,35 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
     this.checkBoxbuilder,
     this.groupCheckBoxBuilder,
     this.direction = Axis.horizontal,
+  })  : builderTitle = null,
+        super(key: key);
+
+  const GroupCheckBoxWidget.custom({
+    Key? key,
+    this.onSelected,
+    this.defaultValue,
+    required this.values,
+    this.numberOfRow,
+    this.spacing = 8,
+    this.error,
+    this.isRadioType = false,
+    this.checkBoxbuilder,
+    this.groupCheckBoxBuilder,
+    this.direction = Axis.horizontal,
+    required this.builderTitle,
   }) : super(key: key);
 
   final ValueChanged<T?>? onSelected;
   final T? defaultValue;
-  final Set<T> values;
+  final List<T> values;
   final int? numberOfRow;
   final double spacing;
   final Widget? error;
   final bool isRadioType;
-  final CheckboxBuilder? checkBoxbuilder;
-  final GroupCheckBoxBuilder? groupCheckBoxBuilder;
+  final CheckboxBuilder<T>? checkBoxbuilder;
+  final GroupCheckBoxBuilder<T>? groupCheckBoxBuilder;
   final Axis direction;
+  final Widget Function(T data, bool isSelected)? builderTitle;
 
   @override
   State<GroupCheckBoxWidget<T>> createState() => _GroupCheckBoxWidgetState();
@@ -39,14 +61,15 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
   T? _selectedValue;
 
   void _onSelected(bool isSelected, T? value) {
-    if (isSelected) {
-      _selectedValue = value;
-      widget.onSelected?.call(_selectedValue);
-    } else {
-      _selectedValue = null;
-      widget.onSelected?.call(null);
-    }
-    setState(() {});
+    setState(() {
+      if (isSelected) {
+        _selectedValue = value;
+        widget.onSelected?.call(_selectedValue);
+      } else {
+        _selectedValue = null;
+        widget.onSelected?.call(null);
+      }
+    });
   }
 
   @override
@@ -74,16 +97,29 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
             itemBuilder: (context, index) {
               final item = widget.values.elementAt(index);
               final isSelected = _selectedValue == item;
-              final widgetItem = CheckBoxWidget(
-                text: item.toString(),
+              final titleWidget = widget.builderTitle?.call(item, isSelected) ??
+                  Text(item.toString());
+
+              final widgetItem = CheckBoxWidget<T>(
+                textWidget: titleWidget,
                 isSelected: isSelected,
                 hasUnselect: widget.isRadioType == false,
                 onSelected: (bool isSelected) => _onSelected(isSelected, item),
                 builder: widget.checkBoxbuilder,
+                data: item,
               );
               if (widget.groupCheckBoxBuilder != null) {
-                return widget.groupCheckBoxBuilder!
-                    .call(index, widgetItem, constraints);
+                return GestureDetector(
+                  onTap: () => _onSelected(isSelected, item),
+                  behavior: HitTestBehavior.translucent,
+                  child: widget.groupCheckBoxBuilder!.call(
+                    index,
+                    widgetItem,
+                    constraints,
+                    isSelected,
+                    item,
+                  ),
+                );
               }
               return widgetItem;
             },
@@ -100,8 +136,14 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
               alignment: WrapAlignment.spaceBetween,
               children: List.generate(widget.values.length, (index) {
                 final item = widget.values.toList()[index];
-                final widgetCheckBox = CheckBoxWidget(
-                  text: item.toString(),
+                final isSelected = _selectedValue == item;
+                final titleWidget =
+                    widget.builderTitle?.call(item, isSelected) ??
+                        Text(item.toString());
+
+                final widgetCheckBox = CheckBoxWidget<T>(
+                  textWidget: titleWidget,
+                  data: item,
                   isSelected: _selectedValue == item,
                   hasUnselect: widget.isRadioType == false,
                   onSelected: (bool isSelected) =>
@@ -110,9 +152,19 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
                 );
 
                 if (widget.groupCheckBoxBuilder != null) {
-                  return widget.groupCheckBoxBuilder!
-                      .call(index, widgetCheckBox, constraints);
+                  return GestureDetector(
+                    onTap: () => _onSelected(isSelected, item),
+                    behavior: HitTestBehavior.translucent,
+                    child: widget.groupCheckBoxBuilder!.call(
+                      index,
+                      widgetCheckBox,
+                      constraints,
+                      isSelected,
+                      item,
+                    ),
+                  );
                 }
+
                 return widgetCheckBox;
               }),
             ),
