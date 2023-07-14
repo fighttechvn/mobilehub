@@ -1,4 +1,3 @@
-
 extension DurationByStringExt on String {
   Duration parseDuration() {
     var hours = 0;

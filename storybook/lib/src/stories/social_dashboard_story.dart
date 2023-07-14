@@ -127,6 +127,8 @@ class FloatingAppbarPage extends StatelessWidget {
           return Container(
             height: 200,
             color: index % 2 == 0 ? Colors.white : Colors.grey,
+            alignment: Alignment.center,
+            child: Text('$index'),
           );
         },
       ),
@@ -149,6 +151,8 @@ class NormalPage extends StatelessWidget {
           return Container(
             height: 150,
             color: index % 2 == 0 ? Colors.yellow : Colors.green,
+            alignment: Alignment.center,
+            child: Text('$index'),
           );
         },
       ),

@@ -16,6 +16,7 @@ Future<void> main() async {
               HoverStory(),
               SocialDashboardStory(),
               HideBottomNavStory(),
+              RenderBoxInforStory(),
             ],
           ),
         );
