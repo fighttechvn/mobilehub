@@ -1,5 +1,6 @@
 library mobilehub_core;
 
+export 'src/base/render_box/render_box_infor.dart';
 export 'src/controller/value_notifier_saved.dart';
 export 'src/dependency_injection/mobilehub_core_micro.dart';
 export 'src/dependency_injection/mobilehub_core_micro.module.dart';

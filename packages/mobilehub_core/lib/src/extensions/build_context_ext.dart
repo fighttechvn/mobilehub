@@ -6,9 +6,13 @@ extension BuildContextExt on BuildContext {
     return routeNamed == currentName;
   }
 
-  ThemeData get theme => Theme.of(this);
+  String? get currentName => ModalRoute.of(this)?.settings.name;
+}
 
+extension BuildContextThemeExt on BuildContext {
   TextTheme get textTheme => theme.textTheme;
+
+  ThemeData get theme => Theme.of(this);
 
   bool get isDarkMode =>
       MediaQuery.of(this).platformBrightness == Brightness.dark;
