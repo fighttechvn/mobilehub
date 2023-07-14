@@ -6,7 +6,7 @@ void main() {
   late Widget sut;
 
   setUp(() {
-    sut = const CheckBoxWidget();
+    sut = const CheckBoxWidget(data: 'a');
   });
 
   group('CheckBox Widget render', () {
@@ -109,6 +109,7 @@ class _TestCheckboxState extends State<TestCheckbox> {
         isSelected: _isSelected,
         activeColor: widget.activeColor,
         inactiveColor: widget.inactiveColor,
+        data: 'a',
       ),
     );
   }

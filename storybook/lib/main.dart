@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'src/stories/countdown_story.dart';
 import 'src/stories/hide_bottom_nav_story.dart';
 import 'src/stories/social_dashboard_story.dart';
 import 'src/stories/stories.dart';
@@ -13,6 +14,7 @@ Future<void> main() async {
           home: Storybook(
             [
               ButtonStory(),
+              CountdownStory(),
               HoverStory(),
               SocialDashboardStory(),
               HideBottomNavStory(),

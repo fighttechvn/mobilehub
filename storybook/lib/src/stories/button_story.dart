@@ -25,11 +25,13 @@ class ButtonStory extends Story {
         ),
       ),
       WidgetMap(
-        title: 'ButtonWidget',
+        title: 'ElevatedButtonShadow',
         builder: (context) => Center(
           child: Column(
             children: [
+              spacingBox,
               const ElevatedButtonShadow(label: 'label'),
+              spacingBox,
               ElevatedButtonShadow(
                 label: 'label',
                 onPressed: () {},
