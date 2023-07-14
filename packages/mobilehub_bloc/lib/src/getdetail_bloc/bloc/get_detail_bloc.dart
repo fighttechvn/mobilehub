@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,11 +25,6 @@ class GetDetailBloc<T> extends Bloc<GetDetailEvent, GetDetailState> {
       final data = await _usecase();
       if (data != null) {
         emit(GetDetailDataSuccess<T>(data));
-      }
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
-      if (kDebugMode) {
-        rethrow;
       }
     } catch (e) {
       emit(GetDetailError<T>(e));
@@ -58,11 +52,6 @@ class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
 
       final data = await _usecase(event.param1);
       emit(GetDetailDataSuccess<T>(data));
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
-      if (kDebugMode) {
-        rethrow;
-      }
     } catch (e) {
       emit(GetDetailError<T>(e));
       if (kDebugMode) {
@@ -92,8 +81,6 @@ class GetDetailBlocParam2<T, P1, P2>
       final data = await _usecase(event.param1, event.param2);
 
       emit(GetDetailDataSuccess<T>(data));
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
     } catch (e, trace) {
       if (kDebugMode) {
         log(e.toString());
@@ -127,8 +114,6 @@ class GetDetailBlocParam3<T, P1, P2, P3>
       final data = await _usecase(event.param1, event.param2, event.param3);
 
       emit(GetDetailDataSuccess<T>(data));
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
     } catch (e) {
       emit(GetDetailError<T>(e));
     }

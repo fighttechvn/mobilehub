@@ -24,7 +24,6 @@ dependencies:
   universal_platform: ^1.0.0+1
   equatable: ^2.0.3
   rxdart: ^0.27.3
-  dio: ^4.0.6
 
   # state management
   flutter_bloc: ^8.1.1
