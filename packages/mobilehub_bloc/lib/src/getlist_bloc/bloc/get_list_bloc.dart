@@ -9,7 +9,6 @@ import '../../usecase/usecase_add.dart';
 import '../../usecase/usecase_delete.dart';
 
 part 'get_list_event.dart';
-
 part 'get_list_state.dart';
 
 typedef LoadListFuture<T> = Future<List<T>> Function();
@@ -74,8 +73,9 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
 
   GetListBlocParam1(this._usecaseParam1) : super(GetListBlocInitial()) {
     on<GetListDataParam1Event>(_mapGetDetailDataParam1Event);
-    on<RemoveItemFromListEvent>(_mapRemoveItemFromListEvent);
-    on<AddItemIntoListEvent>(_mapAddItemIntoListEvent);
+    on<RemoveItemFromListEvent<T>>(_mapRemoveItemFromListEvent);
+    on<AddItemIntoListEvent<T>>(_mapAddItemIntoListEvent);
+    on<UpdateItemToListEvent<T>>(_mapUpdateItemToListEvent);
   }
 
   FutureOr<void> _mapGetDetailDataParam1Event(
@@ -92,7 +92,7 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapRemoveItemFromListEvent(
-      RemoveItemFromListEvent event, Emitter<GetListState> emit) {
+      RemoveItemFromListEvent<T> event, Emitter<GetListState> emit) {
     final currentState = state;
 
     if (currentState is GetListDataSuccess) {
@@ -103,13 +103,37 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapAddItemIntoListEvent(
-      AddItemIntoListEvent event, Emitter<GetListState> emit) {
+      AddItemIntoListEvent<T> event, Emitter<GetListState> emit) {
     final currentState = state;
 
     if (currentState is GetListDataSuccess) {
       final result = List.from(currentState.data);
       result.add(event.item);
       emit(GetListDataSuccess<T>(result.map((e) => e as T).toList()));
+    }
+  }
+
+  FutureOr<void> _mapUpdateItemToListEvent(
+      UpdateItemToListEvent<T> event, Emitter<GetListState> emit) async {
+    try {
+      final currentState = state;
+
+      if (currentState is GetListDataSuccess<T>) {
+        final result = List<T>.from(currentState.data);
+        final idexItem = result.indexWhere(event.where);
+        if (idexItem >= 0) {
+          result[idexItem] = event.item;
+        }
+
+        emit(
+          GetListDataSuccess<T>(
+            result,
+            timespan: DateTime.now().millisecondsSinceEpoch,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(GetListDataError<T>(e.toString(), e));
     }
   }
 }
