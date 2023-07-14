@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-class RenderInfo {
-  final Offset position;
-  final Size size;
-
-  RenderInfo(this.position, this.size);
-}
-
-extension BuildCtx on BuildContext {
-  RenderInfo get getRenderObjectInfo {
-    final box = findRenderObject() as RenderBox;
-    final pos = box.globalToLocal(Offset.zero);
-    final position = Offset(-pos.dx, -pos.dy);
-    return RenderInfo(position, box.size);
+extension BuildContextExt on BuildContext {
+  bool isRouteNamed(String routeNamed) {
+    final currentName = ModalRoute.of(this)?.settings.name;
+    return routeNamed == currentName;
   }
+
+  ThemeData get theme => Theme.of(this);
+
+  TextTheme get textTheme => theme.textTheme;
+
+  bool get isDarkMode =>
+      MediaQuery.of(this).platformBrightness == Brightness.dark;
 }

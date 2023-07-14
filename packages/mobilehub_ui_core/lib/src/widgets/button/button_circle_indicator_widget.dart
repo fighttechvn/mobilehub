@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../animations/circle_progress_indicator/animated_circle_progress_indicator.dart';
 import 'elevated_button_shadow.dart';
 
-
 class ButtonCircleIndicatorWidget extends StatelessWidget {
   final void Function()? onTap;
   final double value;
