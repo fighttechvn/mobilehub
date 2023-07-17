@@ -5,7 +5,7 @@ extension ScrollControllerExt on ScrollController {
     if (positions.isEmpty) {
       return;
     }
-    
+
     if (position.extentBefore == 0 && isPullToRefresh) {
       animateTo(
         -100,
