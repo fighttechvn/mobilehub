@@ -40,6 +40,17 @@ class ButtonStory extends Story {
           ),
         ),
       ),
+      WidgetMap(
+        title: 'ButtonCircleIndicatorWidget',
+        builder: (context) => Column(
+          children: [
+            ButtonCircleIndicatorWidget(
+              title: 'Next',
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
     ];
   }
 }
