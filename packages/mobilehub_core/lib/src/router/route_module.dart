@@ -32,6 +32,7 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
     final builder = _getAll(settings)[routeName];
 
     if (builder == null) {
+      assert(builder != null, 'please check route builder:');
       throw Exception('please check route builder: $builder');
     }
 
@@ -48,10 +49,10 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
     );
   }
 
-  PageRouteBuilder pageRouteBuilder(WidgetBuilder? builder) {
+  PageRouteBuilder pageRouteBuilder(WidgetBuilder builder) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
-        return builder!(context);
+        return builder(context);
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         final tween =
