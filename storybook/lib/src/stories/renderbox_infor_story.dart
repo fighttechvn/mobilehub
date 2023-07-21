@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobilehub_core/mobilehub_core.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 
 import '../storybook/storybook.dart';
 

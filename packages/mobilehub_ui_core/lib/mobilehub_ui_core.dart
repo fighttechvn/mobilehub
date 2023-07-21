@@ -4,6 +4,7 @@ export 'src/animations/call/calling_effect.dart';
 export 'src/animations/circle_progress_indicator/animated_circle_progress_indicator.dart';
 export 'src/animations/slide_animation/slide_aniamtion_widget.dart';
 export 'src/animations/switching_layout.dart';
+export 'src/core/render_box/render_box_infor.dart';
 export 'src/layout/sliver_nested_scroll_view.dart';
 export 'src/layout/tabbar_dynamic_widget.dart';
 export 'src/list/listing/list_builder_widget.dart';

@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../mobilehub_core.dart';
+import '../core/dependency_injection/injector_container.dart';
 
-abstract class RouteModule extends InjectorGet {
-  GetIt get injector => GetIt.instance;
-
+abstract class RouteModule extends InjectorContainerGet {
   Map<String, WidgetBuilder> getAll(RouteSettings settings);
 }
 
-abstract class RouteModuleBuilder extends InjectorGet {
+abstract class RouteModuleBuilder extends InjectorContainerGet {
   List<RouteModule> get routes;
+
   List<RouteModuleBuilder> get routerModules => <RouteModuleBuilder>[];
 
-  Map<String, WidgetBuilder> getAll(RouteSettings settings) {
+  Map<String, WidgetBuilder> _getAll(RouteSettings settings) {
     final result = <String, WidgetBuilder>{};
     for (final e in routes) {
       result.addAll(e.getAll(settings));
     }
     for (final e in routerModules) {
-      result.addAll(e.getAll(settings));
+      result.addAll(e._getAll(settings));
     }
     return result;
   }
@@ -31,7 +29,7 @@ abstract class RouteModuleBuilder extends InjectorGet {
       throw Exception('please check route name: $routeName');
     }
 
-    final builder = getAll(settings)[routeName];
+    final builder = _getAll(settings)[routeName];
 
     if (builder == null) {
       throw Exception('please check route builder: $builder');

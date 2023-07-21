@@ -1,9 +1,10 @@
 extension DurationByStringExt on String {
-  Duration parseDuration() {
+  Duration? parseDuration() {
     var hours = 0;
     var minutes = 0;
     var micros = 0;
     final parts = split(':');
+
     try {
       if (parts.isNotEmpty) {
         hours = int.parse(parts.first);
@@ -16,7 +17,7 @@ extension DurationByStringExt on String {
       }
       return Duration(hours: hours, minutes: minutes, microseconds: micros);
     } catch (_) {
-      return Duration.zero;
+      return null;
     }
   }
 }
