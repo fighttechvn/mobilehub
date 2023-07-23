@@ -2,6 +2,7 @@ library mobilehub_ui_core;
 
 export 'src/animations/call/calling_effect.dart';
 export 'src/animations/circle_progress_indicator/animated_circle_progress_indicator.dart';
+export 'src/animations/skake_widget.dart';
 export 'src/animations/slide_animation/slide_aniamtion_widget.dart';
 export 'src/animations/switching_layout.dart';
 export 'src/core/render_box/render_box_infor.dart';
