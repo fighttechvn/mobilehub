@@ -1,5 +1,7 @@
 library mobilehub_ui_core;
 
+export 'package:easy_loading_adaptive/easy_loading.dart';
+
 export 'src/animations/call/calling_effect.dart';
 export 'src/animations/circle_progress_indicator/animated_circle_progress_indicator.dart';
 export 'src/animations/skake_widget.dart';
@@ -28,7 +30,6 @@ export 'src/widgets/countdown/timer_countdown_day_widget.dart';
 export 'src/widgets/expandable_fab.dart';
 export 'src/widgets/hidable_button_nav.dart';
 export 'src/widgets/keyboard/auto_hide_keyboard.dart';
-export 'src/widgets/loading_widget.dart';
 export 'src/widgets/measure_size.dart';
 export 'src/widgets/nested_scroll_view_notification.dart';
 export 'src/widgets/text_input_multi_select/text_input_multi_select.dart';
