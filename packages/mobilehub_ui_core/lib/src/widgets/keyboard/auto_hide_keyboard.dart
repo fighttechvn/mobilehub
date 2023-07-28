@@ -40,10 +40,12 @@ class ScaffoldHideKeyboard extends Scaffold {
     bool extendBody = false,
     Color? backgroundColor,
     Widget? endDrawer,
+    bool extendBodyBehindAppBar = false,
   }) : super(
           key: key,
           appBar: appBar,
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
           body: AutoHideKeyboard(child: body),
           floatingActionButton: floatingActionButton,
           floatingActionButtonLocation: floatingActionButtonLocation,

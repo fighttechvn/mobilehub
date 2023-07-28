@@ -89,6 +89,8 @@ class GetDetailBlocParam2<T, P1, P2>
       final currentState = state;
       if (currentState is GetDetailDataSuccess<T>) {
         emit(GetDetailErrorHasData<T>(currentState.data, e));
+      } else {
+        emit(GetDetailError<T>(e));
       }
     }
   }
