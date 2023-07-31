@@ -9,7 +9,16 @@ abstract class RouteModule extends InjectorContainerGet {
 abstract class RouteModuleBuilder extends InjectorContainerGet {
   List<RouteModule> get routes;
 
+  ///
+  /// External route loader
+  ///
   List<RouteModuleBuilder> get routerModules => <RouteModuleBuilder>[];
+
+  ///
+  /// Expose get all router by name
+  ///
+  Map<String, WidgetBuilder> getAll(RouteSettings settings) =>
+      _getAll(settings);
 
   Map<String, WidgetBuilder> _getAll(RouteSettings settings) {
     final result = <String, WidgetBuilder>{};
