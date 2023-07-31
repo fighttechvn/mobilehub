@@ -20,4 +20,6 @@ extension BuildContextThemeExt on BuildContext {
 
 extension ContextCoodinator on BuildContext {
   BuildContext get context => this;
+
+  void pop() => Navigator.of(this).pop();
 }
