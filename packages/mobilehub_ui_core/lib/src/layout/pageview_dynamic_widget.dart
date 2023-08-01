@@ -2,58 +2,60 @@ import 'package:flutter/material.dart';
 
 const _extentSizeForBottom = 20.0;
 
-class TabbarDynamicWidget extends StatefulWidget {
-  const TabbarDynamicWidget({
+class PageViewDynamicWidget extends StatefulWidget {
+  const PageViewDynamicWidget({
     super.key,
-    required this.tabController,
+    required this.pageController,
     required this.children,
     this.heightDefault = 200.0,
   });
 
-  final TabController tabController;
+  final PageController pageController;
   final List<Widget> children;
   final double heightDefault;
 
   @override
-  State<TabbarDynamicWidget> createState() => _TabbarDynamicWidgetState();
+  State<PageViewDynamicWidget> createState() => _PageViewDynamicWidgetState();
 }
 
-class _TabbarDynamicWidgetState extends State<TabbarDynamicWidget> {
+class _PageViewDynamicWidgetState extends State<PageViewDynamicWidget> {
   final _heightOfTab = [];
-  late final _sizeTabbar = ValueNotifier(_heightTitleTabbar);
+  int _indexCurrent = 0;
+  late final _sizePageView = ValueNotifier(_heightTitlePageView);
 
-  double get _heightTitleTabbar =>
+  double get _heightTitlePageView =>
       _heightOfTab.isNotEmpty ? _heightOfTab.first : widget.heightDefault;
 
-  void _onChangeTabbar() {
-    _sizeTabbar.value =
-        _heightOfTab[widget.tabController.index] ?? _heightTitleTabbar;
+  void _onChangePageView() {
+    _indexCurrent = widget.pageController.page?.toInt() ?? 0;
+    _sizePageView.value = _heightOfTab[_indexCurrent] ?? _heightTitlePageView;
   }
 
   @override
   void initState() {
     super.initState();
-    widget.tabController.addListener(_onChangeTabbar);
+    widget.pageController.addListener(_onChangePageView);
+
     for (var i = 0; i < widget.children.length; i++) {
-      _heightOfTab.add(_heightTitleTabbar);
+      _heightOfTab.add(_heightTitlePageView);
     }
   }
 
   @override
   void dispose() {
-    widget.tabController.removeListener(_onChangeTabbar);
+    widget.pageController.removeListener(_onChangePageView);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<double>(
-      valueListenable: _sizeTabbar,
-      builder: (_, heightTabbar, __) {
+      valueListenable: _sizePageView,
+      builder: (_, heightPageView, __) {
         return SizedBox(
-          height: heightTabbar,
-          child: TabBarView(
-            controller: widget.tabController,
+          height: heightPageView,
+          child: PageView(
+            controller: widget.pageController,
             children: List.generate(
               widget.children.length,
               (index) {
@@ -61,9 +63,9 @@ class _TabbarDynamicWidgetState extends State<TabbarDynamicWidget> {
                 return _DetectorSizeChildWidget(
                   onGetSize: (p0, p1) {
                     _heightOfTab[index] = p0.height + _extentSizeForBottom;
-                    if (index == widget.tabController.index) {
-                      _sizeTabbar.value =
-                          _heightOfTab[index] ?? _heightTitleTabbar;
+                    if (index == _indexCurrent) {
+                      _sizePageView.value =
+                          _heightOfTab[index] ?? _heightTitlePageView;
                     }
                   },
                   child: item,
@@ -103,19 +105,17 @@ class _DetectorSizeChildWidgetState extends State<_DetectorSizeChildWidget> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _getSize();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: SizedBox(
-        key: globalKeyCenterButton,
-        child: widget.child,
-      ),
-    );
+    return LayoutBuilder(builder: (_, __) {
+      _getSize();
+
+      return SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: SizedBox(
+          key: globalKeyCenterButton,
+          child: widget.child,
+        ),
+      );
+    });
   }
 }
