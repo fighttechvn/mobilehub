@@ -29,6 +29,9 @@ abstract class StorageService {
 extension ObjStorageService on Object {
   StorageService get _storageService => StorageServiceImpl();
 
+  Future<String> get getTemporaryDirectoryPath =>
+      _storageService.getTemporaryDirectoryPath;
+
   Future<Directory> createDir(String folderName) =>
       _storageService.createDir(folderName);
 }
