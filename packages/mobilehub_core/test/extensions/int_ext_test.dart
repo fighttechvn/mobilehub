@@ -2,8 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 
 void main() {
-  
-
   group('should verify file format size', () {
     test('should display B', () {
       const sizeByte = 10111;
