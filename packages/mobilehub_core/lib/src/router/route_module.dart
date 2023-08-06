@@ -77,3 +77,19 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
     );
   }
 }
+
+extension CoodinatorBuildStartScreen on BuildContext {
+  Future<T?> start<T>(
+      {required Widget child, Widget Function(BuildContext)? builder}) {
+    return Navigator.of(this).push(
+      MaterialPageRoute(
+        builder: (context) {
+          if (builder != null) {
+            return builder(context);
+          }
+          return child;
+        },
+      ),
+    );
+  }
+}
