@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:mobilehub_core/mobilehub_core.dart';
 
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
@@ -10,13 +11,17 @@ class ExpandableFab extends StatefulWidget {
     required this.closedIcon,
     this.openedIcon,
     this.size,
+    this.separator = const SizedBox(height: 18),
+    required this.onTapItem,
   });
 
   final List<Widget> actions;
   final Color buttonColor;
   final Widget closedIcon;
   final Widget? openedIcon;
+  final Widget separator;
   final Size? size;
+  final void Function(int index) onTapItem;
 
   @override
   State<StatefulWidget> createState() {
@@ -30,6 +35,8 @@ class ExpandableFabState extends State<ExpandableFab>
   late AnimationController _animationController;
   final Curve _curve = Curves.easeOut;
 
+  final focusNode = FocusNode();
+
   @override
   void initState() {
     _animationController = AnimationController(
@@ -37,19 +44,29 @@ class ExpandableFabState extends State<ExpandableFab>
       ..addListener(() {
         setState(() {});
       });
+
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus && isOpened) {
+        // Close when out focus
+        animate();
+      }
+    });
     super.initState();
   }
 
   @override
   void dispose() {
+    focusNode.dispose();
     _animationController.dispose();
     super.dispose();
   }
 
   void animate() {
     if (!isOpened) {
+      focusNode.requestFocus();
       _animationController.forward();
     } else {
+      focusNode.previousFocus();
       _animationController.reverse();
     }
     isOpened = !isOpened;
@@ -65,7 +82,16 @@ class ExpandableFabState extends State<ExpandableFab>
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
-            children: widget.actions,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ...widget.actions.mapIndex((e, idx) => InkWell(
+                    child: e,
+                    onTap: () {
+                      animate();
+                      widget.onTapItem.call(idx);
+                    },
+                  ))
+            ].insertSeparator((index) => widget.separator),
           ),
         ),
       ],
@@ -118,23 +144,29 @@ class ExpandableFabState extends State<ExpandableFab>
         ),
       ),
     );
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
-            translateAnim.value,
-            0.0,
-          ),
-          child: FadeAndScaleItem(
-            controller: _animationController,
-            curve: _curve,
-            child: actions(),
-          ),
+    return Focus(
+      focusNode: focusNode,
+      child: FittedBox(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Transform(
+              transform: Matrix4.translationValues(
+                0.0,
+                translateAnim.value,
+                0.0,
+              ),
+              child: FadeAndScaleItem(
+                controller: _animationController,
+                curve: _curve,
+                child: actions(),
+              ),
+            ),
+            toggle(),
+          ],
         ),
-        toggle(),
-      ],
+      ),
     );
   }
 }

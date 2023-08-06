@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:mobilehub_core/mobilehub_core.dart';
+
+import '../list/sliver/sliver_refresh_indicator_widget.dart';
+
+class PullToRefreshWidget extends StatelessWidget {
+  const PullToRefreshWidget({
+    super.key,
+    required this.onRefresh,
+    required this.slivers,
+  });
+
+  final Future<void> Function() onRefresh;
+  final List<Widget> slivers;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isAndroid) {
+      return RefreshIndicator(
+        onRefresh: onRefresh,
+        child: CustomScrollView(
+          slivers: slivers,
+        ),
+      );
+    }
+    return CustomScrollView(
+      slivers: [
+        SliverRefreshIndicatorWidget(
+          onRefresh: onRefresh,
+        ),
+        ...slivers,
+      ],
+    );
+  }
+}

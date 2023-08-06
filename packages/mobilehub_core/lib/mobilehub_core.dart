@@ -8,6 +8,8 @@ export 'src/easy_debounce.dart';
 export 'src/extensions/build_context_ext.dart';
 export 'src/extensions/color_ext.dart';
 export 'src/extensions/datetime_helper_extension.dart';
+export 'src/extensions/iterable_extension.dart';
+export 'src/extensions/num_extension.dart';
 export 'src/extensions/object_ext.dart';
 export 'src/extensions/scroll_controller_ext.dart';
 export 'src/extensions/string_ext.dart';
