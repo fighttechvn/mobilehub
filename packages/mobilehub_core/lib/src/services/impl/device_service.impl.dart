@@ -23,24 +23,31 @@ class DeviceServiceImpl extends DeviceService {
 
   @override
   Future<void> setStatusBar({Color? color}) async {
-    await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-    await FlutterStatusbarcolor.setStatusBarColor(color ?? Colors.transparent);
+    if (isMobile) {
+      await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+      await FlutterStatusbarcolor.setStatusBarColor(
+          color ?? Colors.transparent);
+    }
   }
 
   @override
   Future<void> statusbar(bool isDark) async {
-    await FlutterStatusbarcolor.setStatusBarWhiteForeground(isDark);
+    if (isMobile) {
+      await FlutterStatusbarcolor.setStatusBarWhiteForeground(isDark);
+    }
   }
 
   @override
   Future<void> updateNavigationBarColors(bool isDark,
       [Color buttombarColor = const Color(0xFF232323)]) async {
-    if (isDark) {
-      await FlutterStatusbarcolor.setNavigationBarColor(buttombarColor);
-      await FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
-    } else {
-      await FlutterStatusbarcolor.setNavigationBarColor(Colors.white);
-      await FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+    if (isMobile) {
+      if (isDark) {
+        await FlutterStatusbarcolor.setNavigationBarColor(buttombarColor);
+        await FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+      } else {
+        await FlutterStatusbarcolor.setNavigationBarColor(Colors.white);
+        await FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+      }
     }
   }
 
