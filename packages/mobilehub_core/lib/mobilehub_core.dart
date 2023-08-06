@@ -23,5 +23,7 @@ export 'src/router/navigator_page.dart';
 export 'src/router/route_module.dart';
 export 'src/router/route_observer.dart';
 export 'src/services/device_service.dart';
+export 'src/services/impl/device_service.impl.dart';
+export 'src/services/impl/storage_service.impl.dart';
 export 'src/services/storage_service.dart';
 export 'src/stateful/base_statefull.dart';
