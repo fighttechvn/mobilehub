@@ -21,3 +21,12 @@ extension DurationByStringExt on String {
     }
   }
 }
+
+extension NullableStringIsNullOrEmptyExtension on String? {
+  /// Returns `true` if the String is either null or empty.
+  bool get isNullOrEmpty => this?.isEmpty ?? true;
+}
+
+extension NullableStringIsNotNullOrEmptyExtension on String? {
+  bool get isNotNullOrEmpty => !isNullOrEmpty;
+}
