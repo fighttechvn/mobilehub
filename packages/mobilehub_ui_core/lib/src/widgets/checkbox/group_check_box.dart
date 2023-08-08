@@ -30,8 +30,13 @@ class GroupCheckBox<T> extends StatelessWidget {
       checkBoxbuilder: (bool isSelected, T data) {
         return RadioButtonWidget(isSelected: isSelected);
       },
-      groupCheckBoxBuilder: (int index, CheckBoxWidget item,
-          BoxConstraints constraints, bool isSelected, T data) {
+      groupCheckBoxBuilder: (
+        int index,
+        CheckBoxWidget item,
+        BoxConstraints constraints,
+        bool isSelected,
+        T data,
+      ) {
         BoxBorder? divider;
         if (showDivider == true) {
           divider = index < values.length - 1
@@ -66,8 +71,8 @@ class RadioButtonWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-            color:
-                isSelected ? const Color(0xffFFBD11) : const Color(0xFF696969)),
+          color: isSelected ? const Color(0xffFFBD11) : const Color(0xFF696969),
+        ),
       ),
       margin: const EdgeInsets.symmetric(vertical: 16),
       child: Container(

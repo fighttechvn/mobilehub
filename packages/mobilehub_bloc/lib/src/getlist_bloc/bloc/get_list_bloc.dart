@@ -19,14 +19,18 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
   GetListBloc(this._usecase) : super(GetListBlocInitial()) {
     on<GetListDataEvent>(_mapGetListDataEvent);
     on<RemoveItemFromListEvent>(_mapRemoveItemFromListEvent);
-    on<GetListDateTypeSearchText>(_mapGetListDateTypeSearchText,
-        transformer: (events, mapper) => events
-            .debounceTime(const Duration(milliseconds: 300))
-            .switchMap(mapper));
+    on<GetListDateTypeSearchText>(
+      _mapGetListDateTypeSearchText,
+      transformer: (events, mapper) => events
+          .debounceTime(const Duration(milliseconds: 300))
+          .switchMap(mapper),
+    );
   }
 
   FutureOr<void> _mapGetListDataEvent(
-      GetListDataEvent event, Emitter<GetListState> emit) async {
+    GetListDataEvent event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final stateCurrent = state;
       if (stateCurrent is! GetListDataSuccess<T>) {
@@ -42,7 +46,9 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapRemoveItemFromListEvent(
-      RemoveItemFromListEvent event, Emitter<GetListState> emit) {
+    RemoveItemFromListEvent event,
+    Emitter<GetListState> emit,
+  ) {
     final currentState = state;
 
     if (currentState is GetListDataSuccess) {
@@ -53,7 +59,9 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapGetListDateTypeSearchText(
-      GetListDateTypeSearchText event, Emitter<GetListState> emit) {
+    GetListDateTypeSearchText event,
+    Emitter<GetListState> emit,
+  ) {
     final currentState = state;
 
     if (currentState is GetListDataSuccess) {
@@ -79,7 +87,9 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapGetDetailDataParam1Event(
-      GetListDataParam1Event event, Emitter<GetListState> emit) async {
+    GetListDataParam1Event event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       emit(GetListDataLoading<T>());
 
@@ -92,7 +102,9 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapRemoveItemFromListEvent(
-      RemoveItemFromListEvent<T> event, Emitter<GetListState> emit) {
+    RemoveItemFromListEvent<T> event,
+    Emitter<GetListState> emit,
+  ) {
     final currentState = state;
 
     if (currentState is GetListDataSuccess) {
@@ -103,7 +115,9 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapAddItemIntoListEvent(
-      AddItemIntoListEvent<T> event, Emitter<GetListState> emit) {
+    AddItemIntoListEvent<T> event,
+    Emitter<GetListState> emit,
+  ) {
     final currentState = state;
 
     if (currentState is GetListDataSuccess) {
@@ -114,7 +128,9 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapUpdateItemToListEvent(
-      UpdateItemToListEvent<T> event, Emitter<GetListState> emit) async {
+    UpdateItemToListEvent<T> event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final currentState = state;
 
@@ -140,7 +156,9 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
 
 /// Bloc with 2 parameter
 typedef LoadListFutureParam2<T, P1, P2> = Future<List<T>> Function(
-    P1 param1, P2 param2);
+  P1 param1,
+  P2 param2,
+);
 
 class GetListBlocParam2<T, P1, P2> extends Bloc<GetListEvent, GetListState> {
   final LoadListFutureParam2<T, P1, P2> _usecaseParam2;
@@ -150,7 +168,9 @@ class GetListBlocParam2<T, P1, P2> extends Bloc<GetListEvent, GetListState> {
   }
 
   FutureOr<void> _mapGetListDataParam2Event(
-      GetListDataParam2Event event, Emitter<GetListState> emit) async {
+    GetListDataParam2Event event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final stateCurrent = state;
       final dataCurrent = <T>[];
@@ -175,7 +195,10 @@ class GetListBlocParam2<T, P1, P2> extends Bloc<GetListEvent, GetListState> {
 /// Bloc with 3 parameter
 /// Bloc with 3 parameter support loadmore paging
 typedef LoadListFutureParam3<T, P1, P2, P3> = Future<List<T>> Function(
-    P1 param1, P2 param2, P3 param3);
+  P1 param1,
+  P2 param2,
+  P3 param3,
+);
 
 class GetListBlocParam3<T, P1, P2, P3>
     extends Bloc<GetListEvent, GetListState> {
@@ -191,10 +214,12 @@ class GetListBlocParam3<T, P1, P2, P3>
         _usecaseAddApi = usecaseAddApi,
         super(GetListBlocInitial()) {
     on<GetListDataParam3Event>(_mapGetListDataParam3Event);
-    on<GetListPagingEvent<P1, P2, P3>>(_mapGetListPagingEvent,
-        transformer: (events, mapper) => events
-            .debounceTime(const Duration(milliseconds: 500))
-            .switchMap(mapper));
+    on<GetListPagingEvent<P1, P2, P3>>(
+      _mapGetListPagingEvent,
+      transformer: (events, mapper) => events
+          .debounceTime(const Duration(milliseconds: 500))
+          .switchMap(mapper),
+    );
     on<RemoveItemFromListEvent>(_mapRemoveItemFromListEvent);
     on<RemoveItemEvent>(_mapRemoveItemEvent);
     on<AddItemEvent>(_mapAddItemEvent);
@@ -204,7 +229,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapGetListDataParam3Event(
-      GetListDataParam3Event event, Emitter<GetListState> emit) async {
+    GetListDataParam3Event event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final stateCurrent = state;
       if (stateCurrent is! GetListDataSuccess<T>) {
@@ -221,7 +248,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapGetListPagingEvent(
-      GetListPagingEvent<P1, P2, P3> event, Emitter<GetListState> emit) async {
+    GetListPagingEvent<P1, P2, P3> event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final stateCurrent = state;
       final dataCurrent = <T>[];
@@ -246,13 +275,15 @@ class GetListBlocParam3<T, P1, P2, P3>
       final hasLoadMore = data.isNotEmpty;
 
       if (event.type == TypeFetchPaging.refresh) {
-        emit(PullToRefreshSuccess<T, P2, P3>(
-          listData,
-          offset: offset as P2,
-          limit: limitPerPage,
-          hasLoadMore: hasLoadMore,
-          timespan: DateTime.now().millisecondsSinceEpoch,
-        ));
+        emit(
+          PullToRefreshSuccess<T, P2, P3>(
+            listData,
+            offset: offset as P2,
+            limit: limitPerPage,
+            hasLoadMore: hasLoadMore,
+            timespan: DateTime.now().millisecondsSinceEpoch,
+          ),
+        );
       } else {
         emit(
           GetListDataPagingSuccess<T, P2, P3>(
@@ -269,7 +300,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapRemoveItemFromListEvent(
-      RemoveItemFromListEvent event, Emitter<GetListState> emit) {
+    RemoveItemFromListEvent event,
+    Emitter<GetListState> emit,
+  ) {
     try {
       final currentState = state;
 
@@ -277,13 +310,15 @@ class GetListBlocParam3<T, P1, P2, P3>
         final result = List.from(currentState.data);
         result.removeWhere(event.where);
 
-        emit(GetListDataPagingSuccess<T, P2, P3>(
-          result.map((e) => e as T).toList(),
-          offset: currentState.offset,
-          limit: currentState.limit,
-          hasLoadMore: currentState.hasLoadMore,
-          timespan: DateTime.now().microsecondsSinceEpoch,
-        ));
+        emit(
+          GetListDataPagingSuccess<T, P2, P3>(
+            result.map((e) => e as T).toList(),
+            offset: currentState.offset,
+            limit: currentState.limit,
+            hasLoadMore: currentState.hasLoadMore,
+            timespan: DateTime.now().microsecondsSinceEpoch,
+          ),
+        );
       }
     } catch (e) {
       emit(GetListDataError<T>(e.toString(), e));
@@ -291,7 +326,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapRemoveItemEvent(
-      RemoveItemEvent event, Emitter<GetListState> emit) async {
+    RemoveItemEvent event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final currentState = state;
 
@@ -307,13 +344,15 @@ class GetListBlocParam3<T, P1, P2, P3>
         final currentData = List.from(currentState.data);
         currentData.remove(event.item);
 
-        emit(GetListDataPagingSuccess<T, P2, P3>(
-          currentData.map((e) => e as T).toList(),
-          offset: currentState.offset,
-          limit: currentState.limit,
-          hasLoadMore: currentState.hasLoadMore,
-          timespan: DateTime.now().microsecondsSinceEpoch,
-        ));
+        emit(
+          GetListDataPagingSuccess<T, P2, P3>(
+            currentData.map((e) => e as T).toList(),
+            offset: currentState.offset,
+            limit: currentState.limit,
+            hasLoadMore: currentState.hasLoadMore,
+            timespan: DateTime.now().microsecondsSinceEpoch,
+          ),
+        );
       }
     } catch (e) {
       emit(
@@ -323,7 +362,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapAddItemToListEvent(
-      AddItemToListEvent event, Emitter<GetListState> emit) {
+    AddItemToListEvent event,
+    Emitter<GetListState> emit,
+  ) {
     try {
       final currentState = state;
 
@@ -335,13 +376,15 @@ class GetListBlocParam3<T, P1, P2, P3>
           result.add(event.item);
         }
 
-        emit(GetListDataPagingSuccess<T, P2, P3>(
-          result.map((e) => e as T).toList(),
-          offset: currentState.offset,
-          limit: currentState.limit,
-          hasLoadMore: currentState.hasLoadMore,
-          timespan: DateTime.now().microsecondsSinceEpoch,
-        ));
+        emit(
+          GetListDataPagingSuccess<T, P2, P3>(
+            result.map((e) => e as T).toList(),
+            offset: currentState.offset,
+            limit: currentState.limit,
+            hasLoadMore: currentState.hasLoadMore,
+            timespan: DateTime.now().microsecondsSinceEpoch,
+          ),
+        );
       }
     } catch (e) {
       emit(GetListDataError<T>(e.toString(), e));
@@ -349,7 +392,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapAddItemEvent(
-      AddItemEvent event, Emitter<GetListState> emit) async {
+    AddItemEvent event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final currentState = state;
       T? itemNew;
@@ -368,13 +413,15 @@ class GetListBlocParam3<T, P1, P2, P3>
         final currentData = List.from(currentState.data);
         currentData.insert(0, itemNew);
 
-        emit(GetListDataPagingSuccess<T, P2, P3>(
-          currentData.map((e) => e as T).toList(),
-          offset: currentState.offset,
-          limit: currentState.limit,
-          hasLoadMore: currentState.hasLoadMore,
-          timespan: DateTime.now().microsecondsSinceEpoch,
-        ));
+        emit(
+          GetListDataPagingSuccess<T, P2, P3>(
+            currentData.map((e) => e as T).toList(),
+            offset: currentState.offset,
+            limit: currentState.limit,
+            hasLoadMore: currentState.hasLoadMore,
+            timespan: DateTime.now().microsecondsSinceEpoch,
+          ),
+        );
       }
     } catch (e) {
       emit(GetListDataError<T>(e.toString(), e));
@@ -382,7 +429,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapUpdateItemToListEvent(
-      UpdateItemToListEvent<T> event, Emitter<GetListState> emit) async {
+    UpdateItemToListEvent<T> event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final currentState = state;
 
@@ -393,13 +442,15 @@ class GetListBlocParam3<T, P1, P2, P3>
           result[idexItem] = event.item;
         }
 
-        emit(GetListDataPagingSuccess<T, P2, P3>(
-          result,
-          offset: currentState.offset,
-          limit: currentState.limit,
-          hasLoadMore: currentState.hasLoadMore,
-          timespan: DateTime.now().microsecondsSinceEpoch,
-        ));
+        emit(
+          GetListDataPagingSuccess<T, P2, P3>(
+            result,
+            offset: currentState.offset,
+            limit: currentState.limit,
+            hasLoadMore: currentState.hasLoadMore,
+            timespan: DateTime.now().microsecondsSinceEpoch,
+          ),
+        );
       }
     } catch (e) {
       emit(GetListDataError<T>(e.toString(), e));
@@ -407,7 +458,9 @@ class GetListBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapUpdateDataListEvent(
-      UpdateDataListEvent<T> event, Emitter<GetListState> emit) async {
+    UpdateDataListEvent<T> event,
+    Emitter<GetListState> emit,
+  ) async {
     try {
       final currentState = state;
 
@@ -415,13 +468,15 @@ class GetListBlocParam3<T, P1, P2, P3>
         final listData = List<T>.from(currentState.data);
         final result = event.onUpdate(listData);
 
-        emit(GetListDataPagingSuccess<T, P2, P3>(
-          result,
-          offset: currentState.offset,
-          limit: currentState.limit,
-          hasLoadMore: currentState.hasLoadMore,
-          timespan: DateTime.now().microsecondsSinceEpoch,
-        ));
+        emit(
+          GetListDataPagingSuccess<T, P2, P3>(
+            result,
+            offset: currentState.offset,
+            limit: currentState.limit,
+            hasLoadMore: currentState.hasLoadMore,
+            timespan: DateTime.now().microsecondsSinceEpoch,
+          ),
+        );
       }
     } catch (e) {
       emit(GetListDataError<T>(e.toString(), e));

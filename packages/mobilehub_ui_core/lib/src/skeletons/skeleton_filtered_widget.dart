@@ -21,7 +21,9 @@ class _SkeletonFilteredWidgetState extends State<SkeletonFilteredWidget>
     super.initState();
 
     _controller = AnimationController(
-        duration: const Duration(milliseconds: 1500), vsync: this);
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
 
     gradientPosition = Tween<double>(begin: -3, end: 10).animate(
       CurvedAnimation(parent: _controller, curve: Curves.linear),

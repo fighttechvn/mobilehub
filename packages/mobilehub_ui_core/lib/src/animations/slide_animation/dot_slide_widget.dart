@@ -26,7 +26,9 @@ class DotSlideWidget extends StatelessWidget {
         return Center(
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
             width: size,
             height: size,
           ),

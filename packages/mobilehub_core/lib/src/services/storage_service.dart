@@ -7,8 +7,10 @@ import 'impl/storage_service.impl.dart';
 abstract class StorageService {
   Future<File> saveTempFile(Uint8List data, String fileName);
 
-  Future<String> getFilePath(String assetPath,
-      [String package = 'packages/design_system']);
+  Future<String> getFilePath(
+    String assetPath, [
+    String package = 'packages/design_system',
+  ]);
 
   Future<ByteData> getFileData(String path);
 

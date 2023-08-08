@@ -106,16 +106,18 @@ class _DetectorSizeChildWidgetState extends State<_DetectorSizeChildWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, __) {
-      _getSize();
+    return LayoutBuilder(
+      builder: (_, __) {
+        _getSize();
 
-      return SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: SizedBox(
-          key: globalKeyCenterButton,
-          child: widget.child,
-        ),
-      );
-    });
+        return SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: SizedBox(
+            key: globalKeyCenterButton,
+            child: widget.child,
+          ),
+        );
+      },
+    );
   }
 }

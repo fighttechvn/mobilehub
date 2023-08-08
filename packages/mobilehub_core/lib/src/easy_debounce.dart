@@ -27,7 +27,10 @@ class EasyDebounce {
   /// If [duration] is `Duration.zero`, [onExecute] will be executed immediately, i.e.
   /// synchronously.
   static void debounce(
-      String tag, Duration duration, EasyDebounceCallback onExecute) {
+    String tag,
+    Duration duration,
+    EasyDebounceCallback onExecute,
+  ) {
     if (duration == Duration.zero) {
       _operations[tag]?.timer.cancel();
       _operations.remove(tag);
@@ -36,13 +39,14 @@ class EasyDebounce {
       _operations[tag]?.timer.cancel();
 
       _operations[tag] = _EasyDebounceOperation(
-          onExecute,
-          Timer(duration, () {
-            _operations[tag]?.timer.cancel();
-            _operations.remove(tag);
+        onExecute,
+        Timer(duration, () {
+          _operations[tag]?.timer.cancel();
+          _operations.remove(tag);
 
-            onExecute();
-          }));
+          onExecute();
+        }),
+      );
     }
   }
 

@@ -127,14 +127,19 @@ class PreloadPageController extends ScrollController {
   /// The returned [Future] resolves when the animation completes.
   ///
   /// The `duration` and `curve` arguments must not be null.
-  Future<void> previousPage(
-      {required Duration duration, required Curve curve}) {
+  Future<void> previousPage({
+    required Duration duration,
+    required Curve curve,
+  }) {
     return animateToPage(page!.round() - 1, duration: duration, curve: curve);
   }
 
   @override
-  ScrollPosition createScrollPosition(ScrollPhysics physics,
-      ScrollContext context, ScrollPosition? oldPosition) {
+  ScrollPosition createScrollPosition(
+    ScrollPhysics physics,
+    ScrollContext context,
+    ScrollPosition? oldPosition,
+  ) {
     return _PagePosition(
       physics: physics,
       context: context,
@@ -274,9 +279,12 @@ class _PagePosition extends ScrollPositionWithSingleContext
   @override
   void saveScrollOffset() {
     PageStorage.of(context.storageContext).writeState(
-        context.storageContext,
-        getPageFromPixels(hasPixels ? pixels : null,
-            hasViewportDimension ? viewportDimension : null));
+      context.storageContext,
+      getPageFromPixels(
+        hasPixels ? pixels : null,
+        hasViewportDimension ? viewportDimension : null,
+      ),
+    );
   }
 
   @override
@@ -365,7 +373,10 @@ class PageScrollPhysics extends ScrollPhysics {
   }
 
   double _getTargetPixels(
-      ScrollPosition position, Tolerance tolerance, double velocity) {
+    ScrollPosition position,
+    Tolerance tolerance,
+    double velocity,
+  ) {
     double? page = _getPage(position);
     if (velocity < -tolerance.velocity) {
       page -= 0.5;
@@ -377,7 +388,9 @@ class PageScrollPhysics extends ScrollPhysics {
 
   @override
   Simulation? createBallisticSimulation(
-      ScrollMetrics position, double velocity) {
+    ScrollMetrics position,
+    double velocity,
+  ) {
     // If we're out of range and not headed back in range, defer to the parent
     // ballistics, which should put us back in range at a page boundary.
     if ((velocity <= 0.0 && position.pixels <= position.minScrollExtent) ||
@@ -388,8 +401,13 @@ class PageScrollPhysics extends ScrollPhysics {
     final double target =
         _getTargetPixels(position as ScrollPosition, tolerance, velocity);
     if (target != position.pixels) {
-      return ScrollSpringSimulation(spring, position.pixels, target, velocity,
-          tolerance: tolerance);
+      return ScrollSpringSimulation(
+        spring,
+        position.pixels,
+        target,
+        velocity,
+        tolerance: tolerance,
+      );
     }
     return null;
   }
@@ -570,7 +588,8 @@ class _PreloadPageViewState extends State<PreloadPageView> {
   void _validatePreloadPagesCount(int preloadPagesCount) {
     if (preloadPagesCount < 0) {
       throw Exception(
-          'preloadPagesCount cannot be less than 0. Actual value: $preloadPagesCount');
+        'preloadPagesCount cannot be less than 0. Actual value: $preloadPagesCount',
+      );
     }
   }
 
@@ -631,8 +650,9 @@ class _PreloadPageViewState extends State<PreloadPageView> {
             offset: position,
             slivers: <Widget>[
               SliverFillViewport(
-                  viewportFraction: widget.controller.viewportFraction,
-                  delegate: widget.childrenDelegate),
+                viewportFraction: widget.controller.viewportFraction,
+                delegate: widget.childrenDelegate,
+              ),
             ],
           );
         },
@@ -646,14 +666,28 @@ class _PreloadPageViewState extends State<PreloadPageView> {
     description
         .add(EnumProperty<Axis>('scrollDirection', widget.scrollDirection));
     description.add(
-        FlagProperty('reverse', value: widget.reverse, ifTrue: 'reversed'));
-    description.add(DiagnosticsProperty<PreloadPageController>(
-        'controller', widget.controller,
-        showName: false));
-    description.add(DiagnosticsProperty<ScrollPhysics>(
-        'physics', widget.physics,
-        showName: false));
-    description.add(FlagProperty('pageSnapping',
-        value: widget.pageSnapping, ifFalse: 'snapping disabled'));
+      FlagProperty('reverse', value: widget.reverse, ifTrue: 'reversed'),
+    );
+    description.add(
+      DiagnosticsProperty<PreloadPageController>(
+        'controller',
+        widget.controller,
+        showName: false,
+      ),
+    );
+    description.add(
+      DiagnosticsProperty<ScrollPhysics>(
+        'physics',
+        widget.physics,
+        showName: false,
+      ),
+    );
+    description.add(
+      FlagProperty(
+        'pageSnapping',
+        value: widget.pageSnapping,
+        ifFalse: 'snapping disabled',
+      ),
+    );
   }
 }

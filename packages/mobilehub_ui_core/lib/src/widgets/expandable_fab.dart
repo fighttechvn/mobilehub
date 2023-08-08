@@ -40,8 +40,9 @@ class ExpandableFabState extends State<ExpandableFab>
   @override
   void initState() {
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500))
-      ..addListener(() {
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..addListener(() {
         setState(() {});
       });
 
@@ -84,13 +85,15 @@ class ExpandableFabState extends State<ExpandableFab>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ...widget.actions.mapIndex((e, idx) => InkWell(
-                    child: e,
-                    onTap: () {
-                      animate();
-                      widget.onTapItem.call(idx);
-                    },
-                  ))
+              ...widget.actions.mapIndex(
+                (e, idx) => InkWell(
+                  child: e,
+                  onTap: () {
+                    animate();
+                    widget.onTapItem.call(idx);
+                  },
+                ),
+              )
             ].insertSeparator((index) => widget.separator),
           ),
         ),

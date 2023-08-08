@@ -16,22 +16,25 @@ void main() {
     );
 
     // When
-    await tester.pumpWidget(MaterialApp(
-      home: Scaffold(
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
           body: CustomScrollView(
-        slivers: [
-          widget,
-          SliverToBoxAdapter(
-            child: Container(
-              key: const ValueKey('itemBox'),
-              width: 100,
-              height: 300,
-              color: Colors.red,
-            ),
+            slivers: [
+              widget,
+              SliverToBoxAdapter(
+                child: Container(
+                  key: const ValueKey('itemBox'),
+                  width: 100,
+                  height: 300,
+                  color: Colors.red,
+                ),
+              ),
+            ],
           ),
-        ],
-      )),
-    ));
+        ),
+      ),
+    );
 
     // Then
     // expect(find.byType(CupertinoActivityIndicator), findsOneWidget);

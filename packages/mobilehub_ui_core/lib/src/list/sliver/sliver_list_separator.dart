@@ -6,13 +6,15 @@ class SliverListSeparator extends SliverList {
     required SliverChildBuilderDelegate delegate,
     required IndexedWidgetBuilder separatorBuilder,
   }) : super(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            if (index % 2 == 0) {
-              return delegate.builder(context, index ~/ 2);
-            }
-            return separatorBuilder(context, index);
-          },
-              childCount:
-                  (delegate.childCount ?? 0) + (delegate.childCount ?? 1) - 1),
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              if (index % 2 == 0) {
+                return delegate.builder(context, index ~/ 2);
+              }
+              return separatorBuilder(context, index);
+            },
+            childCount:
+                (delegate.childCount ?? 0) + (delegate.childCount ?? 1) - 1,
+          ),
         );
 }

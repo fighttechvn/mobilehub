@@ -298,8 +298,13 @@ class _ListBuilderIos extends StatelessWidget {
         if (onRefresh != null && isAndroid == false)
           CupertinoSliverRefreshControl(
             onRefresh: onRefresh,
-            builder: (context, refreshState, pulledExtent,
-                refreshTriggerPullDistance, refreshIndicatorExtent) {
+            builder: (
+              context,
+              refreshState,
+              pulledExtent,
+              refreshTriggerPullDistance,
+              refreshIndicatorExtent,
+            ) {
               const Curve opacityCurve =
                   Interval(0.4, 0.8, curve: Curves.easeInOut);
               return Align(
@@ -308,7 +313,8 @@ class _ListBuilderIos extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Opacity(
                     opacity: opacityCurve.transform(
-                        min(pulledExtent / refreshIndicatorExtent, 1.0)),
+                      min(pulledExtent / refreshIndicatorExtent, 1.0),
+                    ),
                     child: const CupertinoActivityIndicator(radius: 10.0),
                   ),
                 ),
@@ -389,10 +395,11 @@ class ListScrollController {
       itemScrollController.jumpTo(index: index, alignment: 0);
 
   void _scrollTo(int index) => itemScrollController.scrollTo(
-      index: index,
-      duration: scrollDuration,
-      curve: Curves.easeInOutCubic,
-      alignment: 0);
+        index: index,
+        duration: scrollDuration,
+        curve: Curves.easeInOutCubic,
+        alignment: 0,
+      );
 
   void to(int index, ScrollToItemType type) {
     if (type == ScrollToItemType.jump) {

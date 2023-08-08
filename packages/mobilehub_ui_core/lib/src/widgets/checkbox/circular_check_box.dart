@@ -355,16 +355,22 @@ class _CircularCheckBoxState extends State<CircularCheckBox>
         break;
       case MaterialTapTargetSize.shrinkWrap:
         size = const Size(
-            kMinInteractiveDimension - 8.0, kMinInteractiveDimension - 8.0);
+          kMinInteractiveDimension - 8.0,
+          kMinInteractiveDimension - 8.0,
+        );
         break;
     }
     size += effectiveVisualDensity.baseSizeAdjustment;
     final additionalConstraints = BoxConstraints.tight(size);
     final effectiveMouseCursor = MaterialStateProperty.resolveAs<MouseCursor?>(
-            widget.mouseCursor, _states) ??
+          widget.mouseCursor,
+          _states,
+        ) ??
         themeData.checkboxTheme.mouseCursor?.resolve(_states) ??
         MaterialStateProperty.resolveAs<MouseCursor>(
-            MaterialStateMouseCursor.clickable, _states);
+          MaterialStateMouseCursor.clickable,
+          _states,
+        );
     // Colors need to be resolved in selected and non selected states separately
     // so that they can be lerped between.
     final activeStates = _states..add(MaterialState.selected);
@@ -502,7 +508,9 @@ class _CircularCheckBoxRenderObjectWidget extends LeafRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, _RenderCircularCheckBox renderObject) {
+    BuildContext context,
+    _RenderCircularCheckBox renderObject,
+  ) {
     renderObject
       ..tristate = tristate
       ..value = value
@@ -1228,15 +1236,23 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(FlagProperty('value',
+      ..add(
+        FlagProperty(
+          'value',
           value: value,
           ifTrue: 'checked',
           ifFalse: 'unchecked',
-          showName: true))
-      ..add(FlagProperty('isInteractive',
+          showName: true,
+        ),
+      )
+      ..add(
+        FlagProperty(
+          'isInteractive',
           value: isInteractive,
           ifTrue: 'enabled',
           ifFalse: 'disabled',
-          defaultValue: true));
+          defaultValue: true,
+        ),
+      );
   }
 }

@@ -9,7 +9,11 @@ import '../getlist_bloc/views/getlist_builder.dart';
 import '../widgets/empty_widget.dart';
 
 typedef ListingBuillder<T> = Widget Function(
-    BuildContext context, List<T> listItems, int index, T item);
+  BuildContext context,
+  List<T> listItems,
+  int index,
+  T item,
+);
 
 class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     extends StatefulWidget {
@@ -129,8 +133,10 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
     await completer?.future;
   }
 
-  void _fetchListData(
-      [int? offset, TypeFetchPaging type = TypeFetchPaging.fetch]) {
+  void _fetchListData([
+    int? offset,
+    TypeFetchPaging type = TypeFetchPaging.fetch,
+  ]) {
     final currentState = (context.read<B>() as Bloc).state;
 
     var offsetCurrent = offset ?? widget.offsetDefault;
@@ -222,7 +228,11 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
                 }
 
                 return widget.builder(
-                    context, listData, index, listData[index]);
+                  context,
+                  listData,
+                  index,
+                  listData[index],
+                );
               },
               childCount: listData.length,
               gridDelegate: widget._gridDelegate,

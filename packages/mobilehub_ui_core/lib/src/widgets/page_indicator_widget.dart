@@ -56,13 +56,17 @@ class _PageIndicatorWidgetState extends State<PageIndicatorWidget> {
         final pageNext = page.toInt();
 
         if (pageNext == 0) {
-          widget.controller!.animateToPage(pageNext,
-              duration: widget.durationReverce,
-              curve: widget.curveReverce ?? Curves.easeInOutBack);
+          widget.controller!.animateToPage(
+            pageNext,
+            duration: widget.durationReverce,
+            curve: widget.curveReverce ?? Curves.easeInOutBack,
+          );
         } else {
-          widget.controller!.animateToPage(pageNext,
-              duration: widget.durationTranfer,
-              curve: widget.curve ?? Curves.ease);
+          widget.controller!.animateToPage(
+            pageNext,
+            duration: widget.durationTranfer,
+            curve: widget.curve ?? Curves.ease,
+          );
         }
         widget.onChangePage?.call(page);
       }

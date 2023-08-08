@@ -24,8 +24,10 @@ class StorageServiceImpl extends StorageService {
   }
 
   @override
-  Future<String> getFilePath(String assetPath,
-      [String package = 'packages/design_system']) async {
+  Future<String> getFilePath(
+    String assetPath, [
+    String package = 'packages/design_system',
+  ]) async {
     final tempDir = await getTemporaryDirectory();
     final localFile = '${tempDir.path}/${assetPath.split('/').last}';
 
