@@ -14,8 +14,10 @@ import '../device_service.dart';
 class DeviceServiceImpl extends DeviceService {
   PlatformUniversal get _platform => PlatformUniversal();
 
+  @override
   bool get isAndroid => _platform.isAndroid;
 
+  @override
   bool get isiOS => _platform.isIOS;
 
   @override

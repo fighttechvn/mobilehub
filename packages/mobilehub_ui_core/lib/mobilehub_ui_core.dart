@@ -32,6 +32,7 @@ export 'src/widgets/expandable_fab.dart';
 export 'src/widgets/hidable_button_nav.dart';
 export 'src/widgets/keep_alive_widget.dart';
 export 'src/widgets/keyboard/auto_hide_keyboard.dart';
+export 'src/widgets/listtile/listtile_radio_with_icon.dart';
 export 'src/widgets/measure_size.dart';
 export 'src/widgets/nested_scroll_view_notification.dart';
 export 'src/widgets/pullto_refresh_widget.dart';
