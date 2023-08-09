@@ -9,6 +9,8 @@ abstract class RouteModule extends InjectorContainerGet {
 abstract class RouteModuleBuilder extends InjectorContainerGet {
   List<RouteModule> get routes;
 
+  List<String> get routersDialog => [];
+
   ///
   /// External route loader
   ///
@@ -50,7 +52,13 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
     ].contains(settings.name)) {
       return pageRouteBuilder(builder);
     }
-    final isShowDialog = routeName.contains('dialog');
+
+    final routersDialogAll = <String>[];
+    for (final e in routerModules) {
+      routersDialogAll.addAll(e.routersDialog);
+    }
+    final isShowDialog = routersDialogAll.contains(routeName);
+
     return MaterialPageRoute(
       builder: builder,
       settings: settings,
