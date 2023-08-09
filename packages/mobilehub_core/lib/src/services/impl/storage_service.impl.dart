@@ -65,4 +65,14 @@ class StorageServiceImpl extends StorageService {
 
     return result;
   }
+
+  @override
+  Future<Directory> createDirDocument(String folderName) async {
+    final dir = await getApplicationDocumentsDirectory();
+
+    final result =
+        await Directory('${dir.path}/$folderName').create(recursive: true);
+
+    return result;
+  }
 }
