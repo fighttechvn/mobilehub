@@ -4,6 +4,10 @@ import 'package:easy_file/easy_file.dart';
 import 'package:flutter/material.dart';
 
 abstract class DeviceService {
+  bool get isAndroid;
+
+  bool get isiOS;
+
   Future<void> copy(String text);
 
   Future<void> setStatusBar({Color? color});

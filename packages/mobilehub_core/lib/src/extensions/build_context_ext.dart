@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+extension BuildContextCoodinator on BuildContext {
+  BuildContext get context => this;
+}
+
 extension BuildContextExt on BuildContext {
   bool isRouteNamed(String routeNamed) {
     final currentName = ModalRoute.of(this)?.settings.name;
@@ -7,6 +11,8 @@ extension BuildContextExt on BuildContext {
   }
 
   String? get currentName => ModalRoute.of(this)?.settings.name;
+
+  void pop<T extends Object?>([T? result]) => Navigator.of(this).pop(result);
 }
 
 extension BuildContextThemeExt on BuildContext {
@@ -18,10 +24,4 @@ extension BuildContextThemeExt on BuildContext {
       MediaQuery.of(this).platformBrightness == Brightness.dark;
 
   MediaQueryData get mediaData => MediaQuery.of(context);
-}
-
-extension ContextCoodinator on BuildContext {
-  BuildContext get context => this;
-
-  void pop() => Navigator.of(this).pop();
 }
