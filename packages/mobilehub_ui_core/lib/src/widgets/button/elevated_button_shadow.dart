@@ -26,8 +26,10 @@ class ElevatedButtonShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(label == null || child == null,
-        'Cannot provide both a child and a label');
+    assert(
+      label == null || child == null,
+      'Cannot provide both a child and a label',
+    );
 
     return Container(
       width: width,

@@ -16,6 +16,8 @@ extension BuildContextThemeExt on BuildContext {
 
   bool get isDarkMode =>
       MediaQuery.of(this).platformBrightness == Brightness.dark;
+
+  MediaQueryData get mediaData => MediaQuery.of(context);
 }
 
 extension ContextCoodinator on BuildContext {

@@ -100,6 +100,7 @@ linter:
     - use_rethrow_when_possible
     - use_setters_to_change_properties
     - use_string_buffers
+    - require_trailing_commas
 
     # nice to have
     - avoid_double_and_int_checks

@@ -62,31 +62,32 @@ class _ButtonCircleIndicatorWidgetState
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _valueCtr,
-        builder: (context, child) {
-          return AnimatedCircleProgressIndicator(
-            value: _valueCtr.value,
-            strokeWidth: 2,
-            size: widget.size,
-            child: ElevatedButtonShadow(
-              height: widget.size - widget.spacer,
-              width: widget.size - widget.spacer,
-              color: Theme.of(context).primaryColor,
-              padding: EdgeInsets.all(widget.padding),
-              borderRadius: widget.size / 2,
-              onPressed: _onTapButton,
-              child: Center(
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Text(
-                    widget.title,
-                    style: widget.styleTitle,
-                    textAlign: TextAlign.center,
-                  ),
+      animation: _valueCtr,
+      builder: (context, child) {
+        return AnimatedCircleProgressIndicator(
+          value: _valueCtr.value,
+          strokeWidth: 2,
+          size: widget.size,
+          child: ElevatedButtonShadow(
+            height: widget.size - widget.spacer,
+            width: widget.size - widget.spacer,
+            color: Theme.of(context).primaryColor,
+            padding: EdgeInsets.all(widget.padding),
+            borderRadius: widget.size / 2,
+            onPressed: _onTapButton,
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  widget.title,
+                  style: widget.styleTitle,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

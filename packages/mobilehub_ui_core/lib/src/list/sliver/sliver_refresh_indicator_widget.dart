@@ -9,8 +9,13 @@ class SliverRefreshIndicatorWidget extends CupertinoSliverRefreshControl {
     double offsetPadding = 0,
   }) : super(
           onRefresh: onRefresh,
-          builder: (context, refreshState, pulledExtent,
-              refreshTriggerPullDistance, refreshIndicatorExtent) {
+          builder: (
+            context,
+            refreshState,
+            pulledExtent,
+            refreshTriggerPullDistance,
+            refreshIndicatorExtent,
+          ) {
             const Curve opacityCurve =
                 Interval(0.4, 0.8, curve: Curves.easeInOut);
             return Align(
@@ -20,7 +25,8 @@ class SliverRefreshIndicatorWidget extends CupertinoSliverRefreshControl {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Opacity(
                   opacity: opacityCurve.transform(
-                      min(pulledExtent / refreshIndicatorExtent, 1.0)),
+                    min(pulledExtent / refreshIndicatorExtent, 1.0),
+                  ),
                   child: const CupertinoActivityIndicator(radius: 10.0),
                 ),
               ),

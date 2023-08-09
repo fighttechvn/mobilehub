@@ -68,9 +68,9 @@ void main() {
 
       // Then
       expect(
-        ((tester.widget(find
-                        .byKey(const ValueKey('checkbox_widget_container_key')))
-                    as Container)
+        ((tester.widget(
+          find.byKey(const ValueKey('checkbox_widget_container_key')),
+        ) as Container)
                 .decoration as BoxDecoration)
             .color,
         activeColor,

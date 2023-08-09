@@ -63,8 +63,10 @@ class _PageViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
     await completer?.future;
   }
 
-  void _fetchListData(
-      [int? offset, TypeFetchPaging type = TypeFetchPaging.fetch]) {
+  void _fetchListData([
+    int? offset,
+    TypeFetchPaging type = TypeFetchPaging.fetch,
+  ]) {
     final currentState = (context.read<B>() as Bloc).state;
 
     var offsetCurrent = offset ?? widget.offsetDefault;

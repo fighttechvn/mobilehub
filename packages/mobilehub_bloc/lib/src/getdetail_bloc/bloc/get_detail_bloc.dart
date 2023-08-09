@@ -18,7 +18,9 @@ class GetDetailBloc<T> extends Bloc<GetDetailEvent, GetDetailState> {
   }
 
   FutureOr<void> _mapGetDetailDataEvent(
-      GetDetailDataEvent event, Emitter<GetDetailState> emit) async {
+    GetDetailDataEvent event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 
@@ -46,7 +48,9 @@ class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
   }
 
   FutureOr<void> _mapGetDetailDataParam1Event(
-      GetDetailDataParam1Event event, Emitter<GetDetailState> emit) async {
+    GetDetailDataParam1Event event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 
@@ -63,7 +67,9 @@ class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
 
 /// Param2
 typedef GetDetailFutureParam2<T, P1, P2> = Future<T> Function(
-    P1 param1, P2 param2);
+  P1 param1,
+  P2 param2,
+);
 
 class GetDetailBlocParam2<T, P1, P2>
     extends Bloc<GetDetailEvent, GetDetailState> {
@@ -74,7 +80,9 @@ class GetDetailBlocParam2<T, P1, P2>
   }
 
   FutureOr<void> _mapGetDetailDataParam2Event(
-      GetDetailDataParam2Event event, Emitter<GetDetailState> emit) async {
+    GetDetailDataParam2Event event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 
@@ -98,7 +106,10 @@ class GetDetailBlocParam2<T, P1, P2>
 
 /// Param3
 typedef GetDetailFutureParam3<T, P1, P2, P3> = Future<T> Function(
-    P1 param1, P2 param2, P3 param3);
+  P1 param1,
+  P2 param2,
+  P3 param3,
+);
 
 class GetDetailBlocParam3<T, P1, P2, P3>
     extends Bloc<GetDetailEvent, GetDetailState> {
@@ -109,7 +120,9 @@ class GetDetailBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapGetDetailDataParam3Event(
-      GetDetailDataParam3Event event, Emitter<GetDetailState> emit) async {
+    GetDetailDataParam3Event event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 

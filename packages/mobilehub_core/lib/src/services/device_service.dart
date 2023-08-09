@@ -10,8 +10,10 @@ abstract class DeviceService {
 
   Future<void> statusbar(bool isDark);
 
-  Future<void> updateNavigationBarColors(bool isDark,
-      [Color buttombarColor = const Color(0xFF232323)]);
+  Future<void> updateNavigationBarColors(
+    bool isDark, [
+    Color buttombarColor = const Color(0xFF232323),
+  ]);
 
   dynamic readFile(String path) => getFile(path);
 

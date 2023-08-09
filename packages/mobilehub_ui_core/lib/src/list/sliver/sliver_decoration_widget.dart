@@ -10,10 +10,12 @@ class SliverDecorationWidget extends SliverStack {
     required this.sliver,
     this.decoration,
     super.key,
-  }) : super(children: [
-          SliverPositioned.fill(
-            child: Container(decoration: decoration),
-          ),
-          sliver,
-        ]);
+  }) : super(
+          children: [
+            SliverPositioned.fill(
+              child: Container(decoration: decoration),
+            ),
+            sliver,
+          ],
+        );
 }

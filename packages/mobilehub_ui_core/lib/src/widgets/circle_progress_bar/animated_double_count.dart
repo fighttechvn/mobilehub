@@ -59,10 +59,12 @@ class _AnimatedCountState extends State<AnimatedCount>
       _animation = Tween<double>(
         begin: _animation.value,
         end: widget.count,
-      ).animate(CurvedAnimation(
-        curve: widget.curve,
-        parent: _controller,
-      ));
+      ).animate(
+        CurvedAnimation(
+          curve: widget.curve,
+          parent: _controller,
+        ),
+      );
       setState(() {});
       _controller.forward(from: 0);
     }
