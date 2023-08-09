@@ -56,7 +56,7 @@ class StorageServiceImpl extends StorageService {
 
   @override
   Future<Directory> createDir(String folderName) async {
-    final dir = await getTemporaryDirectory();
+    final dir = await getApplicationCacheDirectory();
 
     final result =
         await Directory('${dir.path}/$folderName').create(recursive: true);
