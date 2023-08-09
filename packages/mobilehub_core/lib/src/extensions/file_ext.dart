@@ -15,7 +15,7 @@ extension FileExt on File {
   //   return Size(src.width.toDouble(), src.height.toDouble());
   // }
 
-   Future<double> get getSizeMb async {
+  Future<double> get getSizeMb async {
     final sizeInBytes = await length();
     return sizeInBytes / (1024 * 1024);
   }
