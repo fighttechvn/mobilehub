@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../mobilehub_core.dart';
 import '../core/dependency_injection/injector_container.dart';
 
 abstract class RouteModule extends InjectorContainerGet {
@@ -39,8 +40,8 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
     if (routeName == null) {
       throw Exception('please check route name: $routeName');
     }
-
-    final builder = _getAll(settings)[routeName];
+    final allRouteBuilder = _getAll(settings);
+    final builder = allRouteBuilder[routeName];
 
     if (builder == null) {
       assert(builder != null, 'please check route builder:');
@@ -54,8 +55,11 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
     }
 
     final routersDialogAll = <String>[];
+
     for (final e in routerModules) {
-      routersDialogAll.addAll(e.routersDialog);
+      routersDialogAll.addAll([
+        ...e.routersDialog,
+      ]);
     }
     final isShowDialog = routersDialogAll.contains(routeName);
 
