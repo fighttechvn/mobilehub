@@ -66,7 +66,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.sliverTitle,
     this.physics,
     this.listener,
-    this.useScrollBar = true,
+    this.useScrollBar = false,
   })  : _gridDelegate = null,
         super(key: key);
 
@@ -93,7 +93,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.sliverTitle,
     this.physics,
     this.listener,
-    this.useScrollBar = true,
+    this.useScrollBar = false,
   })  : _gridDelegate = gridDelegate ?? _kGridDelegate,
         separatorBuilder = null,
         typeScroll = null,

@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -294,7 +295,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
