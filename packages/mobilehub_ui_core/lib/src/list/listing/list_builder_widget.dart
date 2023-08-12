@@ -295,6 +295,7 @@ class _ListBuilderIos extends StatelessWidget {
                 )
               : null),
       slivers: [
+        if (sliverTitle != null) sliverTitle!,
         if (onRefresh != null && isAndroid == false)
           CupertinoSliverRefreshControl(
             onRefresh: onRefresh,
@@ -321,7 +322,6 @@ class _ListBuilderIos extends StatelessWidget {
               );
             },
           ),
-        if (sliverTitle != null) sliverTitle!,
         if (title != null) SliverToBoxAdapter(child: title),
         if (isLoading == false) ...[
           if (childCount == 0)

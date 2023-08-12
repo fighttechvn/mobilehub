@@ -40,6 +40,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final ScrollPhysics? physics;
   final SliverGridDelegate? _gridDelegate;
   final Function(BuildContext context, GetListState state)? listener;
+  final bool useScrollBar;
 
   const ListingBuilderWidget.listview({
     Key? key,
@@ -65,6 +66,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.sliverTitle,
     this.physics,
     this.listener,
+    this.useScrollBar = true,
   })  : _gridDelegate = null,
         super(key: key);
 
@@ -91,6 +93,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.sliverTitle,
     this.physics,
     this.listener,
+    this.useScrollBar = true,
   })  : _gridDelegate = gridDelegate ?? _kGridDelegate,
         separatorBuilder = null,
         typeScroll = null,
@@ -197,48 +200,47 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
           hasLoadMore = state.hasLoadMore;
         }
 
-        return Scrollbar(
-          controller: controller,
-          child: Padding(
-            padding: widget.scrollbarPaddingContent,
-            child: ListBuilderWidget(
-              sliverTitle: widget.sliverTitle,
-              pageStorageKey: widget.pageStorageKey,
-              physics: widget.physics ??
-                  (widget.enableRefresh == false && listData.isEmpty
-                      ? const NeverScrollableScrollPhysics()
-                      : null),
-              separatorBuilder: widget.separatorBuilder,
-              listScrollController: listScrollController,
-              emptyWidget: widget.emptyWidget,
-              isLoading: state is GetListDataLoading,
-              scrollController: controller,
-              padding: widget.paddingList,
-              reverse: widget.reverse,
-              title: widget.title,
-              footer: widget.footer,
-              onRefresh: widget.enableRefresh ? _onRefresh : null,
-              builder: (context, index) {
-                final isEnd =
-                    index == (listData.length - widget.offsetWillLoadMore);
+        final listWidget = Padding(
+          padding: widget.scrollbarPaddingContent,
+          child: ListBuilderWidget(
+            sliverTitle: widget.sliverTitle,
+            pageStorageKey: widget.pageStorageKey,
+            physics: widget.physics ??
+                (widget.enableRefresh == false && listData.isEmpty
+                    ? const NeverScrollableScrollPhysics()
+                    : null),
+            separatorBuilder: widget.separatorBuilder,
+            listScrollController: listScrollController,
+            emptyWidget: widget.emptyWidget,
+            isLoading: state is GetListDataLoading,
+            scrollController: controller,
+            padding: widget.paddingList,
+            reverse: widget.reverse,
+            title: widget.title,
+            footer: widget.footer,
+            onRefresh: widget.enableRefresh ? _onRefresh : null,
+            builder: (context, index) {
+              final isEnd =
+                  index == (listData.length - widget.offsetWillLoadMore);
 
-                if (hasLoadMore && isEnd) {
-                  hasLoadMore = false;
-                  _fetchListData();
-                }
+              if (hasLoadMore && isEnd) {
+                hasLoadMore = false;
+                _fetchListData();
+              }
 
-                return widget.builder(
-                  context,
-                  listData,
-                  index,
-                  listData[index],
-                );
-              },
-              childCount: listData.length,
-              gridDelegate: widget._gridDelegate,
-            ),
+              return widget.builder(
+                context,
+                listData,
+                index,
+                listData[index],
+              );
+            },
+            childCount: listData.length,
+            gridDelegate: widget._gridDelegate,
           ),
         );
+
+        return widget.useScrollBar ? Scrollbar(child: listWidget) : listWidget;
       },
     );
   }
