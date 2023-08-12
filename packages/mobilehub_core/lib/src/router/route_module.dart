@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../mobilehub_core.dart';
 import '../core/dependency_injection/injector_container.dart';
+import 'fader_page_route.dart';
 
 abstract class RouteModule extends InjectorContainerGet {
   Map<String, WidgetBuilder> getAll(RouteSettings settings);
@@ -11,6 +12,8 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
   List<RouteModule> get routes;
 
   List<String> get routersDialog => [];
+
+  List<String> get routersFade => [];
 
   ///
   /// External route loader
@@ -55,13 +58,25 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
     }
 
     final routersDialogAll = <String>[];
+    final routersFadeAll = <String>[];
 
     for (final e in routerModules) {
       routersDialogAll.addAll([
         ...e.routersDialog,
       ]);
+      routersFadeAll.addAll([
+        ...e.routersFade,
+      ]);
     }
     final isShowDialog = routersDialogAll.contains(routeName);
+    final isShowFade = routersFadeAll.contains(routeName);
+
+    if (isShowFade) {
+      return FaderPageRoute(
+        builder: builder,
+        settings: settings,
+      );
+    }
 
     return MaterialPageRoute(
       builder: builder,

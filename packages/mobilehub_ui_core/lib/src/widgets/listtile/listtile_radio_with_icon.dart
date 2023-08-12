@@ -4,7 +4,7 @@ class ListTileRadioWithIcon extends StatelessWidget {
   final Widget? leading;
   final IconData? iconData;
   final String title;
-  final String subTitle;
+  final String? subTitle;
   final VoidCallback onTap;
   final Function(dynamic)? onChanged;
   final dynamic value;
@@ -15,7 +15,7 @@ class ListTileRadioWithIcon extends StatelessWidget {
     this.leading,
     this.iconData,
     required this.title,
-    required this.subTitle,
+    this.subTitle,
     required this.onTap,
     this.onChanged,
     this.value,
@@ -25,6 +25,7 @@ class ListTileRadioWithIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(0),
       leading: leading ??
           Icon(
             iconData,
@@ -38,13 +39,15 @@ class ListTileRadioWithIcon extends StatelessWidget {
             .titleMedium!
             .copyWith(fontWeight: FontWeight.w600),
       ),
-      subtitle: Text(
-        subTitle,
-        style: Theme.of(context)
-            .textTheme
-            .bodySmall
-            ?.copyWith(color: const Color(0xffA1A1A1)),
-      ),
+      subtitle: subTitle == null
+          ? null
+          : Text(
+              subTitle!,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: const Color(0xffA1A1A1)),
+            ),
       dense: true,
       minLeadingWidth: 0,
       minVerticalPadding: 0,
