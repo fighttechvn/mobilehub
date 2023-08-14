@@ -41,7 +41,10 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
       final data = await _usecase();
 
       emit(GetListDataSuccess<T>(data));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -97,7 +100,10 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
       final data = await _usecaseParam1(event.param1);
 
       emit(GetListDataSuccess<T>(data));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -149,7 +155,10 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -187,7 +196,10 @@ class GetListBlocParam2<T, P1, P2> extends Bloc<GetListEvent, GetListState> {
       final data = await _usecaseParam2(event.param1, event.param2);
 
       emit(GetListDataSuccess<T>([...dataCurrent, ...data]));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -243,7 +255,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           await _usecaseParam3(event.param1, event.param2, event.param3);
 
       emit(GetListDataSuccess<T>(data));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -324,7 +339,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -358,7 +376,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(
         GetListDataError<T>(e.toString(), e),
       );
@@ -390,7 +411,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -427,7 +451,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -456,7 +483,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }
@@ -482,7 +512,10 @@ class GetListBlocParam3<T, P1, P2, P3>
           ),
         );
       }
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetListDataError<T>(e.toString(), e));
     }
   }

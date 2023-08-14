@@ -28,11 +28,11 @@ class GetDetailBloc<T> extends Bloc<GetDetailEvent, GetDetailState> {
       if (data != null) {
         emit(GetDetailDataSuccess<T>(data));
       }
-    } catch (e) {
-      emit(GetDetailError<T>(e));
+    } catch (e, trace) {
       if (kDebugMode) {
-        rethrow;
+        log('error: $trace');
       }
+      emit(GetDetailError<T>(e));
     }
   }
 }
@@ -56,11 +56,11 @@ class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
 
       final data = await _usecase(event.param1);
       emit(GetDetailDataSuccess<T>(data));
-    } catch (e) {
-      emit(GetDetailError<T>(e));
+    } catch (e, trace) {
       if (kDebugMode) {
-        rethrow;
+        log('error: $trace');
       }
+      emit(GetDetailError<T>(e));
     }
   }
 }
@@ -92,7 +92,7 @@ class GetDetailBlocParam2<T, P1, P2>
     } catch (e, trace) {
       if (kDebugMode) {
         log(e.toString());
-        log(trace.toString());
+        log('error: $trace');
       }
       final currentState = state;
       if (currentState is GetDetailDataSuccess<T>) {
@@ -129,7 +129,10 @@ class GetDetailBlocParam3<T, P1, P2, P3>
       final data = await _usecase(event.param1, event.param2, event.param3);
 
       emit(GetDetailDataSuccess<T>(data));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetDetailError<T>(e));
     }
   }
