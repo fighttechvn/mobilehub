@@ -29,7 +29,7 @@ class MyRouteObserver extends RouteObserver<PageRoute<dynamic>> {
 
   Stream<NavigatorData?> get onRouteChange =>
       _onRouteChange.asBroadcastStream();
-  String? get currentName => _onRouteChange.value?.routeName;
+  String? get currentName => _onRouteChange.valueOrNull?.routeName;
 
   void close() {
     _onRouteChange.close();
