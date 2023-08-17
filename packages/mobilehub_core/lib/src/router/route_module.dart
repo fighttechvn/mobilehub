@@ -4,7 +4,17 @@ import '../../mobilehub_core.dart';
 import '../core/dependency_injection/injector_container.dart';
 import 'fader_page_route.dart';
 
+abstract class ModuleDelegate {
+  void fetchUser();
+}
+
 abstract class RouteModule extends InjectorContainerGet {
+  final ModuleDelegate? moduleDelegate;
+
+  RouteModule({
+    this.moduleDelegate,
+  });
+
   Map<String, WidgetBuilder> getAll(RouteSettings settings);
 }
 
