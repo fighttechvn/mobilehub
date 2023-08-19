@@ -82,19 +82,21 @@ class ExpandableFabState extends State<ExpandableFab>
             color: widget.buttonColor,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ...widget.actions.mapIndex(
-                (e, idx) => InkWell(
-                  child: e,
-                  onTap: () {
-                    animate();
-                    widget.onTapItem.call(idx);
-                  },
-                ),
-              )
-            ].insertSeparator((index) => widget.separator),
+          child: IntrinsicWidth(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ...widget.actions.mapIndex(
+                  (e, idx) => InkWell(
+                    child: e,
+                    onTap: () {
+                      animate();
+                      widget.onTapItem.call(idx);
+                    },
+                  ),
+                )
+              ].insertSeparator((index) => widget.separator),
+            ),
           ),
         ),
       ],
