@@ -234,6 +234,7 @@ class GetListBlocParam3<T, P1, P2, P3>
           .switchMap(mapper),
     );
     on<RemoveItemFromListEvent>(_mapRemoveItemFromListEvent);
+    on<LoadDataListEvent<T, P1, P2, P3>>(_mapLoadDataListEvent);
     on<RemoveItemEvent>(_mapRemoveItemEvent);
     on<AddItemEvent>(_mapAddItemEvent);
     on<AddItemToListEvent>(_mapAddItemToListEvent);
@@ -518,5 +519,24 @@ class GetListBlocParam3<T, P1, P2, P3>
       }
       emit(GetListDataError<T>(e.toString(), e));
     }
+  }
+
+  FutureOr<void> _mapLoadDataListEvent(
+    LoadDataListEvent<T, P1, P2, P3> event,
+    Emitter<GetListState> emit,
+  ) async {
+    /// Data of State
+    final limitPerPage = event.limit; // with type P3
+    final offset = (event.offset as int) + 1;
+
+    emit(
+      GetListDataPagingSuccess<T, P2, P3>(
+        event.listData,
+        offset: offset as P2,
+        limit: limitPerPage,
+        hasLoadMore: true,
+        timespan: DateTime.now().microsecondsSinceEpoch,
+      ),
+    );
   }
 }

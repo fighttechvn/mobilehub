@@ -23,7 +23,7 @@ class GetListDataSuccess<T> extends GetListState {
   GetListDataSuccess(this.data, {this.timespan});
 
   @override
-  List<Object?> get props => [...data, this.timespan];
+  List<Object?> get props => [data, this.timespan];
 }
 
 class GetListDataLoadingSuccess<T> extends GetListDataSuccess<T> {
