@@ -27,6 +27,8 @@ abstract class StorageService {
 
   Future<Directory> createDir(String folderName);
 
+  Future<String> createTemporaryDirectory();
+
   Future<Directory> createDirDocument(String folderName);
 }
 
@@ -38,6 +40,9 @@ extension ObjStorageService on Object {
 
   Future<Directory> createDir(String folderName) =>
       _storageService.createDir(folderName);
+
+  Future<String> createTemporaryDirectory() =>
+      _storageService.createTemporaryDirectory();
 
   Future<Directory> createDirDocument(String folderName) =>
       _storageService.createDirDocument(folderName);
