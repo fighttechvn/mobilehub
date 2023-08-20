@@ -19,7 +19,7 @@ class PageViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final int offsetDefault;
   final bool enableRefresh;
   final bool autoFetchWhenInit;
-  final PageController? pageController;
+  final PageViewBuilderController? pageController;
   final Widget emptyWidget;
   final Axis scrollDirection;
 
@@ -129,7 +129,7 @@ class _PageViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
             bodyWidget = widget.emptyWidget;
           } else {
             bodyWidget = PreloadPageView.builder(
-              // controller: widget.pageController,
+              controller: widget.pageController,
               preloadPagesCount: 4,
               scrollDirection: widget.scrollDirection,
               itemCount: listData.length,
@@ -163,4 +163,12 @@ class _PageViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
 
     return widget.builder(context, listData, index, listData[index]);
   }
+}
+
+class PageViewBuilderController extends PreloadPageController {
+  PageViewBuilderController({
+    super.initialPage = 0,
+    super.keepPage = true,
+    super.viewportFraction = 1.0,
+  }) : assert(viewportFraction > 0.0, 'viewportFraction not zero');
 }
