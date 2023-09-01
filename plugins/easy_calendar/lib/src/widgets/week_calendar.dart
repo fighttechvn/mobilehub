@@ -6,10 +6,9 @@ import '../locale/datetime/vi.dart';
 import '../utils/date_utils.dart';
 import '../utils/iterable_ext.dart';
 
-class WeekCalendar extends StatefulWidget {
+class WeekCalendar<T> extends StatefulWidget {
   const WeekCalendar({
     Key? key,
-    required this.monthStr,
     required this.value,
     required this.onSelected,
     this.minDate,
@@ -20,9 +19,16 @@ class WeekCalendar extends StatefulWidget {
     this.dateLocale = const VIDateLocale(),
     this.footerTextStyle,
     this.headerTextStyle,
+    this.todayTextStyle = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 16.0,
+    ),
+    this.defaultTextStyle = const TextStyle(),
+    this.outsideTextStyle = const TextStyle(color: const Color(0xFFAEAEAE)),
+    this.singleMarkerBuilder,
+    this.eventLoader,
   }) : super(key: key);
 
-  final String monthStr;
   final DateTime? value;
   final DateTime? minDate;
   final DateTime? maxDate;
@@ -33,17 +39,24 @@ class WeekCalendar extends StatefulWidget {
   final void Function(DateTime selected) onSelected;
   final TextStyle? headerTextStyle;
   final TextStyle? footerTextStyle;
+  final TextStyle todayTextStyle;
+  final TextStyle defaultTextStyle;
+  final TextStyle outsideTextStyle;
+  final SingleMarkerBuilder<T>? singleMarkerBuilder;
+
+  /// Function that assigns a list of events to a specified day.
+  final List<T> Function(DateTime day)? eventLoader;
 
   @override
-  State<WeekCalendar> createState() => _WeekCalendarState();
+  State<WeekCalendar<T>> createState() => _WeekCalendarState<T>();
 }
 
-class _WeekCalendarState extends State<WeekCalendar> {
+class _WeekCalendarState<T> extends State<WeekCalendar<T>> {
   late DateTime datetime = widget.value ?? DateTime.now();
   late DateTime forcusedDate = datetime;
 
   @override
-  void didUpdateWidget(covariant WeekCalendar oldWidget) {
+  void didUpdateWidget(covariant WeekCalendar<T> oldWidget) {
     datetime = widget.value ?? DateTime.now();
     forcusedDate = datetime;
     super.didUpdateWidget(oldWidget);
@@ -60,7 +73,7 @@ class _WeekCalendarState extends State<WeekCalendar> {
       child: Column(
         children: [
           _buildHeader(textTheme),
-          TableCalendar(
+          TableCalendar<T>(
             startingDayOfWeek: StartingDayOfWeek.monday,
             rangeStartDay: widget.rangeStart,
             availableGestures: widget.availableGestures,
@@ -70,7 +83,7 @@ class _WeekCalendarState extends State<WeekCalendar> {
             focusedDay: forcusedDate,
             currentDay: datetime,
             availableCalendarFormats: {
-              CalendarFormat.week: widget.monthStr,
+              CalendarFormat.week: 'week',
             },
             onDaySelected: (selectedDay, _) {
               setState(() {
@@ -96,18 +109,9 @@ class _WeekCalendarState extends State<WeekCalendar> {
             headerVisible: false,
             daysOfWeekVisible: false,
             calendarBuilders: CalendarBuilders(
-              dowBuilder: (context, day) {
-                return Center(
-                  child: Text(
-                    widget.dateLocale.daysShort[day.weekday - 1],
-                    style: textTheme.titleSmall,
-                  ),
-                );
-              },
-              headerTitleBuilder: (context, day) {
-                return Text(day.toString());
-              },
+              singleMarkerBuilder: widget.singleMarkerBuilder,
             ),
+            eventLoader: widget.eventLoader,
             calendarStyle: CalendarStyle(
               selectedDecoration: BoxDecoration(
                 color: themeData.colorScheme.primary,
@@ -126,6 +130,10 @@ class _WeekCalendarState extends State<WeekCalendar> {
                 color: themeData.colorScheme.primary,
                 shape: BoxShape.circle,
               ),
+              todayTextStyle: widget.todayTextStyle,
+              defaultTextStyle: widget.defaultTextStyle,
+              weekendTextStyle: widget.defaultTextStyle,
+              outsideTextStyle: widget.outsideTextStyle,
             ),
             calendarFormat: CalendarFormat.week,
           ),
@@ -150,25 +158,16 @@ class _WeekCalendarState extends State<WeekCalendar> {
                   minHeight: 50,
                   minWidth: constraints.maxWidth / 6,
                 ),
-                child: InkWell(
-                  onTap: () {
+                child: MonthTitleWidget(
+                  onChange: (d) {
                     setState(() {
-                      forcusedDate = DateTime.now().copyWith(
-                        month: index,
-                      );
+                      forcusedDate = d;
                     });
                   },
-                  child: Center(
-                    child: Text(
-                      e,
-                      style: (widget.headerTextStyle ?? textTheme.titleMedium)
-                          ?.copyWith(
-                        fontWeight: forcusedDate.month == index
-                            ? FontWeight.bold
-                            : null,
-                      ),
-                    ),
-                  ),
+                  textStyle: widget.headerTextStyle,
+                  month: index + 1,
+                  title: e,
+                  forcusedDate: forcusedDate,
                 ),
               ),
             ),
@@ -195,6 +194,79 @@ class _WeekCalendarState extends State<WeekCalendar> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class MonthTitleWidget extends StatefulWidget {
+  const MonthTitleWidget({
+    super.key,
+    required this.title,
+    required this.month,
+    required this.forcusedDate,
+    required this.onChange,
+    this.textStyle,
+  });
+
+  final String title;
+  final int month;
+  final DateTime forcusedDate;
+  final void Function(DateTime forcusedDate) onChange;
+  final TextStyle? textStyle;
+
+  @override
+  State<MonthTitleWidget> createState() => _MonthTitleWidgetState();
+}
+
+class _MonthTitleWidgetState extends State<MonthTitleWidget> {
+  void focus() {
+    if (widget.forcusedDate.month == widget.month)
+      WidgetsBinding.instance.addPostFrameCallback(
+        (timeStamp) {
+          Scrollable.ensureVisible(
+            context,
+            duration: const Duration(milliseconds: 150),
+            alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+          );
+        },
+      );
+  }
+
+  @override
+  void initState() {
+    focus();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant MonthTitleWidget oldWidget) {
+    focus();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return InkWell(
+      onTap: () {
+        widget.onChange(DateTime.now().copyWith(
+          month: widget.month,
+        ));
+      },
+      child: Center(
+        child: Text(
+          widget.title,
+          style: (widget.textStyle ?? textTheme.titleMedium)?.copyWith(
+              fontWeight: widget.forcusedDate.month == widget.month
+                  ? FontWeight.bold
+                  : null,
+              color: widget.forcusedDate.month == widget.month
+                  ? null
+                  : (widget.textStyle ?? textTheme.titleMedium)
+                      ?.color
+                      ?.withOpacity(0.5)),
+        ),
+      ),
     );
   }
 }

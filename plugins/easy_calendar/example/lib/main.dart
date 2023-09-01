@@ -60,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             WeekCalendar(
-              monthStr: 'a',
               value: DateTime.now(),
               onSelected: (selected) {},
             ),
