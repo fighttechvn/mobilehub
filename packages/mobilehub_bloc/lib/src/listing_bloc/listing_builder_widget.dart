@@ -41,6 +41,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final SliverGridDelegate? _gridDelegate;
   final Function(BuildContext context, GetListState state)? listener;
   final bool useScrollBar;
+  final Widget? loadingWidget;
 
   const ListingBuilderWidget.listview({
     Key? key,
@@ -67,6 +68,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.physics,
     this.listener,
     this.useScrollBar = false,
+    this.loadingWidget,
   })  : _gridDelegate = null,
         super(key: key);
 
@@ -94,6 +96,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.physics,
     this.listener,
     this.useScrollBar = false,
+    this.loadingWidget,
   })  : _gridDelegate = gridDelegate ?? _kGridDelegate,
         separatorBuilder = null,
         typeScroll = null,
@@ -193,6 +196,22 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
             }
           : null,
       builder: (context, state) {
+        if (state is GetListDataLoading) {
+          return CustomScrollView(
+            slivers: [
+              if (widget.sliverTitle != null) widget.sliverTitle!,
+              if (widget.title != null)
+                SliverToBoxAdapter(
+                  child: widget.title!,
+                ),
+              if (widget.loadingWidget != null)
+                SliverToBoxAdapter(
+                  child: widget.loadingWidget!,
+                ),
+            ],
+          );
+        }
+
         final listData = <T>[];
 
         if (state is GetListDataPagingSuccess<T, int, int>) {
