@@ -61,12 +61,6 @@ abstract class RouteModuleBuilder extends InjectorContainerGet {
       throw Exception('please check route builder: $builder');
     }
 
-    if ([
-      '/',
-    ].contains(settings.name)) {
-      return pageRouteBuilder(builder);
-    }
-
     final routersDialogAll = <String>[];
     final routersFadeAll = <String>[];
 
