@@ -49,6 +49,16 @@ class _SliderImageWidgetState extends State<SliderImageWidget> {
   }
 
   @override
+  void didUpdateWidget(covariant SliderImageWidget oldWidget) {
+    if (oldWidget.images != widget.images) {
+      setState(() {
+        _images = widget.images.where((element) => element.isNotEmpty).toList();
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (_images.isEmpty) {
       return kDebugMode
