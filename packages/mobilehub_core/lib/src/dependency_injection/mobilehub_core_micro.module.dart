@@ -16,7 +16,7 @@ import 'package:mobilehub_core/src/services/impl/storage_service.impl.dart'
 import 'package:mobilehub_core/src/services/storage_service.dart' as _i5;
 
 class MobilehubCorePackageModule extends _i1.MicroPackageModule {
-  // initializes the registration of main-scope dependencies inside of GetIt
+// initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i2.FutureOr<void> init(_i1.GetItHelper gh) {
     gh.factory<_i3.DeviceService>(() => _i4.DeviceServiceImpl());
