@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 
-import '../../mobilehub_ui_core.dart';
+import 'measure_size.dart';
 
 class ViewMoreWidget extends StatefulWidget {
   final Widget child;

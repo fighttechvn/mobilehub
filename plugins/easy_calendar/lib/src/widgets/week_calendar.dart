@@ -67,9 +67,7 @@ class _WeekCalendarState<T> extends State<WeekCalendar<T>> {
     final themeData = Theme.of(context);
     final textTheme = themeData.textTheme;
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: 500,
-      ),
+      constraints: BoxConstraints(),
       child: Column(
         children: [
           _buildHeader(textTheme),

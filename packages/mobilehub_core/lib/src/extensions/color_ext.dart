@@ -20,3 +20,16 @@ extension HexColor on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 }
+
+extension ColorExtension on String {
+  Color get toColor {
+    var hexColor = replaceAll('#', '');
+    if (hexColor.length == 6) {
+      hexColor = 'FF$hexColor';
+    }
+    if (hexColor.length == 8) {
+      return Color(int.parse('0x$hexColor'));
+    }
+    return Colors.transparent;
+  }
+}

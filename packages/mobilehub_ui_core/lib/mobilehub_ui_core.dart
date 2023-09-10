@@ -1,6 +1,7 @@
 library mobilehub_ui_core;
 
 export 'package:easy_loading_adaptive/easy_loading.dart';
+export 'package:mobilehub_core/mobilehub_core.dart';
 
 export 'src/animations/call/calling_effect.dart';
 export 'src/animations/circle_progress_indicator/animated_circle_progress_indicator.dart';
@@ -8,6 +9,9 @@ export 'src/animations/skake_widget.dart';
 export 'src/animations/slide_animation/slide_aniamtion_widget.dart';
 export 'src/animations/switching_layout.dart';
 export 'src/core/render_box/render_box_infor.dart';
+export 'src/features/dynamic_layout/hightlight_action_entity.dart';
+export 'src/features/dynamic_layout/hightlight_action_slider.dart';
+export 'src/features/dynamic_layout/widgets/hightlight_button_widget.dart';
 export 'src/layout/pageview_dynamic_widget.dart';
 export 'src/layout/sliver_nested_scroll_view.dart';
 export 'src/layout/tabbar_dynamic_widget.dart';

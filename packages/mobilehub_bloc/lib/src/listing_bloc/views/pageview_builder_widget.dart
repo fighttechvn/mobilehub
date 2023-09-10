@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
-import 'package:universal_platform/universal_platform.dart';
 
 import '../../getlist_bloc/bloc/get_list_bloc.dart';
 import '../../mobilehub_constants.dart';
