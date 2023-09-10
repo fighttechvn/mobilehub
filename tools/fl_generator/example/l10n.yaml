@@ -1,0 +1,7 @@
+output-class: ExampleLocalizations
+synthetic-package: false
+arb-dir: lib/src/l10n
+output-dir: ./lib/src/l10n/generated/
+template-arb-file: intl_vi.arb
+output-localization-file: example_localizations.dart
+resource-file: lib/src/l10n/localizations.csv

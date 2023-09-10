@@ -1,0 +1,20 @@
+{
+  "discountLable": "Giảm 1",
+  "sold": "đã bán",
+  "origin": "Xuất xứ",
+  "size": "Kích thước",
+  "weight": "Trọng lượng",
+  "state": "Tình trạng",
+  "warranty": "Bảo hành",
+  "description": "Mô tả",
+  "parameters": "Thông số",
+  "newState": "Mới",
+  "likeNew": "99%",
+  "seeMore": "Xem Thêm",
+  "seeLess": "Thu Gọn",
+  "productEmpty": "Không có sản phẩm nào",
+  "search": "Tìm kiếm",
+  "viewReviewItem": "Xem đánh giá",
+  "productReview": "Đánh giá sản phẩm",
+  "seeAll": "Xem tất cả"
+}
