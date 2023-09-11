@@ -40,6 +40,7 @@ export 'src/widgets/listtile/listtile_radio_with_icon.dart';
 export 'src/widgets/measure_size.dart';
 export 'src/widgets/nested_scroll_view_notification.dart';
 export 'src/widgets/pullto_refresh_widget.dart';
+export 'src/widgets/quality/quantity_widget.dart';
 export 'src/widgets/radio/radio_group_widget.dart';
 export 'src/widgets/slivers/sliver_appbar_custom.dart';
 export 'src/widgets/star_rating_widget.dart';
