@@ -1,6 +1,3 @@
-[submodule "docs"]
-	path = docs
-	url = https://github.com/fighttech-vn/mobilehub-docs.git
 [submodule "storybook"]
 	path = storybook
 	url = https://github.com/fighttech-vn/mobilehub-storybook
