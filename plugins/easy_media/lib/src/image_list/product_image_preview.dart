@@ -1,9 +1,10 @@
 import 'dart:math';
 
-import 'package:easy_media/easy_media.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
+
+import 'images_list_coodinator.dart';
 
 class ProductImagePreview extends StatefulWidget {
   const ProductImagePreview({

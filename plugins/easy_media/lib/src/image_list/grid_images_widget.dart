@@ -1,6 +1,7 @@
-import 'package:easy_media/src/image_list/images_list_coodinator.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+
+import 'images_list_coodinator.dart';
 
 class GridImagesWidget extends StatelessWidget {
   const GridImagesWidget({
