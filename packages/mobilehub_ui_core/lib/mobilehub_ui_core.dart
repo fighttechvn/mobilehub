@@ -3,15 +3,38 @@ library mobilehub_ui_core;
 export 'package:easy_loading_adaptive/easy_loading.dart';
 export 'package:mobilehub_core/mobilehub_core.dart';
 
+///
+/// animation
+///
+///
 export 'src/animations/call/calling_effect.dart';
 export 'src/animations/circle_progress_indicator/animated_circle_progress_indicator.dart';
 export 'src/animations/skake_widget.dart';
 export 'src/animations/slide_animation/slide_aniamtion_widget.dart';
 export 'src/animations/switching_layout.dart';
+
+///
+/// core
+///
+///
+export 'src/core/decoration/stepper_decoration.dart';
+export 'src/core/decoration/tab_indicator_decoration.dart';
 export 'src/core/render_box/render_box_infor.dart';
+
+///
+/// feature
+///
+///
 export 'src/features/dynamic_layout/hightlight_action_entity.dart';
 export 'src/features/dynamic_layout/hightlight_action_slider.dart';
 export 'src/features/dynamic_layout/widgets/hightlight_button_widget.dart';
+export 'src/features/stepper/stepper_widget.dart';
+export 'src/features/tab/tabbar_indicator_center_widget.dart';
+export 'src/features/tab/tabview_builder_widget.dart';
+
+///
+/// layout
+///
 export 'src/layout/pageview_dynamic_widget.dart';
 export 'src/layout/sliver_nested_scroll_view.dart';
 export 'src/layout/tabbar_dynamic_widget.dart';
@@ -23,6 +46,10 @@ export 'src/page/pageview/preload_page_view.dart';
 export 'src/skeletons/attribution_widget_skeleton.dart';
 export 'src/skeletons/skeleton_filtered_widget.dart';
 export 'src/web/hover/x_hover.dart';
+
+///
+/// widget
+///
 export 'src/widgets/button/button_circle_indicator_widget.dart';
 export 'src/widgets/button/elevated_button_shadow.dart';
 export 'src/widgets/checkbox/check_box_form_field.dart';
