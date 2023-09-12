@@ -17,6 +17,7 @@ export 'src/animations/switching_layout.dart';
 /// core
 ///
 ///
+export 'src/core/bottom_navigation_bar/bottom_navigationbar_widget.dart';
 export 'src/core/decoration/stepper_decoration.dart';
 export 'src/core/decoration/tab_indicator_decoration.dart';
 export 'src/core/render_box/render_box_infor.dart';
