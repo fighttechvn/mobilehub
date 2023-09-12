@@ -6,11 +6,17 @@ class QuantityWidget extends StatefulWidget {
     this.controller,
     this.max,
     this.min = 1,
+    this.showTitle = true,
+    this.showLabel = true,
+    this.isColorTransparent = false,
   });
 
   final ValueNotifier<int>? controller;
   final int? max;
   final int min;
+  final bool? showTitle;
+  final bool? showLabel;
+  final bool? isColorTransparent;
 
   @override
   State<QuantityWidget> createState() => _QuantityWidgetState();
@@ -27,15 +33,13 @@ class _QuantityWidgetState extends State<QuantityWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(10),
-      child: AnimatedBuilder(
-        animation: _quantityCtr,
-        builder: (context, snapshot) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+    return AnimatedBuilder(
+      animation: _quantityCtr,
+      builder: (context, snapshot) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (widget.showTitle ?? true) ...[
               Text(
                 'Choose a quantity',
                 style: Theme.of(context)
@@ -44,60 +48,96 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                     .copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 20),
-              Row(
-                children: [
+            ],
+            Row(
+              children: [
+                if (widget.showLabel ?? true) ...[
                   const Text('Quantity'),
                   const SizedBox(width: 20),
-                  GestureDetector(
-                    onTap: _quantityCtr.value <= widget.min
-                        ? null
-                        : () {
-                            if (_quantityCtr.value > 0) {
-                              _quantityCtr.value -= 1;
-                            }
-                          },
-                    child: Container(
-                      color: _quantityCtr.value <= widget.min
-                          ? Colors.grey
-                          : Theme.of(context).primaryColor,
-                      width: 30,
-                      height: 30,
-                      child: const Center(child: Text('-')),
+                ],
+                GestureDetector(
+                  onTap: _quantityCtr.value <= widget.min
+                      ? null
+                      : () {
+                          if (_quantityCtr.value > 0) {
+                            _quantityCtr.value -= 1;
+                          }
+                        },
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: widget.isColorTransparent ?? true
+                          ? Colors.transparent
+                          : _quantityCtr.value <= widget.min
+                              ? Colors.grey
+                              : Theme.of(context).primaryColor,
+                      border: Border.all(
+                        width: 1,
+                        color: const Color(0xFFF0F0F0),
+                      ),
+                    ),
+                    child: const Center(child: Text('-')),
+                  ),
+                ),
+                Container(
+                  constraints:
+                      const BoxConstraints(minWidth: 30, maxHeight: 30),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        width: 1,
+                        color: Color(0xFFF0F0F0),
+                      ),
+                      bottom: BorderSide(
+                        width: 1,
+                        color: Color(0xFFF0F0F0),
+                      ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('${_quantityCtr.value}'),
+                  child: Center(
+                    child: Text(
+                      '${_quantityCtr.value}',
+                      style: const TextStyle(fontSize: 14),
+                    ),
                   ),
-                  GestureDetector(
-                    onTap: (widget.max != null &&
-                            _quantityCtr.value >= widget.max!)
-                        ? null
-                        : () {
-                            if (widget.max != null) {
-                              if (_quantityCtr.value < widget.max!) {
+                ),
+                GestureDetector(
+                  onTap:
+                      (widget.max != null && _quantityCtr.value >= widget.max!)
+                          ? null
+                          : () {
+                              if (widget.max != null) {
+                                if (_quantityCtr.value < widget.max!) {
+                                  _quantityCtr.value += 1;
+                                }
+                              } else {
                                 _quantityCtr.value += 1;
                               }
-                            } else {
-                              _quantityCtr.value += 1;
-                            }
-                          },
-                    child: Container(
-                      color: (widget.max != null &&
-                              _quantityCtr.value >= widget.max!)
-                          ? Colors.grey
-                          : Theme.of(context).primaryColor.withOpacity(.8),
-                      width: 30,
-                      height: 30,
-                      child: const Center(child: Text('+')),
+                            },
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: widget.isColorTransparent ?? true
+                          ? Colors.transparent
+                          : (widget.max != null &&
+                                  _quantityCtr.value >= widget.max!)
+                              ? Colors.grey
+                              : Theme.of(context).primaryColor.withOpacity(.8),
+                      border: Border.all(
+                        width: 1,
+                        color: const Color(0xFFF0F0F0),
+                      ),
                     ),
+                    child: const Center(child: Text('+')),
                   ),
-                ],
-              ),
-            ],
-          );
-        },
-      ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
