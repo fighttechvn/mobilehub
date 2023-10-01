@@ -9,6 +9,7 @@ class QuantityWidget extends StatefulWidget {
     this.showTitle = true,
     this.showLabel = true,
     this.isColorTransparent = false,
+    this.disable = false,
   });
 
   final ValueNotifier<int>? controller;
@@ -17,6 +18,7 @@ class QuantityWidget extends StatefulWidget {
   final bool? showTitle;
   final bool? showLabel;
   final bool? isColorTransparent;
+  final bool? disable;
 
   @override
   State<QuantityWidget> createState() => _QuantityWidgetState();
@@ -56,16 +58,18 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                   const SizedBox(width: 20),
                 ],
                 GestureDetector(
-                  onTap: _quantityCtr.value <= widget.min
+                  onTap: widget.disable ?? false
                       ? null
-                      : () {
-                          if (_quantityCtr.value > 0) {
-                            _quantityCtr.value -= 1;
-                          }
-                        },
+                      : _quantityCtr.value <= widget.min
+                          ? null
+                          : () {
+                              if (_quantityCtr.value > 0) {
+                                _quantityCtr.value -= 1;
+                              }
+                            },
                   child: Container(
-                    width: 30,
-                    height: 30,
+                    width: 38,
+                    height: 38,
                     decoration: BoxDecoration(
                       color: widget.isColorTransparent ?? true
                           ? Colors.transparent
@@ -77,12 +81,17 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                         color: const Color(0xFFF0F0F0),
                       ),
                     ),
-                    child: const Center(child: Text('-')),
+                    child: const Center(
+                      child: Text(
+                        '-',
+                        style: TextStyle(height: 1),
+                      ),
+                    ),
                   ),
                 ),
                 Container(
                   constraints:
-                      const BoxConstraints(minWidth: 30, maxHeight: 30),
+                      const BoxConstraints(minWidth: 38, maxHeight: 38),
                   decoration: const BoxDecoration(
                     border: Border(
                       top: BorderSide(
@@ -98,13 +107,15 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                   child: Center(
                     child: Text(
                       '${_quantityCtr.value}',
-                      style: const TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14, height: 1),
                     ),
                   ),
                 ),
                 GestureDetector(
-                  onTap:
-                      (widget.max != null && _quantityCtr.value >= widget.max!)
+                  onTap: widget.disable ?? false
+                      ? null
+                      : (widget.max != null &&
+                              _quantityCtr.value >= widget.max!)
                           ? null
                           : () {
                               if (widget.max != null) {
@@ -116,8 +127,8 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                               }
                             },
                   child: Container(
-                    width: 30,
-                    height: 30,
+                    width: 38,
+                    height: 38,
                     decoration: BoxDecoration(
                       color: widget.isColorTransparent ?? true
                           ? Colors.transparent
@@ -130,7 +141,9 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                         color: const Color(0xFFF0F0F0),
                       ),
                     ),
-                    child: const Center(child: Text('+')),
+                    child: const Center(
+                      child: Text('+', style: TextStyle(height: 1)),
+                    ),
                   ),
                 ),
               ],

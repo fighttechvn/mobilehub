@@ -18,6 +18,7 @@ class RadioGroupWidget<T> extends StatefulWidget {
     this.spacing = 8.0,
     this.radius = 8.0,
     this.borderColor,
+    this.borderColorDefault,
     this.backgroundColor,
     this.padding,
     this.contentPadding,
@@ -35,6 +36,7 @@ class RadioGroupWidget<T> extends StatefulWidget {
   final double spacing;
   final double radius;
   final Color? borderColor;
+  final Color? borderColorDefault;
   final Color? backgroundColor;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
@@ -55,6 +57,9 @@ class _RadioGroupWidgetState<T> extends State<RadioGroupWidget<T>> {
 
   Color get _borderColor =>
       widget.borderColor ?? Theme.of(context).primaryColor;
+
+  Color get _borderColorDefault =>
+      widget.borderColorDefault ?? Colors.transparent;
 
   Color? get _backgroundColor =>
       widget.backgroundColor ?? Theme.of(context).listTileTheme.tileColor;
@@ -102,7 +107,7 @@ class _RadioGroupWidgetState<T> extends State<RadioGroupWidget<T>> {
             border: Border.all(
               color: _currentValue == value
                   ? (hasAlert ? const Color(0xffD92424) : _borderColor)
-                  : Colors.transparent,
+                  : _borderColorDefault,
               width: 1.0,
             ),
             borderRadius: BorderRadius.circular(_radius),

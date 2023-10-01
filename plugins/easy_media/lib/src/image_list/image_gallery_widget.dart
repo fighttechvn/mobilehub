@@ -83,21 +83,22 @@ class _ImageGalleryWidgetState extends StatefulWidgetBase<ImageGalleryWidget> {
                     },
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).padding.bottom + 16,
+                if (pageCount > 1)
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).padding.bottom + 16,
+                    ),
+                    height: 20,
+                    child: PageIndicatorWidget(
+                      countItem: pageCount,
+                      controller: _pageController,
+                      color: const Color(0xffA6AFCE),
+                      size: const Size(8, 8),
+                      activeSize: const Size(8, 8),
+                      colorActive: Colors.white,
+                      initialPage: widget.forcusIndex,
+                    ),
                   ),
-                  height: 20,
-                  child: PageIndicatorWidget(
-                    countItem: pageCount,
-                    controller: _pageController,
-                    color: const Color(0xffA6AFCE),
-                    size: const Size(8, 8),
-                    activeSize: const Size(8, 8),
-                    colorActive: Colors.white,
-                    initialPage: widget.forcusIndex,
-                  ),
-                ),
               ],
             ),
             Positioned(
