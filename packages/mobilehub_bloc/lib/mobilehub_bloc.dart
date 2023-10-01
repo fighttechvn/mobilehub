@@ -1,5 +1,8 @@
 library mobilehub_bloc;
 
+export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
+
 export 'src/getdetail_bloc/bloc/get_detail_bloc.dart';
 export 'src/getdetail_bloc/views/get_detail_builder.dart';
 export 'src/getlist_bloc/bloc/get_list_bloc.dart';
