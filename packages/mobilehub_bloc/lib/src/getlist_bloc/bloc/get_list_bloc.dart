@@ -6,8 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../listing_bloc/listing_bloc.dart';
 import '../../usecase/usecase_add.dart';
 import '../../usecase/usecase_delete.dart';
+import '../ui_state/response_bloc_cursor.dart';
 
 part 'get_list_event.dart';
 part 'get_list_state.dart';
@@ -213,6 +215,96 @@ typedef LoadListFutureParam3<T, P1, P2, P3> = Future<List<T>> Function(
   P3 param3,
 );
 
+class GetListBlocCursoParam3<T, P> extends ListingBloc<T, P> {
+  final LoadListFutureParam4<T, P> _usecaseCursor;
+
+  GetListBlocCursoParam3(this._usecaseCursor)
+      : super(emptyUsecase<T, P>, isOverrideEvent: true) {
+    on<GetListPagingEvent<P, int, int>>(
+      _mapGetListPagingEvent,
+      transformer: (events, mapper) => events
+          .debounceTime(const Duration(milliseconds: 500))
+          .switchMap(mapper),
+    );
+  }
+
+  @override
+  FutureOr<void> _mapGetListPagingEvent(
+    GetListPagingEvent<P, int, int> event,
+    Emitter<GetListState> emit,
+  ) async {
+    final stateCurrent = state;
+    final dataCurrent = <T>[];
+    dynamic cursor;
+
+    if (stateCurrent is GetListDataPagingSuccess<T, int, int> &&
+        [TypeFetchPaging.fetch, TypeFetchPaging.refresh].contains(event.type)) {
+      if (event.type == TypeFetchPaging.fetch) {
+        dataCurrent.addAll(stateCurrent.data);
+      }
+
+      if (event.type != TypeFetchPaging.refresh) {
+        cursor = stateCurrent.cursor;
+      }
+    } else {
+      emit(GetListDataLoading<T>());
+    }
+
+    try {
+      final data = await _usecaseCursor(event.param1, cursor);
+
+      /// Data of State
+      final listData = [...dataCurrent, ...data.listData];
+      cursor = data.cursor;
+      final hasLoadMore = data.listData.isNotEmpty && cursor != null;
+
+      if (event.type == TypeFetchPaging.refresh) {
+        emit(
+          PullToRefreshSuccess<T, int, int>(
+            listData,
+            offset: -1,
+            limit: -1,
+            hasLoadMore: hasLoadMore,
+            timespan: DateTime.now().millisecondsSinceEpoch,
+            cursor: cursor,
+          ),
+        );
+      } else {
+        emit(
+          GetListDataPagingSuccess<T, int, int>(
+            listData,
+            offset: -1,
+            limit: -1,
+            timespan: DateTime.now().millisecondsSinceEpoch,
+            hasLoadMore: hasLoadMore,
+            cursor: cursor,
+          ),
+        );
+      }
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
+
+      if (stateCurrent is GetListDataPagingSuccess) {
+        emit(
+          GetListDataPagingFailed<T>(
+            e.toString(),
+            e,
+            stateCurrent.data,
+            cursor: stateCurrent.cursor,
+            limit: -1,
+            offset: -1,
+            hasLoadMore: stateCurrent.hasLoadMore,
+          ),
+        );
+      } else {
+        emit(GetListDataError(e.toString(), e));
+      }
+    }
+  }
+}
+
 class GetListBlocParam3<T, P1, P2, P3>
     extends Bloc<GetListEvent, GetListState> {
   final LoadListFutureParam3<T, P1, P2, P3> _usecaseParam3;
@@ -223,16 +315,19 @@ class GetListBlocParam3<T, P1, P2, P3>
     this._usecaseParam3, {
     UsecaseDelete<T, dynamic>? usecaseDeleteApi,
     UsecaseAdd<T, dynamic>? usecaseAddApi,
+    bool isOverrideEvent = false,
   })  : _usecaseDeleteApi = usecaseDeleteApi,
         _usecaseAddApi = usecaseAddApi,
         super(GetListBlocInitial()) {
     on<GetListDataParam3Event>(_mapGetListDataParam3Event);
-    on<GetListPagingEvent<P1, P2, P3>>(
-      _mapGetListPagingEvent,
-      transformer: (events, mapper) => events
-          .debounceTime(const Duration(milliseconds: 500))
-          .switchMap(mapper),
-    );
+    if (isOverrideEvent == false) {
+      on<GetListPagingEvent<P1, P2, P3>>(
+        _mapGetListPagingEvent,
+        transformer: (events, mapper) => events
+            .debounceTime(const Duration(milliseconds: 500))
+            .switchMap(mapper),
+      );
+    }
     on<RemoveItemFromListEvent>(_mapRemoveItemFromListEvent);
     on<LoadDataListEvent<T, P1, P2, P3>>(_mapLoadDataListEvent);
     on<RemoveItemEvent>(_mapRemoveItemEvent);

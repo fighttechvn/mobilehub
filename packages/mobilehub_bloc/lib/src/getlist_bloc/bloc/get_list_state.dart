@@ -42,6 +42,7 @@ class GetListDataTypeSearchResult<T> extends GetListDataSuccess {
 class GetListDataPagingSuccess<T, P2, P3> extends GetListDataSuccess<T> {
   final P2 offset;
   final P3 limit;
+  final dynamic cursor;
   final bool hasLoadMore;
 
   GetListDataPagingSuccess(
@@ -50,10 +51,12 @@ class GetListDataPagingSuccess<T, P2, P3> extends GetListDataSuccess<T> {
     required this.limit,
     this.hasLoadMore = true,
     super.timespan,
+    this.cursor,
   });
 
   @override
-  List<Object?> get props => [data, offset, limit, hasLoadMore, timespan];
+  List<Object?> get props =>
+      [data, offset, limit, hasLoadMore, timespan, cursor];
 }
 
 class GetListDataFromItemSuccess<T, P2, P3>
@@ -67,10 +70,12 @@ class GetListDataFromItemSuccess<T, P2, P3>
     required super.limit,
     super.hasLoadMore = true,
     super.timespan,
+    super.cursor,
   });
 
   @override
-  List<Object?> get props => [data, offset, limit, hasLoadMore, timespan];
+  List<Object?> get props =>
+      [data, offset, limit, hasLoadMore, timespan, cursor];
 }
 
 class PullToRefreshSuccess<T, P2, P3>
@@ -81,10 +86,32 @@ class PullToRefreshSuccess<T, P2, P3>
     required super.offset,
     required super.limit,
     super.hasLoadMore = true,
+    super.cursor,
   });
 
   @override
-  List<Object?> get props => [data, offset, limit, hasLoadMore, timespan];
+  List<Object?> get props =>
+      [data, offset, limit, hasLoadMore, timespan, cursor];
+}
+
+class GetListDataPagingFailed<T> extends GetListDataPagingSuccess {
+  final String message;
+  final dynamic error;
+
+  GetListDataPagingFailed(
+    this.message,
+    this.error,
+    super.data, {
+    super.timespan,
+    required super.offset,
+    required super.limit,
+    super.hasLoadMore = true,
+    super.cursor,
+  });
+
+  @override
+  List<Object?> get props =>
+      [message, error, data, offset, limit, hasLoadMore, timespan, cursor];
 }
 
 class GetListDataError<T> extends GetListState {

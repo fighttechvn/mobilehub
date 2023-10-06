@@ -41,7 +41,9 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final SliverGridDelegate? _gridDelegate;
   final Function(BuildContext context, GetListState state)? listener;
   final bool useScrollBar;
+  final bool showTitleWhenLoading;
   final Widget? loadingWidget;
+  final void Function()? onRefresh;
 
   const ListingBuilderWidget.listview({
     Key? key,
@@ -51,7 +53,9 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.offsetWillLoadMore = 3,
     this.limitDefault = 10,
     this.offsetDefault = 1,
+    this.onRefresh,
     this.enableRefresh = true,
+    this.showTitleWhenLoading = true,
     this.autoFetchWhenInit = true,
     this.scrollbarPaddingContent = paddingDefault,
     this.paddingList = EdgeInsets.zero,
@@ -78,6 +82,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     required this.builder,
     this.initStateBuilder,
     this.offsetWillLoadMore = 3,
+    this.showTitleWhenLoading = true,
     this.limitDefault = 10,
     this.offsetDefault = 1,
     this.enableRefresh = true,
@@ -96,6 +101,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.physics,
     this.listener,
     this.useScrollBar = false,
+    this.onRefresh,
     this.loadingWidget,
   })  : _gridDelegate = gridDelegate ?? _kGridDelegate,
         separatorBuilder = null,
@@ -135,6 +141,7 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
 
   Future<void> _onRefresh() async {
     _fetchListData(widget.offsetDefault, TypeFetchPaging.refresh);
+    widget.onRefresh?.call();
     completer = Completer();
     await completer?.future;
   }
@@ -199,11 +206,13 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
         if (state is GetListDataLoading) {
           return CustomScrollView(
             slivers: [
-              if (widget.sliverTitle != null) widget.sliverTitle!,
-              if (widget.title != null)
-                SliverToBoxAdapter(
-                  child: widget.title!,
-                ),
+              if (widget.showTitleWhenLoading) ...[
+                if (widget.sliverTitle != null) widget.sliverTitle!,
+                if (widget.title != null)
+                  SliverToBoxAdapter(
+                    child: widget.title!,
+                  ),
+              ],
               if (widget.loadingWidget != null)
                 SliverToBoxAdapter(
                   child: widget.loadingWidget!,
