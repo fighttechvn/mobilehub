@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 context.showMonthCalendarPicker();
               },
               child: const Text('Show Month Calendar Picker'),
-            )
+            ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

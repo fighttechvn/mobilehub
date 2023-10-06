@@ -84,7 +84,7 @@ class _CheckBoxWidgetState<T> extends State<CheckBoxWidget<T>> {
                               widget.text!,
                               style: widget.style,
                             )
-                          : const SizedBox())
+                          : const SizedBox()),
                 ],
               )
             : _buildCheckBoxCustom(),

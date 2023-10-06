@@ -54,7 +54,7 @@ class _XHoverState extends State<XHover> {
             widget.child,
             SizedBox(width: widget.spacing),
             if (widget.alwaysShowHoverItem || isMobile) ...[
-              widget.hoverChild
+              widget.hoverChild,
             ] else ...[
               Visibility(
                 visible: _valueNotifier.value,
@@ -63,7 +63,7 @@ class _XHoverState extends State<XHover> {
                 maintainAnimation: true,
                 child: widget.hoverChild,
               ),
-            ]
+            ],
           ],
         ),
       );

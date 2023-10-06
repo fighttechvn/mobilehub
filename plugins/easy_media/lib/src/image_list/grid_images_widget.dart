@@ -52,7 +52,7 @@ class GridImagesWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
       ],
     );
   }

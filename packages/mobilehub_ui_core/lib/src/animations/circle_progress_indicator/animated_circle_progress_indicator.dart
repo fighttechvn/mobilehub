@@ -98,7 +98,7 @@ class _AnimatedCircleProgressIndicatorState
               SizedBox(
                 height: widget.size,
                 child: Center(child: widget.child),
-              )
+              ),
             ],
           );
         },

@@ -22,7 +22,7 @@ extension ExtendedIterable<E> on Iterable<E> {
           ...[
             creator(previousValue.length),
             element,
-          ]
+          ],
         ];
       },
     );

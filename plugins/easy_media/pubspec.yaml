@@ -15,7 +15,7 @@ dependencies:
   mobilehub_core:
     path: ../../packages/mobilehub_core
 
-  imagewidget: ^1.0.11
+  imagewidget: ^1.1.0
   dots_indicator: ^2.1.0
   carousel_slider: ^4.1.1
 

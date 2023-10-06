@@ -94,7 +94,7 @@ class ExpandableFabState extends State<ExpandableFab>
                       widget.onTapItem.call(idx);
                     },
                   ),
-                )
+                ),
               ].insertSeparator((index) => widget.separator),
             ),
           ),

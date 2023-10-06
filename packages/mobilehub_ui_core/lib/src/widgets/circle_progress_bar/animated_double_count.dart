@@ -86,7 +86,7 @@ class _AnimatedCountState extends State<AnimatedCount>
                 widget.unit!,
                 style: widget.style,
                 textScaleFactor: widget.unitScaleFactor,
-              )
+              ),
           ],
         );
       },

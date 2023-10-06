@@ -155,10 +155,10 @@ class _ProductImagePreviewState extends State<ProductImagePreview> {
                           color: Colors.white,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ],
         );

@@ -54,7 +54,7 @@ class _SkeletonFilteredWidgetState extends State<SkeletonFilteredWidget>
           colors: const [
             Color(0x0D000000),
             Color(0x1A000000),
-            Color(0x0D000000)
+            Color(0x0D000000),
           ],
         ),
       ),

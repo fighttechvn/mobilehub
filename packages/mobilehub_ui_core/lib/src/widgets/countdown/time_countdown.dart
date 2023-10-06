@@ -44,7 +44,7 @@ class TimeCountDown extends StatelessWidget {
             spreadRadius: 2,
             blurRadius: 2,
             offset: const Offset(2, 4),
-          )
+          ),
         ],
       ),
       width: size,

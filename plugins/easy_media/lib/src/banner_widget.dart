@@ -112,7 +112,7 @@ class _BannerWidgetState<T> extends State<BannerWidget<T>> {
               fit: widget.fit,
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -172,7 +172,7 @@ class BannerItem<T> extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: ClipRRect(
-        borderRadius: borderRadius,
+        borderRadius: borderRadius ?? BorderRadius.zero,
         child: ImageWidget(
           url ?? '',
           fit: fit,
