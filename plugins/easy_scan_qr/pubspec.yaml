@@ -1,34 +1,22 @@
-name: mobilehub_ui_core
+name: easy_scan_qr
 description: A new Flutter package project.
 version: 0.0.1
-homepage: https://flutter.dev
-publish_to: none
+homepage:
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=1.17.0'
+  sdk: '>=3.0.6 <4.0.0'
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  # feature
-  universal_platform: ^1.0.0+1
-
-  # UI
-  imagewidget: ^1.1.0
-  easy_loading_adaptive: 1.0.0
-  
-  scrollable_positioned_list: ^0.3.5
-  sliver_tools: ^0.2.9
-
-  mobilehub_core:
-    path: ../mobilehub_core
+  qr_code_scanner: ^1.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
