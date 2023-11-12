@@ -10,6 +10,15 @@
 .svn/
 migrate_working_dir/
 
+**/ios/Flutter/flutter_export_environment.sh
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/Flutter-Debug.xcconfig
+**/macos/Flutter/Flutter-Release.xcconfig
+**/macos/Flutter/Flutter-Profile.xcconfig
+**/macos/Flutter/ephemeral/Flutter-Generated.xcconfig
+**/macos/Flutter/ephemeral/flutter_export_environment.sh
+**/ios/Flutter/Generated.xcconfig
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -23,8 +32,15 @@ migrate_working_dir/
 
 # Flutter/Dart/Pub related
 # Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
+/pubspec.lock
 **/doc/api/
 .dart_tool/
 .packages
 build/
+
+#ignore on project
+flutter
+.fvm
 coverage/
+dist/
+pubspec.lock

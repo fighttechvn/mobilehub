@@ -1,16 +1,18 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  strong-mode:
-    implicit-dynamic: true
+  language:
+    strict-raw-types: false
   errors:
     todo: ignore
+    invalid_annotation_target: ignore
   exclude:
     - "**/*.g.dart"
     - "**/*.gr.dart"
     - "**/*.freezed.dart"
     - "**/*.config.dart"
     - "**/*.module.dart"
+    - "lib/dist/*.dart"
 
 linter:
   rules:
@@ -103,6 +105,7 @@ linter:
     - use_rethrow_when_possible
     - use_setters_to_change_properties
     - use_string_buffers
+    - require_trailing_commas
 
     # nice to have
     - avoid_double_and_int_checks

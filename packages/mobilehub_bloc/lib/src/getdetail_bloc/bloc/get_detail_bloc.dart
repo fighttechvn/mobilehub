@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'get_detail_event.dart';
@@ -18,7 +18,9 @@ class GetDetailBloc<T> extends Bloc<GetDetailEvent, GetDetailState> {
   }
 
   FutureOr<void> _mapGetDetailDataEvent(
-      GetDetailDataEvent event, Emitter<GetDetailState> emit) async {
+    GetDetailDataEvent event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 
@@ -26,9 +28,10 @@ class GetDetailBloc<T> extends Bloc<GetDetailEvent, GetDetailState> {
       if (data != null) {
         emit(GetDetailDataSuccess<T>(data));
       }
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetDetailError<T>(e));
     }
   }
@@ -45,15 +48,18 @@ class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
   }
 
   FutureOr<void> _mapGetDetailDataParam1Event(
-      GetDetailDataParam1Event event, Emitter<GetDetailState> emit) async {
+    GetDetailDataParam1Event event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 
       final data = await _usecase(event.param1);
       emit(GetDetailDataSuccess<T>(data));
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetDetailError<T>(e));
     }
   }
@@ -61,7 +67,9 @@ class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
 
 /// Param2
 typedef GetDetailFutureParam2<T, P1, P2> = Future<T> Function(
-    P1 param1, P2 param2);
+  P1 param1,
+  P2 param2,
+);
 
 class GetDetailBlocParam2<T, P1, P2>
     extends Bloc<GetDetailEvent, GetDetailState> {
@@ -72,24 +80,36 @@ class GetDetailBlocParam2<T, P1, P2>
   }
 
   FutureOr<void> _mapGetDetailDataParam2Event(
-      GetDetailDataParam2Event event, Emitter<GetDetailState> emit) async {
+    GetDetailDataParam2Event event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 
       final data = await _usecase(event.param1, event.param2);
 
       emit(GetDetailDataSuccess<T>(data));
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
-    } catch (e) {
-      emit(GetDetailError<T>(e));
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log(e.toString());
+        log('error: $trace');
+      }
+      final currentState = state;
+      if (currentState is GetDetailDataSuccess<T>) {
+        emit(GetDetailErrorHasData<T>(currentState.data, e));
+      } else {
+        emit(GetDetailError<T>(e));
+      }
     }
   }
 }
 
 /// Param3
 typedef GetDetailFutureParam3<T, P1, P2, P3> = Future<T> Function(
-    P1 param1, P2 param2, P3 param3);
+  P1 param1,
+  P2 param2,
+  P3 param3,
+);
 
 class GetDetailBlocParam3<T, P1, P2, P3>
     extends Bloc<GetDetailEvent, GetDetailState> {
@@ -100,16 +120,19 @@ class GetDetailBlocParam3<T, P1, P2, P3>
   }
 
   FutureOr<void> _mapGetDetailDataParam3Event(
-      GetDetailDataParam3Event event, Emitter<GetDetailState> emit) async {
+    GetDetailDataParam3Event event,
+    Emitter<GetDetailState> emit,
+  ) async {
     try {
       emit(GetDetailDataLoading<T>());
 
       final data = await _usecase(event.param1, event.param2, event.param3);
 
       emit(GetDetailDataSuccess<T>(data));
-    } on DioError catch (e) {
-      emit(GetDetailError<T>(e));
-    } catch (e) {
+    } catch (e, trace) {
+      if (kDebugMode) {
+        log('error: $trace');
+      }
       emit(GetDetailError<T>(e));
     }
   }

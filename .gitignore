@@ -22,6 +22,7 @@ migrate_working_dir/
 #.vscode/
 
 # Flutter/Dart/Pub related
+/pubspec.lock
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
@@ -86,3 +87,7 @@ ios/ExportOptions.plist
 packages/mobilehub_core/.flutter-plugins-dependencies
 packages/mobilehub_ui_core/.flutter-plugins-dependencies
 packages/mobilehub_bloc/.flutter-plugins-dependencies
+packages/mobilehub_bloc/.flutter-plugins
+packages/mobilehub_core/.flutter-plugins
+packages/mobilehub_ui_core/.flutter-plugins
+pubspec.lock

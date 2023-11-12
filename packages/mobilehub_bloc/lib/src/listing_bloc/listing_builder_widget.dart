@@ -9,7 +9,11 @@ import '../getlist_bloc/views/getlist_builder.dart';
 import '../widgets/empty_widget.dart';
 
 typedef ListingBuillder<T> = Widget Function(
-    BuildContext context, List<T> listItems, int index, T item);
+  BuildContext context,
+  List<T> listItems,
+  int index,
+  T item,
+);
 
 class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     extends StatefulWidget {
@@ -36,6 +40,10 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final ScrollPhysics? physics;
   final SliverGridDelegate? _gridDelegate;
   final Function(BuildContext context, GetListState state)? listener;
+  final bool useScrollBar;
+  final bool showTitleWhenLoading;
+  final Widget? loadingWidget;
+  final void Function()? onRefresh;
 
   const ListingBuilderWidget.listview({
     Key? key,
@@ -45,7 +53,9 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.offsetWillLoadMore = 3,
     this.limitDefault = 10,
     this.offsetDefault = 1,
+    this.onRefresh,
     this.enableRefresh = true,
+    this.showTitleWhenLoading = true,
     this.autoFetchWhenInit = true,
     this.scrollbarPaddingContent = paddingDefault,
     this.paddingList = EdgeInsets.zero,
@@ -61,6 +71,8 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.sliverTitle,
     this.physics,
     this.listener,
+    this.useScrollBar = false,
+    this.loadingWidget,
   })  : _gridDelegate = null,
         super(key: key);
 
@@ -70,6 +82,7 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     required this.builder,
     this.initStateBuilder,
     this.offsetWillLoadMore = 3,
+    this.showTitleWhenLoading = true,
     this.limitDefault = 10,
     this.offsetDefault = 1,
     this.enableRefresh = true,
@@ -87,6 +100,9 @@ class ListingBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.sliverTitle,
     this.physics,
     this.listener,
+    this.useScrollBar = false,
+    this.onRefresh,
+    this.loadingWidget,
   })  : _gridDelegate = gridDelegate ?? _kGridDelegate,
         separatorBuilder = null,
         typeScroll = null,
@@ -125,12 +141,15 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
 
   Future<void> _onRefresh() async {
     _fetchListData(widget.offsetDefault, TypeFetchPaging.refresh);
+    widget.onRefresh?.call();
     completer = Completer();
     await completer?.future;
   }
 
-  void _fetchListData(
-      [int? offset, TypeFetchPaging type = TypeFetchPaging.fetch]) {
+  void _fetchListData([
+    int? offset,
+    TypeFetchPaging type = TypeFetchPaging.fetch,
+  ]) {
     final currentState = (context.read<B>() as Bloc).state;
 
     var offsetCurrent = offset ?? widget.offsetDefault;
@@ -160,7 +179,7 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
       listScrollController = ListScrollController();
     }
     if (widget.autoFetchWhenInit) {
-      _fetchListData(widget.offsetDefault);
+      _fetchListData(widget.offsetDefault, TypeFetchPaging.refresh);
     }
   }
 
@@ -184,6 +203,24 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
             }
           : null,
       builder: (context, state) {
+        if (state is GetListDataLoading) {
+          return CustomScrollView(
+            slivers: [
+              if (widget.showTitleWhenLoading) ...[
+                if (widget.sliverTitle != null) widget.sliverTitle!,
+                if (widget.title != null)
+                  SliverToBoxAdapter(
+                    child: widget.title!,
+                  ),
+              ],
+              if (widget.loadingWidget != null)
+                SliverToBoxAdapter(
+                  child: widget.loadingWidget!,
+                ),
+            ],
+          );
+        }
+
         final listData = <T>[];
 
         if (state is GetListDataPagingSuccess<T, int, int>) {
@@ -191,44 +228,47 @@ class _ListingBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
           hasLoadMore = state.hasLoadMore;
         }
 
-        return Scrollbar(
-          controller: controller,
-          child: Padding(
-            padding: widget.scrollbarPaddingContent,
-            child: ListBuilderWidget(
-              sliverTitle: widget.sliverTitle,
-              pageStorageKey: widget.pageStorageKey,
-              physics: widget.physics ??
-                  (widget.enableRefresh == false && listData.isEmpty
-                      ? const NeverScrollableScrollPhysics()
-                      : null),
-              separatorBuilder: widget.separatorBuilder,
-              listScrollController: listScrollController,
-              emptyWidget: widget.emptyWidget,
-              isLoading: state is GetListDataLoading,
-              scrollController: controller,
-              padding: widget.paddingList,
-              reverse: widget.reverse,
-              title: widget.title,
-              footer: widget.footer,
-              onRefresh: widget.enableRefresh ? _onRefresh : null,
-              builder: (context, index) {
-                final isEnd =
-                    index == (listData.length - widget.offsetWillLoadMore);
+        final listWidget = Padding(
+          padding: widget.scrollbarPaddingContent,
+          child: ListBuilderWidget(
+            sliverTitle: widget.sliverTitle,
+            pageStorageKey: widget.pageStorageKey,
+            physics: widget.physics ??
+                (widget.enableRefresh == false && listData.isEmpty
+                    ? const NeverScrollableScrollPhysics()
+                    : null),
+            separatorBuilder: widget.separatorBuilder,
+            listScrollController: listScrollController,
+            emptyWidget: widget.emptyWidget,
+            isLoading: state is GetListDataLoading,
+            scrollController: controller,
+            padding: widget.paddingList,
+            reverse: widget.reverse,
+            title: widget.title,
+            footer: widget.footer,
+            onRefresh: widget.enableRefresh ? _onRefresh : null,
+            builder: (context, index) {
+              final isEnd =
+                  index == (listData.length - widget.offsetWillLoadMore);
 
-                if (hasLoadMore && isEnd) {
-                  hasLoadMore = false;
-                  _fetchListData();
-                }
+              if (hasLoadMore && isEnd) {
+                hasLoadMore = false;
+                _fetchListData();
+              }
 
-                return widget.builder(
-                    context, listData, index, listData[index]);
-              },
-              childCount: listData.length,
-              gridDelegate: widget._gridDelegate,
-            ),
+              return widget.builder(
+                context,
+                listData,
+                index,
+                listData[index],
+              );
+            },
+            childCount: listData.length,
+            gridDelegate: widget._gridDelegate,
           ),
         );
+
+        return widget.useScrollBar ? Scrollbar(child: listWidget) : listWidget;
       },
     );
   }

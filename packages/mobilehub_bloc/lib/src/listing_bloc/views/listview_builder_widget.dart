@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
-import 'package:universal_platform/universal_platform.dart';
 
 import '../../getlist_bloc/bloc/get_list_bloc.dart';
 import '../../mobilehub_constants.dart';
 import '../../widgets/empty_widget.dart';
 import '../listing_builder_widget.dart';
+
+typedef SliverTitleBuillder<T> = Widget Function(List<T> listItems);
 
 class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     extends StatefulWidget {
@@ -29,11 +30,12 @@ class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final Widget? errorWidget;
   final Widget emptyWidget;
   final Widget? title;
-  final Widget? sliverTitle;
+  final SliverTitleBuillder? sliverTitle;
   final Widget? footer;
   final PageStorageKey? pageStorageKey;
   final ScrollPhysics? physics;
-  final String keyName;
+  final String? keyName;
+  final bool enableSliverOverlapInjector;
 
   const ListViewBuilderWidget.listview({
     Key? key,
@@ -58,7 +60,8 @@ class ListViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
     this.pageStorageKey,
     this.sliverTitle,
     this.physics,
-    required this.keyName,
+    this.keyName,
+    this.enableSliverOverlapInjector = true,
   }) : super(key: key);
 
   @override
@@ -97,8 +100,10 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
     await completer?.future;
   }
 
-  void _fetchListData(
-      [int? offset, TypeFetchPaging type = TypeFetchPaging.fetch]) {
+  void _fetchListData([
+    int? offset,
+    TypeFetchPaging type = TypeFetchPaging.fetch,
+  ]) {
     final currentState = (context.read<B>() as Bloc).state;
 
     var offsetCurrent = offset ?? widget.offsetDefault;
@@ -128,7 +133,7 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
       listScrollController = ListScrollController();
     }
     if (widget.autoFetchWhenInit) {
-      _fetchListData(widget.offsetDefault);
+      _fetchListData(widget.offsetDefault, TypeFetchPaging.refresh);
     }
   }
 
@@ -158,18 +163,30 @@ class _ListViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
             state is GetListDataLoading || state is GetListBlocInitial;
 
         final bodyWidget = CustomScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          key: PageStorageKey<String>('namexxx:name${widget.keyName}'),
+          physics: widget.enableSliverOverlapInjector
+              ? const NeverScrollableScrollPhysics()
+              : null,
+          key: PageStorageKey<String>(
+            'namexxx:name${widget.keyName ?? hashCode}',
+          ),
           slivers: <Widget>[
+            if (widget.title != null)
+              SliverToBoxAdapter(
+                child: widget.title,
+              ),
             if (UniversalPlatform.isAndroid == false)
               SliverRefreshIndicatorWidget(
                 onRefresh: _onRefresh,
                 offsetPadding: offsetRefreshLoadingIOS,
               ),
-            SliverOverlapInjector(
-              // This is the flip side of the SliverOverlapAbsorber above.
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            ),
+            if (widget.enableSliverOverlapInjector)
+              SliverOverlapInjector(
+                // This is the flip side of the SliverOverlapAbsorber above.
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              ),
+            if (widget.sliverTitle != null)
+              SliverToBoxAdapter(child: widget.sliverTitle!(listData)),
             if (isLoading)
               const SliverFillRemaining(child: LoadingWidget())
             else if (listData.isNotEmpty)

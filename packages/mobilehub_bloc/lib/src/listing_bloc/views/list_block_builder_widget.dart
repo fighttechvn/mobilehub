@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
-import 'package:universal_platform/universal_platform.dart';
 
 import '../../getlist_bloc/bloc/get_list_bloc.dart';
 import '../../mobilehub_constants.dart';
@@ -91,7 +90,7 @@ class _ListBlockBuilderWidgetState<B extends StateStreamable<GetListState>, T>
 
         final bodyWidget = CustomScrollView(
           slivers: <Widget>[
-            if (UniversalPlatform.isAndroid == false)
+            if (widget.enableRefresh && UniversalPlatform.isAndroid == false)
               SliverRefreshIndicatorWidget(
                 onRefresh: _onRefresh,
                 offsetPadding: offsetRefreshLoadingIOS,
@@ -106,7 +105,7 @@ class _ListBlockBuilderWidgetState<B extends StateStreamable<GetListState>, T>
           ],
         );
 
-        if (UniversalPlatform.isAndroid && widget.enableRefresh) {
+        if (widget.enableRefresh && UniversalPlatform.isAndroid) {
           return RefreshIndicator(
             onRefresh: _onRefresh,
             edgeOffset: offsetRefreshLoadingAndroid,

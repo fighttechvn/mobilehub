@@ -1,0 +1,20 @@
+{
+  "discountLable": "Discount",
+  "sold": "sold",
+  "origin": "Origin",
+  "size": "Size",
+  "weight": "Weight",
+  "state": "State",
+  "warranty": "Warranty",
+  "description": "Description",
+  "parameters": "Parameters",
+  "newState": "New",
+  "likeNew": "99%",
+  "seeMore": "See More",
+  "seeLess": "See Less",
+  "productEmpty": "Product is empty",
+  "search": "Search",
+  "viewReviewItem": "Review",
+  "productReview": "Product reviews",
+  "seeAll": "See all"
+}

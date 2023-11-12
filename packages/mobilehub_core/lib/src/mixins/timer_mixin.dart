@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 mixin TimerMixin<T extends StatefulWidget> on State<T> {
   bool get isCountDown;
+  bool _isPause = false;
 
   int get timeInputLimit;
 
@@ -13,7 +14,7 @@ mixin TimerMixin<T extends StatefulWidget> on State<T> {
 
   void onCompleteTimer();
 
-  late ValueNotifier<int> timeCtr;
+  ValueNotifier<int> timeCtr = ValueNotifier(0);
   late Timer _timer;
 
   bool _isStart = false;
@@ -38,9 +39,9 @@ mixin TimerMixin<T extends StatefulWidget> on State<T> {
     _time = DateTimeHelper.timestamp + timeInputLimit;
 
     if (isCountDown && _time != null) {
-      timeCtr = ValueNotifier<int>(timeInputLimit);
+      timeCtr.value = timeInputLimit;
     } else {
-      timeCtr = ValueNotifier<int>(0);
+      timeCtr.value = 0;
     }
   }
 
@@ -50,21 +51,35 @@ mixin TimerMixin<T extends StatefulWidget> on State<T> {
       _timer = Timer.periodic(
         loopTime,
         (Timer timer) {
+          if (_isPause) {
+            return;
+          }
+
           if (timeCtr.value <= 0) {
             timer.cancel();
             onCompleteTimer();
           } else {
-            final startTime = _time;
-            if (startTime != null) {
-              timeCtr.value = startTime - DateTimeHelper.timestamp;
-            }
+            timeCtr.value = timeCtr.value - 1;
           }
+          // if (timeCtr.value <= 0) {
+          //   timer.cancel();
+          //   onCompleteTimer();
+          // } else {
+          //   final startTime = _time;
+          //   if (startTime != null) {
+          //     timeCtr.value = startTime - DateTimeHelper.timestamp;
+          //   }
+          // }
         },
       );
     } else {
       _timer = Timer.periodic(
         loopTime,
         (Timer timer) {
+          if (_isPause) {
+            return;
+          }
+
           final ti = _time;
           if (ti != null) {
             timeCtr.value = (DateTimeHelper.timestamp - ti) + 1;
@@ -81,9 +96,18 @@ mixin TimerMixin<T extends StatefulWidget> on State<T> {
 
   Widget builderTimer(ValueWidgetBuilder<int> builder) =>
       ValueListenableBuilder<int>(
+        key: ValueKey('${timeCtr.hashCode}'),
         valueListenable: timeCtr,
         builder: builder,
       );
+
+  void pauseTimer() {
+    _isPause = true;
+  }
+
+  void resumeTimer() {
+    _isPause = false;
+  }
 }
 
 class DateTimeHelper {

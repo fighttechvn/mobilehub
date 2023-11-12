@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
-import 'package:universal_platform/universal_platform.dart';
 
 import '../../getlist_bloc/bloc/get_list_bloc.dart';
 import '../../mobilehub_constants.dart';
@@ -19,7 +18,7 @@ class PageViewBuilderWidget<B extends StateStreamable<GetListState>, T, P>
   final int offsetDefault;
   final bool enableRefresh;
   final bool autoFetchWhenInit;
-  final PageController? pageController;
+  final PageViewBuilderController? pageController;
   final Widget emptyWidget;
   final Axis scrollDirection;
 
@@ -63,8 +62,10 @@ class _PageViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
     await completer?.future;
   }
 
-  void _fetchListData(
-      [int? offset, TypeFetchPaging type = TypeFetchPaging.fetch]) {
+  void _fetchListData([
+    int? offset,
+    TypeFetchPaging type = TypeFetchPaging.fetch,
+  ]) {
     final currentState = (context.read<B>() as Bloc).state;
 
     var offsetCurrent = offset ?? widget.offsetDefault;
@@ -127,7 +128,7 @@ class _PageViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
             bodyWidget = widget.emptyWidget;
           } else {
             bodyWidget = PreloadPageView.builder(
-              // controller: widget.pageController,
+              controller: widget.pageController,
               preloadPagesCount: 4,
               scrollDirection: widget.scrollDirection,
               itemCount: listData.length,
@@ -161,4 +162,12 @@ class _PageViewBuilderWidgetState<B extends StateStreamable<GetListState>, T, P>
 
     return widget.builder(context, listData, index, listData[index]);
   }
+}
+
+class PageViewBuilderController extends PreloadPageController {
+  PageViewBuilderController({
+    super.initialPage = 0,
+    super.keepPage = true,
+    super.viewportFraction = 1.0,
+  }) : assert(viewportFraction > 0.0, 'viewportFraction not zero');
 }

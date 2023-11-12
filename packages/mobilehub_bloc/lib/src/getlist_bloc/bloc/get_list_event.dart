@@ -55,6 +55,15 @@ class RemoveItemFromListEvent<T> extends GetListEvent {
   List<Object?> get props => [where];
 }
 
+class AddItemIntoListEvent<T> extends GetListEvent {
+  final T item;
+
+  AddItemIntoListEvent(this.item);
+
+  @override
+  List<Object?> get props => [item];
+}
+
 class RemoveItemEvent<T> extends GetListEvent {
   final T item;
 
@@ -117,4 +126,23 @@ class GetListPagingEvent<P1, P2, P3> extends GetListEvent {
 
   @override
   List<Object?> get props => [param1, type, offset, limit];
+}
+
+class LoadDataListEvent<T, P1, P2, P3> extends GetListEvent {
+  final P1 param1;
+  final P2 offset;
+  final P3 limit;
+  final List<T> listData;
+  final TypeFetchPaging type;
+
+  LoadDataListEvent(
+    this.param1, {
+    required this.listData,
+    required this.offset,
+    required this.limit,
+    required this.type,
+  });
+
+  @override
+  List<Object?> get props => [param1, type, offset, limit, listData];
 }

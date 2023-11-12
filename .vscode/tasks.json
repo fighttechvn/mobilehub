@@ -1,0 +1,267 @@
+{
+    // See https://go.mi crosoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        //-----FLUTTER_PUB_GET-----
+        {
+            "label": "flutter_pub_get app_core",
+            "type": "shell",
+            "command": "cd modules/app_core/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get app_core_test",
+            "type": "shell",
+            "command": "cd modules/app_core_test/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get app_developer",
+            "type": "shell",
+            "command": "cd modules/app_developer/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get app_distribution",
+            "type": "shell",
+            "command": "cd modules/app_distribution/environments/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get app_main",
+            "type": "shell",
+            "command": "cd modules/app_main/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get app_mock_api",
+            "type": "shell",
+            "command": "cd modules/app_mock_api/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get components",
+            "type": "shell",
+            "command": "cd modules/components/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get design_system",
+            "type": "shell",
+            "command": "cd modules/design_system/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get localization",
+            "type": "shell",
+            "command": "cd modules/localization/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get plugins",
+            "type": "shell",
+            "command": "cd modules/plugins/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get storybook",
+            "type": "shell",
+            "command": "cd modules/storybook/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get mobilehub_ui_core",
+            "type": "shell",
+            "command": "cd modules/plugins/mobilehub/packages/mobilehub_ui_core/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/address_kit",
+            "type": "shell",
+            "command": "cd modules/packages/address_kit/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/anetsdk",
+            "type": "shell",
+            "command": "cd modules/packages/anetsdk/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/authentication",
+            "type": "shell",
+            "command": "cd modules/packages/authentication/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/chat_kit",
+            "type": "shell",
+            "command": "cd modules/packages/chat_kit/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/ecommerce_kit",
+            "type": "shell",
+            "command": "cd modules/packages/ecommerce_kit/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/social_kit",
+            "type": "shell",
+            "command": "cd modules/packages/social_kit/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/ticket",
+            "type": "shell",
+            "command": "cd modules/packages/ticket/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get packages/address_kit",
+            "type": "shell",
+            "command": "cd modules/packages/address_kit/; flutter pub get"
+        },
+        {
+            "label": "flutter_pub_get_all",
+            "dependsOn": [
+                "flutter_pub_get app_core",
+                "flutter_pub_get app_core_test",
+                "flutter_pub_get app_developer",
+                "flutter_pub_get app_distribution",
+                "flutter_pub_get app_main",
+                "flutter_pub_get app_mock_api",
+                "flutter_pub_get components",
+                "flutter_pub_get design_system",
+                "flutter_pub_get packages/address_kit",
+                "flutter_pub_get packages/anetsdk",
+                "flutter_pub_get packages/authentication",
+                "flutter_pub_get packages/chat_kit",
+                "flutter_pub_get packages/ecommerce_kit",
+                "flutter_pub_get packages/social_kit",
+                "flutter_pub_get packages/ticket",
+                "flutter_pub_get localization",
+                "flutter_pub_get plugins",
+                "flutter_pub_get storybook",
+                "flutter_pub_get mobilehub_ui_core",
+            ]
+        },
+        //-----FLUTTER_CLEAN-----
+        {
+            "label": "flutter_clean app_core",
+            "type": "shell",
+            "command": "cd modules/app_core/; flutter clean"
+        },
+        {
+            "label": "flutter_clean app_core_test",
+            "type": "shell",
+            "command": "cd modules/app_core_test/; flutter clean"
+        },
+        {
+            "label": "flutter_clean app_developer",
+            "type": "shell",
+            "command": "cd modules/app_developer/; flutter clean"
+        },
+        {
+            "label": "flutter_clean app_distribution",
+            "type": "shell",
+            "command": "cd modules/app_distribution/environments/; flutter clean"
+        },
+        {
+            "label": "flutter_clean app_main",
+            "type": "shell",
+            "command": "cd modules/app_main/; flutter clean"
+        },
+        {
+            "label": "flutter_clean app_mock_api",
+            "type": "shell",
+            "command": "cd modules/app_mock_api/; flutter clean"
+        },
+        {
+            "label": "flutter_clean components",
+            "type": "shell",
+            "command": "cd modules/components/; flutter clean"
+        },
+        {
+            "label": "flutter_clean design_system",
+            "type": "shell",
+            "command": "cd modules/design_system/; flutter clean"
+        },
+        {
+            "label": "flutter_clean localization",
+            "type": "shell",
+            "command": "cd modules/localization/; flutter clean"
+        },
+        {
+            "label": "flutter_clean plugins",
+            "type": "shell",
+            "command": "cd modules/plugins/; flutter clean"
+        },
+        {
+            "label": "flutter_clean storybook",
+            "type": "shell",
+            "command": "cd modules/storybook/; flutter clean"
+        },
+        {
+            "label": "flutter_clean mobilehub_ui_core",
+            "type": "shell",
+            "command": "cd modules/plugins/mobilehub/packages/mobilehub_ui_core/; flutter clean"
+        },
+        {
+            "label": "flutter_clean_all",
+            "dependsOn": [
+                "flutter_clean app_core",
+                "flutter_clean app_core_test",
+                "flutter_clean app_developer",
+                "flutter_clean app_distribution",
+                "flutter_clean app_main",
+                "flutter_clean app_mock_api",
+                "flutter_clean components",
+                "flutter_clean design_system",
+                "flutter_clean localization",
+                "flutter_clean plugins",
+                "flutter_clean storybook",
+                "flutter_clean mobilehub_ui_core",
+            ]
+        },
+        //-----BUILD RUNNER-----
+        {
+            "label": "build_runner app_main",
+            "type": "shell",
+            "command": "cd modules/app_main/; dart run build_runner build --delete-conflicting-outputs",
+            "dependsOn": [
+                "remove_gen_code one_data"
+            ]
+        },
+        {
+            "label": "build_runner modules:packages:ecommerce_kit",
+            "type": "shell",
+            "command": "cd modules/packages/ecommerce_kit/; dart run build_runner build --delete-conflicting-outputs"
+        },
+        {
+            "label": "build_runner modules:packages:social_kit",
+            "type": "shell",
+            "command": "cd modules/packages/social_kit/; dart run build_runner build --delete-conflicting-outputs"
+        },
+        {
+            "label": "build_runner modules:packages:anetsdk",
+            "type": "shell",
+            "command": "cd modules/packages/anetsdk/; dart run build_runner build --delete-conflicting-outputs"
+        },
+        //-----GENERATE LOCALIZATION
+        {
+            "label": "generate: modules_localizations",
+            "command": "cd modules/localization/; dart run intl_utils:generate",
+            "type": "shell",
+            "options": {
+                "cwd": "./"
+            }
+        },
+        {
+            "label": "generate_localization: modules/packages/social_kit/",
+            "command": "cd modules/packages/social_kit/; dart run fl_generator:generate_app_localizations; flutter gen-l10n; dart format .",
+            "type": "shell",
+            "options": {
+                "cwd": "./"
+            }
+        },
+        {
+            "label": "generate_localization: modules/packages/ecommerce_kit/",
+            "command": "cd modules/packages/ecommerce_kit/; dart run fl_generator:generate_app_localizations; flutter gen-l10n; dart format .",
+            "type": "shell",
+            "options": {
+                "cwd": "./"
+            }
+        },
+        {
+            "label": "generate_localization: modules/plugins/genaral_setting/",
+            "command": "cd modules/plugins/genaral_setting/; dart run fl_generator:generate_app_localizations; flutter gen-l10n; dart format .",
+            "type": "shell",
+            "options": {
+                "cwd": "./"
+            }
+        },
+    ]
+}
