@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrCodeScanWidget extends StatefulWidget {
-  const QrCodeScanWidget({super.key});
+  final Widget? description;
+
+  const QrCodeScanWidget({super.key, this.description});
 
   @override
   State<QrCodeScanWidget> createState() => _QrCodeScanWidgetState();
@@ -152,15 +154,20 @@ class _QrCodeScanWidgetState extends State<QrCodeScanWidget> {
                 ),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 38.0),
-                    child: Text(
-                      'Place QR code in the frame',
-                      style:
-                          Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    padding:
+                        const EdgeInsets.only(top: 38.0, left: 16, right: 16),
+                    child: widget.description ??
+                        Text(
+                          'Place QR code in the frame',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
-                    ),
+                          textAlign: TextAlign.center,
+                        ),
                   ),
                 ),
               ],

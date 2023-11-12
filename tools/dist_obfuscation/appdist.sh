@@ -1,0 +1,1 @@
+dart compile exe lib/main.dart -o bin/dartObfusation

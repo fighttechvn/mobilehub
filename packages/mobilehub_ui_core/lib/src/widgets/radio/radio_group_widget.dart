@@ -23,6 +23,8 @@ class RadioGroupWidget<T> extends StatefulWidget {
     this.padding,
     this.contentPadding,
     this.hasAlertWhenCodAndNotPdone = false,
+    this.itemIsLeft = false,
+    this.enableBorderItem = true,
   }) : super(key: key);
 
   final T? value;
@@ -31,6 +33,10 @@ class RadioGroupWidget<T> extends StatefulWidget {
   final DisplayValueBuilder<T>? titleBuilder;
   final DisplayValueBuilder<T>? subtitleBuilder;
   final DisplayValueBuilder<T>? leadingBuilder;
+
+  /// Item
+  final bool enableBorderItem;
+  final bool itemIsLeft;
 
   // Decoration
   final double spacing;
@@ -100,21 +106,25 @@ class _RadioGroupWidgetState<T> extends State<RadioGroupWidget<T>> {
         final T value = widget.groupValue[index];
 
         return DecoratedBox(
-          decoration: BoxDecoration(
-            color: hasAlert
-                ? const Color.fromRGBO(217, 36, 36, 0.1)
-                : _backgroundColor,
-            border: Border.all(
-              color: _currentValue == value
-                  ? (hasAlert ? const Color(0xffD92424) : _borderColor)
-                  : _borderColorDefault,
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.circular(_radius),
-          ),
+          decoration: widget.enableBorderItem == false
+              ? const BoxDecoration()
+              : BoxDecoration(
+                  color: hasAlert
+                      ? const Color.fromRGBO(217, 36, 36, 0.1)
+                      : _backgroundColor,
+                  border: Border.all(
+                    color: _currentValue == value
+                        ? (hasAlert ? const Color(0xffD92424) : _borderColor)
+                        : _borderColorDefault,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(_radius),
+                ),
           child: RadioListTile<T?>(
             value: value,
-            controlAffinity: ListTileControlAffinity.trailing,
+            controlAffinity: widget.itemIsLeft == true
+                ? ListTileControlAffinity.leading
+                : ListTileControlAffinity.trailing,
             groupValue: _currentValue,
             onChanged: _onChanged,
             secondary: widget.leadingBuilder?.call(context, value, index),

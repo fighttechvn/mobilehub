@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'widgets/qr_code_scan_widget.dart';
 
 extension BuildContextExtQrCode<T> on BuildContext {
-  Future<T?> startQRCodeScan() {
+  Future<T?> startQRCodeScan({Widget? description}) {
     return Navigator.push(
       this,
-      MaterialPageRoute(builder: (context) => const QrCodeScanWidget()),
+      MaterialPageRoute(
+          builder: (context) => QrCodeScanWidget(
+                description: description,
+              )),
     );
   }
 }
