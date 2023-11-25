@@ -18,7 +18,7 @@ dependencies:
     path: ../device_media
   
   equatable: ^2.0.3
-  collection: 1.17.2
+  collection: 1.18.0
   imagewidget: ^1.1.0
   easy_device_media: 1.0.0
 
