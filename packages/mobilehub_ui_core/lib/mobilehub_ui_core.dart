@@ -75,3 +75,4 @@ export 'src/widgets/slivers/sliver_appbar_custom.dart';
 export 'src/widgets/star_rating_widget.dart';
 export 'src/widgets/text_input_multi_select/text_input_multi_select.dart';
 export 'src/widgets/view_more.dart';
+export 'src/widgets/will_pop_scope.dart';

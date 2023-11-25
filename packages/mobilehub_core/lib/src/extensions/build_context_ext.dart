@@ -24,4 +24,6 @@ extension BuildContextThemeExt on BuildContext {
       MediaQuery.of(this).platformBrightness == Brightness.dark;
 
   MediaQueryData get mediaData => MediaQuery.of(context);
+
+  double get textScaleFactor => MediaQuery.textScalerOf(this).scale(1) / 1;
 }

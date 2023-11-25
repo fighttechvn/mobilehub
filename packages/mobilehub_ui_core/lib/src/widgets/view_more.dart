@@ -114,7 +114,7 @@ class _ViewMoreWidgetState extends State<ViewMoreWidget> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stops: const [0, 0.7, 1],
+              stops: const [0, 0.86, 1],
               colors: expand
                   ? [Colors.transparent, Colors.transparent, Colors.transparent]
                   : [Colors.white10, Colors.white, Colors.white],
@@ -131,12 +131,18 @@ class _ViewMoreWidgetState extends State<ViewMoreWidget> {
               });
             },
             child: widget.isLeftStyle
-                ? Text(
-                    expand ? widget.seeLess : widget.viewMore,
-                    style: textTheme.titleMedium?.copyWith(
-                      color: context.theme.colorScheme.secondary,
-                      fontWeight: FontWeight.w600,
-                    ),
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        expand ? widget.seeLess : widget.viewMore,
+                        style: textTheme.titleSmall?.copyWith(
+                          color: context.theme.colorScheme.secondary,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   )
                 : Row(
                     children: [

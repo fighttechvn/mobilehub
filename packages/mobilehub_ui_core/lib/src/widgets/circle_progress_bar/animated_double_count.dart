@@ -85,7 +85,9 @@ class _AnimatedCountState extends State<AnimatedCount>
               Text(
                 widget.unit!,
                 style: widget.style,
-                textScaler: MediaQuery.textScalerOf(context),
+                textScaler: widget.unitScaleFactor != null
+                    ? TextScaler.linear(widget.unitScaleFactor!)
+                    : MediaQuery.textScalerOf(context),
               ),
           ],
         );
