@@ -60,18 +60,15 @@ import 'genaral_setting_localizations_vi.dart';
 /// be consistent with the languages listed in the GenaralSettingLocalizations.supportedLocales
 /// property.
 abstract class GenaralSettingLocalizations {
-  GenaralSettingLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  GenaralSettingLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
   static GenaralSettingLocalizations? of(BuildContext context) {
-    return Localizations.of<GenaralSettingLocalizations>(
-        context, GenaralSettingLocalizations);
+    return Localizations.of<GenaralSettingLocalizations>(context, GenaralSettingLocalizations);
   }
 
-  static const LocalizationsDelegate<GenaralSettingLocalizations> delegate =
-      _GenaralSettingLocalizationsDelegate();
+  static const LocalizationsDelegate<GenaralSettingLocalizations> delegate = _GenaralSettingLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -83,8 +80,7 @@ abstract class GenaralSettingLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -206,36 +202,34 @@ abstract class GenaralSettingLocalizations {
   String get seeAll;
 }
 
-class _GenaralSettingLocalizationsDelegate
-    extends LocalizationsDelegate<GenaralSettingLocalizations> {
+class _GenaralSettingLocalizationsDelegate extends LocalizationsDelegate<GenaralSettingLocalizations> {
   const _GenaralSettingLocalizationsDelegate();
 
   @override
   Future<GenaralSettingLocalizations> load(Locale locale) {
-    return SynchronousFuture<GenaralSettingLocalizations>(
-        lookupGenaralSettingLocalizations(locale));
+    return SynchronousFuture<GenaralSettingLocalizations>(lookupGenaralSettingLocalizations(locale));
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'vi'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'vi'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_GenaralSettingLocalizationsDelegate old) => false;
 }
 
 GenaralSettingLocalizations lookupGenaralSettingLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return GenaralSettingLocalizationsEn();
-    case 'vi':
-      return GenaralSettingLocalizationsVi();
+    case 'en': return GenaralSettingLocalizationsEn();
+    case 'vi': return GenaralSettingLocalizationsVi();
   }
 
   throw FlutterError(
-      'GenaralSettingLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'GenaralSettingLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

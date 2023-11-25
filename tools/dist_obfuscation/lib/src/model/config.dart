@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target, strict_raw_type
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'config.freezed.dart';
