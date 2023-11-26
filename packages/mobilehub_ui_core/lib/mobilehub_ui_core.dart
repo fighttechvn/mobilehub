@@ -61,6 +61,7 @@ export 'src/widgets/checkbox/group_check_box_widget.dart';
 export 'src/widgets/countdown/time_countdown.dart';
 export 'src/widgets/countdown/timer_countdown_day_widget.dart';
 export 'src/widgets/expandable_fab.dart';
+export 'src/widgets/expansion_widget.dart';
 export 'src/widgets/hidable_button_nav.dart';
 export 'src/widgets/keep_alive_widget.dart';
 export 'src/widgets/keyboard/auto_hide_keyboard.dart';

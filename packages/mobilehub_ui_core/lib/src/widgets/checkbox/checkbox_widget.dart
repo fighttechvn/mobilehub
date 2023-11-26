@@ -80,9 +80,14 @@ class _CheckBoxWidgetState<T> extends State<CheckBoxWidget<T>> {
                   const SizedBox(width: 10),
                   widget.textWidget ??
                       ((widget.text?.isNotEmpty ?? false)
-                          ? Text(
-                              widget.text!,
-                              style: widget.style,
+                          ? Tooltip(
+                              message: widget.text,
+                              child: Text(
+                                widget.text!,
+                                style: widget.style,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             )
                           : const SizedBox()),
                 ],

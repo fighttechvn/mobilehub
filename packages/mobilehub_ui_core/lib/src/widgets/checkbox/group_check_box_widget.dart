@@ -97,11 +97,18 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
             itemBuilder: (context, index) {
               final item = widget.values.elementAt(index);
               final isSelected = _selectedValue == item;
-              final titleWidget = widget.builderTitle?.call(item, isSelected) ??
-                  Text(item.toString());
+              final titleWidget = Tooltip(
+                message: item.toString(),
+                child: widget.builderTitle?.call(item, isSelected) ??
+                    Text(
+                      item.toString(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+              );
 
               final widgetItem = CheckBoxWidget<T>(
-                textWidget: titleWidget,
+                textWidget: Expanded(child: titleWidget),
                 isSelected: isSelected,
                 hasUnselect: widget.isRadioType == false,
                 onSelected: (bool isSelected) => _onSelected(isSelected, item),
