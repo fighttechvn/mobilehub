@@ -18,6 +18,7 @@ export 'src/extensions/object_ext.dart';
 export 'src/extensions/scroll_controller_ext.dart';
 export 'src/extensions/string_ext.dart';
 export 'src/helpers/platform_helper.dart';
+export 'src/helpers/stream_helper.dart';
 export 'src/mixins/detect_screen_21_169_mixin.dart';
 export 'src/mixins/timer_mixin.dart';
 export 'src/mixins/validation_mixin.dart';

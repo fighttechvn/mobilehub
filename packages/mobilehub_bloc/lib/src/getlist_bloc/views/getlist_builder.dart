@@ -34,6 +34,42 @@ class GetListBuilder<T> extends StatelessWidget {
   }
 }
 
+class GetListBuilderSearch<T> extends StatelessWidget {
+  final Widget Function(BuildContext context, List<T> data) builder;
+  final Widget Function()? loadingBuilder;
+
+  const GetListBuilderSearch({
+    Key? key,
+    required this.builder,
+    this.loadingBuilder,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GetListBloc<T>, GetListState>(
+      builder: (context, state) {
+        if (state is GetListDataLoading<T>) {
+          return loadingBuilder != null
+              ? loadingBuilder!()
+              : const LoadingWidget();
+        } else if (state is GetListDataSuccess<T>) {
+          var data = state.data;
+
+          if (state is GetListDataTypeSearchResult<T>) {
+            data = state.dataSearchResult;
+          }
+
+          return AnimatedSize(
+            duration: const Duration(milliseconds: 200),
+            child: builder(context, data),
+          );
+        }
+        return const SizedBox();
+      },
+    );
+  }
+}
+
 class GetListParam1Builder<T, P1> extends StatelessWidget {
   final Widget Function(BuildContext context, List<T> data) builder;
   final Widget Function()? initStateBuilder;

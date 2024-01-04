@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobilehub_core/mobilehub_core.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../listing_bloc/listing_bloc.dart';
@@ -22,11 +23,9 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
   GetListBloc(this._usecase) : super(GetListBlocInitial()) {
     on<GetListDataEvent>(_mapGetListDataEvent);
     on<RemoveItemFromListEvent>(_mapRemoveItemFromListEvent);
-    on<GetListDateTypeSearchText>(
-      _mapGetListDateTypeSearchText,
-      transformer: (events, mapper) => events
-          .debounceTime(const Duration(milliseconds: 300))
-          .switchMap(mapper),
+    on<GetListDataTypeSearchText>(
+      _mapGetListDataTypeSearchText,
+      transformer: debounce(const Duration(milliseconds: 300)),
     );
   }
 
@@ -64,22 +63,33 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
     }
   }
 
-  FutureOr<void> _mapGetListDateTypeSearchText(
-    GetListDateTypeSearchText event,
+  FutureOr<void> _mapGetListDataTypeSearchText(
+    GetListDataTypeSearchText event,
     Emitter<GetListState> emit,
   ) {
     final currentState = state;
 
-    if (currentState is GetListDataSuccess) {
-      final searchResult = currentState.data.where((element) {
-        return event.where(element);
-      }).toList() as List<T>;
-      emit(GetListDataTypeSearchResult<T>(currentState.data, searchResult));
+    if (currentState is GetListDataSuccess<T>) {
+      if (event.textSearch.isEmpty) {
+        emit(GetListDataSuccess<T>(currentState.data));
+      } else {
+        final searchResult = currentState.data.where((element) {
+          return event.where(element);
+        }).toList();
+        emit(
+          GetListDataTypeSearchResult<T>(
+            currentState.data,
+            dataSearchResult: searchResult,
+          ),
+        );
+      }
     }
   }
 }
 
+///
 /// Bloc with 1 parameter
+///
 typedef LoadListFutureParam1<T, P1> = Future<List<T>> Function(P1 param1);
 
 class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
@@ -90,6 +100,11 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
     on<RemoveItemFromListEvent<T>>(_mapRemoveItemFromListEvent);
     on<AddItemIntoListEvent<T>>(_mapAddItemIntoListEvent);
     on<UpdateItemToListEvent<T>>(_mapUpdateItemToListEvent);
+
+    on<GetListDataTypeSearchText>(
+      _mapGetListDataTypeSearchText,
+      transformer: debounce(const Duration(milliseconds: 300)),
+    );
   }
 
   FutureOr<void> _mapGetDetailDataParam1Event(
@@ -162,6 +177,32 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
         log('error: $trace');
       }
       emit(GetListDataError<T>(e.toString(), e));
+    }
+  }
+
+  ///
+  /// Event User Search Text
+  ///
+  FutureOr<void> _mapGetListDataTypeSearchText(
+    GetListDataTypeSearchText event,
+    Emitter<GetListState> emit,
+  ) {
+    final currentState = state;
+
+    if (currentState is GetListDataSuccess<T>) {
+      if (event.textSearch.isEmpty) {
+        emit(GetListDataSuccess<T>(currentState.data));
+      } else {
+        final searchResult = currentState.data.where((element) {
+          return event.where(element);
+        }).toList();
+        emit(
+          GetListDataTypeSearchResult<T>(
+            currentState.data,
+            dataSearchResult: searchResult,
+          ),
+        );
+      }
     }
   }
 }

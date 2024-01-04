@@ -4,6 +4,7 @@ part of 'get_list_bloc.dart';
 abstract class GetListState extends Equatable {
   bool get isLoading =>
       this is GetListDataLoading || this is GetListBlocInitial;
+  const GetListState();
 }
 
 class GetListBlocInitial extends GetListState {
@@ -20,23 +21,32 @@ class GetListDataSuccess<T> extends GetListState {
   final List<T> data;
   final int? timespan;
 
-  GetListDataSuccess(this.data, {this.timespan});
+  const GetListDataSuccess(this.data, {this.timespan});
 
   @override
   List<Object?> get props => [data, this.timespan];
 }
 
-class GetListDataLoadingSuccess<T> extends GetListDataSuccess<T> {
-  GetListDataLoadingSuccess(super.data);
+class GetListDataSearchResult<T> extends GetListDataSuccess<T> {
+  final List<T> dataResult;
+
+  const GetListDataSearchResult(
+    super.data,
+    this.dataResult,
+  );
 }
 
-class GetListDataTypeSearchResult<T> extends GetListDataSuccess {
+class GetListDataLoadingSuccess<T> extends GetListDataSuccess<T> {
+  const GetListDataLoadingSuccess(super.data);
+}
+
+class GetListDataTypeSearchResult<T> extends GetListDataSuccess<T> {
   final List<T> dataSearchResult;
 
-  GetListDataTypeSearchResult(
-    super.data,
-    this.dataSearchResult,
-  );
+  const GetListDataTypeSearchResult(
+    super.data, {
+    required this.dataSearchResult,
+  });
 }
 
 class GetListDataPagingSuccess<T, P2, P3> extends GetListDataSuccess<T> {
@@ -45,7 +55,7 @@ class GetListDataPagingSuccess<T, P2, P3> extends GetListDataSuccess<T> {
   final dynamic cursor;
   final bool hasLoadMore;
 
-  GetListDataPagingSuccess(
+  const GetListDataPagingSuccess(
     super.data, {
     required this.offset,
     required this.limit,
@@ -63,7 +73,7 @@ class GetListDataFromItemSuccess<T, P2, P3>
     extends GetListDataPagingSuccess<T, P2, P3> {
   final int index;
 
-  GetListDataFromItemSuccess(
+  const GetListDataFromItemSuccess(
     super.data, {
     required this.index,
     required super.offset,
@@ -80,7 +90,7 @@ class GetListDataFromItemSuccess<T, P2, P3>
 
 class PullToRefreshSuccess<T, P2, P3>
     extends GetListDataPagingSuccess<T, P2, P3> {
-  PullToRefreshSuccess(
+  const PullToRefreshSuccess(
     super.data, {
     super.timespan,
     required super.offset,
@@ -98,7 +108,7 @@ class GetListDataPagingFailed<T> extends GetListDataPagingSuccess {
   final String message;
   final dynamic error;
 
-  GetListDataPagingFailed(
+  const GetListDataPagingFailed(
     this.message,
     this.error,
     super.data, {
@@ -118,7 +128,7 @@ class GetListDataError<T> extends GetListState {
   final String message;
   final dynamic error;
 
-  GetListDataError(this.message, this.error);
+  const GetListDataError(this.message, this.error);
 
   @override
   List<Object?> get props => [message, error];
