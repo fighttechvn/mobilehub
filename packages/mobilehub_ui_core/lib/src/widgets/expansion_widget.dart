@@ -83,16 +83,13 @@ class _ExpansionWidgetState extends State<ExpansionWidget>
         AnimatedBuilder(
           animation: _animation,
           builder: (context, child) {
-            return Opacity(
-              opacity: 1 * _animation.value,
-              child: SizedBox(
-                height: _heightSetItem == null
-                    ? (widget.isExpend ? null : 0)
-                    : _heightSetItem! * _animation.value,
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: child,
-                ),
+            return SizedBox(
+              height: _heightSetItem == null
+                  ? (widget.isExpend ? null : 0)
+                  : _heightSetItem! * _animation.value,
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: child,
               ),
             );
           },
