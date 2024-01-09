@@ -26,7 +26,7 @@ class _ImageGalleryWidgetState extends StatefulWidgetBase<ImageGalleryWidget> {
   final slidePagekey = GlobalKey<ExtendedImageSlidePageState>();
 
   @override
-  DeviceService get deviceService => injector.get();
+  DeviceService get deviceService => DeviceServiceImpl();
 
   @override
   bool get isDark => true;
