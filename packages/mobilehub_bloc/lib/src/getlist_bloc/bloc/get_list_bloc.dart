@@ -112,11 +112,23 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
     Emitter<GetListState> emit,
   ) async {
     try {
-      emit(GetListDataLoading<T>());
+      final previousStateIsSuccess = state is GetListDataSuccess<T>;
+      if ((previousStateIsSuccess &&
+              (state as GetListDataSuccess<T>).data.isEmpty) ||
+          previousStateIsSuccess == false) {
+        emit(GetListDataLoading<T>());
+      }
 
       final data = await _usecaseParam1(event.param1);
 
-      emit(GetListDataSuccess<T>(data));
+      emit(
+        GetListDataSuccess<T>(
+          data,
+          timespan: previousStateIsSuccess
+              ? DateTime.now().microsecondsSinceEpoch
+              : null,
+        ),
+      );
     } catch (e, trace) {
       if (kDebugMode) {
         log('error: $trace');
