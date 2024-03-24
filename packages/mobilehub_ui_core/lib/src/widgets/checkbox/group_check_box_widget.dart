@@ -23,6 +23,8 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
     this.checkBoxbuilder,
     this.groupCheckBoxBuilder,
     this.direction = Axis.horizontal,
+    this.expendTitle = false,
+    this.position = PositionRadio.start,
   })  : builderTitle = null,
         super(key: key);
 
@@ -39,6 +41,8 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
     this.groupCheckBoxBuilder,
     this.direction = Axis.horizontal,
     required this.builderTitle,
+    this.expendTitle = false,
+    this.position = PositionRadio.start,
   }) : super(key: key);
 
   final ValueChanged<T?>? onSelected;
@@ -52,6 +56,8 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
   final GroupCheckBoxBuilder<T>? groupCheckBoxBuilder;
   final Axis direction;
   final Widget Function(T data, bool isSelected)? builderTitle;
+  final bool expendTitle;
+  final PositionRadio position;
 
   @override
   State<GroupCheckBoxWidget<T>> createState() => _GroupCheckBoxWidgetState();
@@ -108,6 +114,8 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
               );
 
               final widgetItem = CheckBoxWidget<T>(
+                position: widget.position,
+                expendTitle: widget.expendTitle,
                 textWidget: Expanded(child: titleWidget),
                 isSelected: isSelected,
                 hasUnselect: widget.isRadioType == false,
@@ -133,48 +141,58 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
           );
         }
 
+        final items = List.generate(widget.values.length, (index) {
+          final item = widget.values.toList()[index];
+          final isSelected = _selectedValue == item;
+          final titleWidget = widget.builderTitle?.call(item, isSelected) ??
+              Text(item.toString());
+
+          final widgetCheckBox = CheckBoxWidget<T>(
+            textWidget: titleWidget,
+            data: item,
+            position: widget.position,
+            expendTitle: widget.expendTitle,
+            isSelected: _selectedValue == item,
+            hasUnselect: widget.isRadioType == false,
+            onSelected: (bool isSelected) => _onSelected(isSelected, item),
+            builder: widget.checkBoxbuilder,
+          );
+
+          if (widget.groupCheckBoxBuilder != null) {
+            return GestureDetector(
+              onTap: () => _onSelected(isSelected, item),
+              behavior: HitTestBehavior.translucent,
+              child: widget.groupCheckBoxBuilder!.call(
+                index,
+                widgetCheckBox,
+                constraints,
+                isSelected,
+                item,
+              ),
+            );
+          }
+
+          return widgetCheckBox;
+        });
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Wrap(
-              spacing: widget.spacing,
-              runSpacing: widget.spacing,
-              direction: widget.direction,
-              alignment: WrapAlignment.spaceBetween,
-              children: List.generate(widget.values.length, (index) {
-                final item = widget.values.toList()[index];
-                final isSelected = _selectedValue == item;
-                final titleWidget =
-                    widget.builderTitle?.call(item, isSelected) ??
-                        Text(item.toString());
-
-                final widgetCheckBox = CheckBoxWidget<T>(
-                  textWidget: titleWidget,
-                  data: item,
-                  isSelected: _selectedValue == item,
-                  hasUnselect: widget.isRadioType == false,
-                  onSelected: (bool isSelected) =>
-                      _onSelected(isSelected, item),
-                  builder: widget.checkBoxbuilder,
-                );
-
-                if (widget.groupCheckBoxBuilder != null) {
-                  return GestureDetector(
-                    onTap: () => _onSelected(isSelected, item),
-                    behavior: HitTestBehavior.translucent,
-                    child: widget.groupCheckBoxBuilder!.call(
-                      index,
-                      widgetCheckBox,
-                      constraints,
-                      isSelected,
-                      item,
-                    ),
-                  );
-                }
-
-                return widgetCheckBox;
-              }),
-            ),
+            if (widget.direction == Axis.vertical)
+              ...items
+                  .expand(
+                    (element) => [element, SizedBox(height: widget.spacing)],
+                  )
+                  .toList()
+                ..removeLast()
+            else
+              Wrap(
+                spacing: widget.spacing,
+                runSpacing: widget.spacing,
+                direction: widget.direction,
+                alignment: WrapAlignment.spaceBetween,
+                children: items,
+              ),
             if (widget.error != null) widget.error!,
           ],
         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 
 import 'images_list_coodinator.dart';
 
@@ -12,9 +13,6 @@ class GridImagesWidget extends StatelessWidget {
     this.crossAxisSpacing = 20.0,
     this.padding = const EdgeInsets.only(right: 12, top: 16),
     this.pushRootNavigator = true,
-    this.builder,
-    this.physics,
-    this.shrinkWrap = true,
   });
 
   final List<String> images;
@@ -24,15 +22,12 @@ class GridImagesWidget extends StatelessWidget {
   final double crossAxisSpacing;
   final EdgeInsetsGeometry padding;
   final bool pushRootNavigator;
-  final Widget Function(int index)? builder;
-  final ScrollPhysics? physics;
-  final bool shrinkWrap;
 
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      physics: physics ?? const NeverScrollableScrollPhysics(),
-      shrinkWrap: shrinkWrap,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       crossAxisCount: crossAxisCount,
       childAspectRatio: childAspectRatio,
       padding: padding,
@@ -42,7 +37,7 @@ class GridImagesWidget extends StatelessWidget {
         ...images.asMap().entries.map(
               (e) => Hero(
                 tag: '${hashCode}_${e.value}',
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () {
                     context.openImageGallery(
                       images: images,
@@ -51,17 +46,10 @@ class GridImagesWidget extends StatelessWidget {
                       rootNavigator: pushRootNavigator,
                     );
                   },
-                  child: builder != null
-                      ? builder!.call(e.key)
-                      : e.value.contains('http')
-                          ? Image.network(
-                              e.value,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.asset(
-                              e.value,
-                              fit: BoxFit.cover,
-                            ),
+                  child: ImageWidget(
+                    e.value,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

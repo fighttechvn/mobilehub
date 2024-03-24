@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 
 typedef CheckboxBuilder<T> = Widget Function(bool isSelected, T data);
 
+enum PositionRadio {
+  start,
+  end;
+
+  bool get isStart => this == PositionRadio.start;
+  bool get isEnd => this == PositionRadio.end;
+}
+
 class CheckBoxWidget<T> extends StatefulWidget {
   final double size;
   final Color borderColor;
@@ -17,6 +25,8 @@ class CheckBoxWidget<T> extends StatefulWidget {
   final CheckboxBuilder<T>? builder;
   final TextStyle? style;
   final T data;
+  final bool expendTitle;
+  final PositionRadio position;
 
   const CheckBoxWidget({
     Key? key,
@@ -32,6 +42,8 @@ class CheckBoxWidget<T> extends StatefulWidget {
     this.style,
     required this.data,
     this.textWidget,
+    this.expendTitle = false,
+    this.position = PositionRadio.start,
   }) : super(key: key);
 
   @override
@@ -76,20 +88,29 @@ class _CheckBoxWidgetState<T> extends State<CheckBoxWidget<T>> {
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildCheckBoxCustom(),
-                  const SizedBox(width: 10),
-                  widget.textWidget ??
-                      ((widget.text?.isNotEmpty ?? false)
-                          ? Tooltip(
-                              message: widget.text,
-                              child: Text(
-                                widget.text!,
-                                style: widget.style,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            )
-                          : const SizedBox()),
+                  if (widget.position.isStart) ...[
+                    _buildCheckBoxCustom(),
+                    const SizedBox(width: 10),
+                  ],
+                  Flexible(
+                    fit: widget.expendTitle ? FlexFit.tight : FlexFit.loose,
+                    child: widget.textWidget ??
+                        ((widget.text?.isNotEmpty ?? false)
+                            ? Tooltip(
+                                message: widget.text,
+                                child: Text(
+                                  widget.text!,
+                                  style: widget.style,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                            : const SizedBox()),
+                  ),
+                  if (widget.position.isEnd) ...[
+                    const SizedBox(width: 10),
+                    _buildCheckBoxCustom(),
+                  ],
                 ],
               )
             : _buildCheckBoxCustom(),

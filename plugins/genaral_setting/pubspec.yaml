@@ -14,8 +14,8 @@ dependencies:
     sdk: flutter
   intl: 0.18.1
   
-  injectable: ^2.1.0
-  get_it: ^7.2.0
+  injectable: ^2.3.2
+  get_it: ^7.6.7
   provider: ^6.0.5
   shared_preferences: ^2.0.13
 

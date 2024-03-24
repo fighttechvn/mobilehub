@@ -94,7 +94,7 @@ TypeFetchPaging.renew   : dùng cho trường hợp force fectch và load new li
         isNews: false,
       ),
       limit: 10,
-      offset: 1,
+      offset: 0,
       type: TypeFetchPaging.renew,
     ));
 ```

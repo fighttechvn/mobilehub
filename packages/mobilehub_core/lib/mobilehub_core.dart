@@ -20,6 +20,7 @@ export 'src/extensions/string_ext.dart';
 export 'src/helpers/platform_helper.dart';
 export 'src/helpers/stream_helper.dart';
 export 'src/mixins/detect_screen_21_169_mixin.dart';
+export 'src/mixins/paging_mixin.dart';
 export 'src/mixins/timer_mixin.dart';
 export 'src/mixins/validation_mixin.dart';
 export 'src/networking/certificate_http_overrides.dart';

@@ -101,10 +101,7 @@ class GetListBlocParam1<T, P1> extends Bloc<GetListEvent, GetListState> {
     on<AddItemIntoListEvent<T>>(_mapAddItemIntoListEvent);
     on<UpdateItemToListEvent<T>>(_mapUpdateItemToListEvent);
 
-    on<GetListDataTypeSearchText>(
-      _mapGetListDataTypeSearchText,
-      transformer: debounce(const Duration(milliseconds: 300)),
-    );
+    on<GetListDataTypeSearchText>(_mapGetListDataTypeSearchText);
   }
 
   FutureOr<void> _mapGetDetailDataParam1Event(

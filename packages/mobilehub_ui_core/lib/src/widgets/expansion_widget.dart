@@ -5,6 +5,7 @@ class ExpansionWidget extends StatefulWidget {
   final Widget title;
   final bool isExpend;
   final Duration duration;
+  final bool turnOffAnimation;
 
   const ExpansionWidget({
     super.key,
@@ -12,6 +13,7 @@ class ExpansionWidget extends StatefulWidget {
     required this.title,
     this.isExpend = false,
     this.duration = const Duration(milliseconds: 300),
+    this.turnOffAnimation = true,
   });
 
   @override
@@ -83,15 +85,29 @@ class _ExpansionWidgetState extends State<ExpansionWidget>
         AnimatedBuilder(
           animation: _animation,
           builder: (context, child) {
-            return SizedBox(
-              height: _heightSetItem == null
-                  ? (widget.isExpend ? null : 0)
-                  : _heightSetItem! * _animation.value,
-              child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: child,
-              ),
-            );
+            final height = _heightSetItem ?? 0;
+            final dy = height - _animation.value * height;
+
+            return widget.turnOffAnimation == false
+                ? SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: child,
+                  )
+                : Transform.translate(
+                    offset: Offset(
+                      0,
+                      -dy,
+                    ),
+                    child: SizedBox(
+                      height: _heightSetItem == null
+                          ? (widget.isExpend ? null : 0)
+                          : _heightSetItem! * _animation.value,
+                      child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: child,
+                      ),
+                    ),
+                  );
           },
           child: SizedBox(
             key: _keyWidget,
