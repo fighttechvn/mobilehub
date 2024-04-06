@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +36,9 @@ class GetDetailBloc<T> extends Bloc<GetDetailEvent, GetDetailState> {
   }
 }
 
-/// Param1
+///
+/// Get Detail Bloc With [Param1]
+///
 typedef GetDetailFutureParam1<T, P1> = Future<T> Function(P1 param1);
 
 class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
@@ -65,7 +66,9 @@ class GetDetailBlocParam1<T, P1> extends Bloc<GetDetailEvent, GetDetailState> {
   }
 }
 
-/// Param2
+///
+/// Get Detail Bloc With [Param2]
+///
 typedef GetDetailFutureParam2<T, P1, P2> = Future<T> Function(
   P1 param1,
   P2 param2,

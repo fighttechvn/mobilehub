@@ -44,6 +44,7 @@ export 'src/list/sliver/sliver_decoration_widget.dart';
 export 'src/list/sliver/sliver_list_separator.dart';
 export 'src/list/sliver/sliver_refresh_indicator_widget.dart';
 export 'src/page/pageview/preload_page_view.dart';
+export 'src/scroll_to_top/scroll_wrapper.dart';
 export 'src/skeletons/attribution_widget_skeleton.dart';
 export 'src/skeletons/skeleton_filtered_widget.dart';
 export 'src/web/hover/x_hover.dart';

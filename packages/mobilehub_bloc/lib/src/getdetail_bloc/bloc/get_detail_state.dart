@@ -1,33 +1,21 @@
 part of 'get_detail_bloc.dart';
 
 @immutable
-abstract class GetDetailState extends Equatable {}
+abstract class GetDetailState {}
 
-class GetDetailInitial extends GetDetailState {
-  @override
-  List<Object?> get props => [];
-}
+class GetDetailInitial extends GetDetailState {}
 
-class GetDetailDataLoading<T> extends GetDetailState {
-  @override
-  List<Object?> get props => [];
-}
+class GetDetailDataLoading<T> extends GetDetailState {}
 
 class GetDetailDataSuccess<T> extends GetDetailState {
   final T data;
   GetDetailDataSuccess(this.data);
-
-  @override
-  List<Object?> get props => [data, T];
 }
 
 class GetDetailError<T> extends GetDetailState {
   final dynamic error;
 
   GetDetailError(this.error);
-
-  @override
-  List<Object?> get props => [error];
 }
 
 class GetDetailErrorHasData<T> extends GetDetailDataSuccess {
