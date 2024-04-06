@@ -3,8 +3,8 @@ import 'package:mobilehub_core/mobilehub_core.dart';
 
 import '../list/sliver/sliver_refresh_indicator_widget.dart';
 
-class PullToRefreshWidget extends StatelessWidget {
-  const PullToRefreshWidget({
+class CustomScrollViewWithPullToRefresh extends StatelessWidget {
+  const CustomScrollViewWithPullToRefresh({
     super.key,
     this.onRefresh,
     required this.slivers,
