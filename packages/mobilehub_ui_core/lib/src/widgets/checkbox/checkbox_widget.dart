@@ -29,7 +29,7 @@ class CheckBoxWidget<T> extends StatefulWidget {
   final PositionRadio position;
 
   const CheckBoxWidget({
-    Key? key,
+    super.key,
     this.size = 22,
     this.borderColor = Colors.grey,
     this.isSelected = false,
@@ -44,7 +44,7 @@ class CheckBoxWidget<T> extends StatefulWidget {
     this.textWidget,
     this.expendTitle = false,
     this.position = PositionRadio.start,
-  }) : super(key: key);
+  });
 
   @override
   State<CheckBoxWidget<T>> createState() => _CheckBoxWidgetState<T>();

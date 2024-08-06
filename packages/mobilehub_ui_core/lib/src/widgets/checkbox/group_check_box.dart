@@ -11,13 +11,13 @@ class GroupCheckBox<T> extends StatelessWidget {
   final Widget Function(T data, bool isSelected) builderTitle;
 
   const GroupCheckBox({
-    Key? key,
+    super.key,
     required this.values,
     this.onSelected,
     this.defaultValue,
     this.showDivider = true,
     required this.builderTitle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +59,9 @@ class RadioButtonWidget extends StatelessWidget {
   final bool isSelected;
 
   const RadioButtonWidget({
-    Key? key,
+    super.key,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -4,9 +4,9 @@ class AutoHideKeyboard extends StatelessWidget {
   final Widget child;
 
   const AutoHideKeyboard({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,28 +30,18 @@ extension BuildCtxHideKeyboard on BuildContext {
 
 class ScaffoldHideKeyboard extends Scaffold {
   ScaffoldHideKeyboard({
-    Key? key,
-    PreferredSizeWidget? appBar,
+    super.key,
+    super.appBar,
     required Widget body,
-    bool resizeToAvoidBottomInset = true,
-    Widget? floatingActionButton,
-    FloatingActionButtonLocation? floatingActionButtonLocation,
-    Widget? bottomNavigationBar,
-    bool extendBody = false,
-    Color? backgroundColor,
-    Widget? endDrawer,
-    bool extendBodyBehindAppBar = false,
+    bool super.resizeToAvoidBottomInset = true,
+    super.floatingActionButton,
+    super.floatingActionButtonLocation,
+    super.bottomNavigationBar,
+    super.extendBody,
+    super.backgroundColor,
+    super.endDrawer,
+    super.extendBodyBehindAppBar,
   }) : super(
-          key: key,
-          appBar: appBar,
-          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-          extendBodyBehindAppBar: extendBodyBehindAppBar,
           body: AutoHideKeyboard(child: body),
-          floatingActionButton: floatingActionButton,
-          floatingActionButtonLocation: floatingActionButtonLocation,
-          bottomNavigationBar: bottomNavigationBar,
-          extendBody: extendBody,
-          backgroundColor: backgroundColor,
-          endDrawer: endDrawer,
         );
 }

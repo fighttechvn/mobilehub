@@ -12,7 +12,7 @@ class ElevatedButtonShadow extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
 
   const ElevatedButtonShadow({
-    Key? key,
+    super.key,
     this.label,
     this.onPressed,
     this.borderRadius,
@@ -22,7 +22,7 @@ class ElevatedButtonShadow extends StatelessWidget {
     this.child,
     this.color,
     this.padding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

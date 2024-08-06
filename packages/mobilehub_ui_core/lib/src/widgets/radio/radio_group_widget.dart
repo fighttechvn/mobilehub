@@ -8,7 +8,7 @@ typedef DisplayValueBuilder<T> = Widget Function(
 
 class RadioGroupWidget<T> extends StatefulWidget {
   const RadioGroupWidget({
-    Key? key,
+    super.key,
     required this.value,
     required this.groupValue,
     this.onChanged,
@@ -25,7 +25,7 @@ class RadioGroupWidget<T> extends StatefulWidget {
     this.hasAlertWhenCodAndNotPdone = false,
     this.itemIsLeft = false,
     this.enableBorderItem = true,
-  }) : super(key: key);
+  });
 
   final T? value;
   final List<T> groupValue;

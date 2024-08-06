@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 
 class SkeletonFilteredWidget extends StatefulWidget {
-  const SkeletonFilteredWidget({Key? key, required this.child})
-      : super(key: key);
+  const SkeletonFilteredWidget({
+    super.key,
+    required this.child,
+  });
   final Widget child;
 
   @override

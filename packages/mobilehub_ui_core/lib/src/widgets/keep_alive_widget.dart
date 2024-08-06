@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KeepAliveWidget extends StatefulWidget {
-  const KeepAliveWidget({Key? key, required this.child}) : super(key: key);
+  const KeepAliveWidget({super.key, required this.child});
 
   final Widget child;
 

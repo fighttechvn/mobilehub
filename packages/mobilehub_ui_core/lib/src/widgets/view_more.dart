@@ -12,14 +12,14 @@ class ViewMoreWidget extends StatefulWidget {
   final bool isLeftStyle;
 
   const ViewMoreWidget({
-    Key? key,
+    super.key,
     required this.child,
     this.expand = false,
     required this.viewMore,
     required this.seeLess,
     this.minHeight = 200,
     this.isLeftStyle = false,
-  }) : super(key: key);
+  });
 
   @override
   State<ViewMoreWidget> createState() => _ViewMoreWidgetState();

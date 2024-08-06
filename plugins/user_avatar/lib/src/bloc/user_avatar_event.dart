@@ -1,10 +1,7 @@
 part of 'user_avatar_bloc.dart';
 
-abstract class UserAvatarEvent extends Equatable {
+abstract class UserAvatarEvent {
   const UserAvatarEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class LoadInitAvatarEvent extends UserAvatarEvent {

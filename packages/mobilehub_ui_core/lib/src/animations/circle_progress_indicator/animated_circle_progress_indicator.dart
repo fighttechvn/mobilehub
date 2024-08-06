@@ -10,7 +10,7 @@ class AnimatedCircleProgressIndicator extends StatefulWidget {
   final Widget child;
 
   const AnimatedCircleProgressIndicator({
-    Key? key,
+    super.key,
     required this.value,
     this.color,
     this.backgroundColor,
@@ -18,7 +18,7 @@ class AnimatedCircleProgressIndicator extends StatefulWidget {
     this.size = 40,
     this.duration = const Duration(milliseconds: 250),
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedCircleProgressIndicator> createState() =>

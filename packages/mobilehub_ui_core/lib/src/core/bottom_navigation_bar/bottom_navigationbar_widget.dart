@@ -7,12 +7,12 @@ class BottomNavigationBarWidget extends StatelessWidget {
   final double? minimumPadding;
 
   const BottomNavigationBarWidget({
-    Key? key,
+    super.key,
     required this.children,
     this.boxDecoration,
     this.backgroundColor,
     this.minimumPadding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

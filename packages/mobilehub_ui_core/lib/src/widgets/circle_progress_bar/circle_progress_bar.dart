@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class CircleProgressBar extends StatefulWidget {
   const CircleProgressBar({
-    Key? key,
+    super.key,
     this.animationDuration,
     this.backgroundColor,
     this.child,
@@ -12,7 +12,7 @@ class CircleProgressBar extends StatefulWidget {
     required this.foregroundColor,
     required this.value,
     this.strokeWidth,
-  }) : super(key: key);
+  });
 
   final Duration? animationDuration;
   final Color? backgroundColor;

@@ -12,7 +12,7 @@ class XHover extends StatefulWidget {
   final MouseCursor cursor;
 
   const XHover({
-    Key? key,
+    super.key,
     required this.child,
     required this.hoverChild,
     this.onTap,
@@ -22,7 +22,7 @@ class XHover extends StatefulWidget {
     this.decoration,
     this.alwaysShowHoverItem = false,
     this.cursor = SystemMouseCursors.click,
-  }) : super(key: key);
+  });
 
   @override
   State<XHover> createState() => _XHoverState();

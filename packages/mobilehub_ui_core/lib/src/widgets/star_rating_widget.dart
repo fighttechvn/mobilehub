@@ -15,7 +15,7 @@ class StarRatingWidget extends StatelessWidget {
   final bool onlyShow;
 
   const StarRatingWidget({
-    Key? key,
+    super.key,
     this.starCount = 5,
     this.rating = 0.0,
     this.onRatingChanged,
@@ -26,7 +26,7 @@ class StarRatingWidget extends StatelessWidget {
     this.label = const SizedBox(),
     this.allowHalfRating = true,
     this.onlyShow = false,
-  }) : super(key: key);
+  });
 
   Widget buildStar(BuildContext context, int index) {
     Icon icon;

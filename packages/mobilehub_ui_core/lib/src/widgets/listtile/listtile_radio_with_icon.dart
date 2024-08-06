@@ -57,7 +57,7 @@ class ListTileRadioWithIcon extends StatelessWidget {
         value: value,
         onChanged: onChanged,
         groupValue: groupValue,
-        fillColor: MaterialStateColor.resolveWith(
+        fillColor: WidgetStateColor.resolveWith(
           (states) => Theme.of(context).primaryColor,
         ), //
       ),

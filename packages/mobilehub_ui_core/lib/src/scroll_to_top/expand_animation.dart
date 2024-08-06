@@ -17,8 +17,8 @@ class SizeExpandedSection extends StatefulWidget {
     required this.curve,
     required this.duration,
     required this.alignment,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SizeExpandedSection> createState() => _SizeExpandedSectionState();

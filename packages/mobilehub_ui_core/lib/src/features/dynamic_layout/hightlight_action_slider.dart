@@ -32,51 +32,49 @@ class _HightlightActionSliderWidgetState
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        ...widget.items
-            .map(
-              (e) => InkWell(
-                onTap: () {
-                  widget.onTap(e);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: InsightsMenuWidget(
-                    width: widget.widgetItem,
-                    minHeight: context.is169 ? 150 : 140,
-                    backgroundColor: e.backgroundColor?.toColor ?? Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          e.title ?? '',
-                          style: widget.styleTitle.copyWith(height: 12 / 10),
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          e.subTitle ?? '',
-                          style: widget.styletitleLog.copyWith(height: 14 / 12),
-                        ),
-                        const SizedBox(height: 16),
-                        if (e.image?.isNotEmpty ?? false)
-                          Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              Flexible(
-                                child: ImageWidget(
-                                  e.image!,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
+        ...widget.items.map(
+          (e) => InkWell(
+            onTap: () {
+              widget.onTap(e);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: InsightsMenuWidget(
+                width: widget.widgetItem,
+                minHeight: context.is169 ? 150 : 140,
+                backgroundColor: e.backgroundColor?.toColor ?? Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      e.title ?? '',
+                      style: widget.styleTitle.copyWith(height: 12 / 10),
                     ),
-                  ),
+                    const SizedBox(height: 3),
+                    Text(
+                      e.subTitle ?? '',
+                      style: widget.styletitleLog.copyWith(height: 14 / 12),
+                    ),
+                    const SizedBox(height: 16),
+                    if (e.image?.isNotEmpty ?? false)
+                      Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          Flexible(
+                            child: ImageWidget(
+                              e.image!,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
               ),
-            )
-            .toList(),
+            ),
+          ),
+        ),
       ],
     );
   }

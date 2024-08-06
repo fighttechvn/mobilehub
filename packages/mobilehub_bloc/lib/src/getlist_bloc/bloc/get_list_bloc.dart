@@ -44,7 +44,8 @@ class GetListBloc<T> extends Bloc<GetListEvent, GetListState> {
       emit(GetListDataSuccess<T>(data));
     } catch (e, trace) {
       if (kDebugMode) {
-        log('error: $trace');
+        log('error: $e');
+        log('trace: $trace');
       }
       emit(GetListDataError<T>(e.toString(), e));
     }

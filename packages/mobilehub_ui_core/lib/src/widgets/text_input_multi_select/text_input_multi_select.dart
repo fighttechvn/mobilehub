@@ -113,7 +113,7 @@ class MultiSelector<T> extends StatefulWidget {
   final String? errorMessage;
 
   const MultiSelector({
-    Key? key,
+    super.key,
     this.style,
     this.enable = true,
     this.width = 120,
@@ -128,7 +128,7 @@ class MultiSelector<T> extends StatefulWidget {
     this.readOnly = false,
     required this.itemBuilderReadOnly,
     this.errorMessage,
-  }) : super(key: key);
+  });
 
   @override
   State<MultiSelector<T>> createState() => MultiSelectorState<T>();

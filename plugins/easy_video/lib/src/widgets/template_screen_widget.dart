@@ -14,7 +14,6 @@ class TemplateScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           iconSize: 30,
@@ -25,16 +24,16 @@ class TemplateScreenWidget extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
+        centerTitle: true,
         title: title == null
             ? null
             : Text(
                 title!,
                 textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
       ),
-      body: Center(
-        child: child,
-      ),
+      body: child,
     );
   }
 }

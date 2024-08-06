@@ -64,7 +64,7 @@ class ScrollWrapper extends StatefulWidget {
   final BorderRadius? borderRadius;
 
   const ScrollWrapper({
-    Key? key,
+    super.key,
     required this.scrollController,
     this.promptScrollOffset = 200,
     required this.child,
@@ -77,7 +77,7 @@ class ScrollWrapper extends StatefulWidget {
     this.promptAnimationType = PromptAnimation.size,
     this.promptReplacementBuilder,
     this.borderRadius,
-  }) : super(key: key);
+  });
 
   @override
   State<ScrollWrapper> createState() => _ScrollWrapperState();

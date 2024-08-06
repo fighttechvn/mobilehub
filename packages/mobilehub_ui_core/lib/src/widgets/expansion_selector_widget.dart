@@ -120,7 +120,7 @@ class _ExpansionSelectorWidgetState<T> extends State<ExpansionSelectorWidget<T>>
 
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5)
@@ -189,7 +189,7 @@ class _ExpansionSelectorWidgetState<T> extends State<ExpansionSelectorWidget<T>>
             behavior: HitTestBehavior.translucent,
             onTap: _onTapAction,
             child: Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               width: double.infinity,
               padding: const EdgeInsets.only(top: 10, bottom: 8),
               child: widget.builderTitle(_selectedValue, _isExpend),

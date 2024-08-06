@@ -61,7 +61,7 @@ class CircularCheckBox extends StatefulWidget {
    * The values of [tristate] and [autofocus] must not be null.
    */
   const CircularCheckBox({
-    Key? key,
+    super.key,
     required this.value,
     this.tristate = false,
     required this.onChanged,
@@ -77,8 +77,7 @@ class CircularCheckBox extends StatefulWidget {
     this.visualDensity,
     this.focusNode,
     this.autofocus = false,
-  })  : assert(tristate || value != null, 'tristate || value != null'),
-        super(key: key);
+  }) : assert(tristate || value != null, 'tristate || value != null');
 
   /// Whether this checkbox is checked.
   ///
@@ -332,7 +331,7 @@ class _CircularCheckBoxState extends State<CircularCheckBox>
         return themeData.disabledColor;
       }
       if (states.contains(MaterialState.selected)) {
-        return themeData.toggleableActiveColor;
+        return themeData.colorScheme.secondary;
       }
       return themeData.unselectedWidgetColor;
     });
@@ -451,7 +450,6 @@ class _CircularCheckBoxState extends State<CircularCheckBox>
 
 class _CircularCheckBoxRenderObjectWidget extends LeafRenderObjectWidget {
   const _CircularCheckBoxRenderObjectWidget({
-    Key? key,
     required this.value,
     required this.tristate,
     required this.activeColor,
@@ -467,8 +465,7 @@ class _CircularCheckBoxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.additionalConstraints,
     required this.hasFocus,
     required this.hovering,
-  })  : assert(tristate || value != null, 'tristate || value != null'),
-        super(key: key);
+  }) : assert(tristate || value != null, 'tristate || value != null');
 
   final bool? value;
   final bool tristate;
@@ -535,38 +532,22 @@ const double _kStrokeWidth = 2.0;
 
 class _RenderCircularCheckBox extends RenderToggleable {
   _RenderCircularCheckBox({
-    bool? value,
-    required bool tristate,
-    required Color activeColor,
+    super.value,
+    required super.tristate,
+    required super.activeColor,
     required this.checkColor,
-    required Color inactiveColor,
-    Color? focusColor,
-    Color? hoverColor,
-    Color? reactionColor,
-    Color? inactiveReactionColor,
-    required double splashRadius,
-    required BoxConstraints additionalConstraints,
-    ValueChanged<bool?>? onChanged,
-    required bool hasFocus,
-    required bool hovering,
-    required TickerProvider vsync,
-  })  : _oldValue = value,
-        super(
-          value: value,
-          tristate: tristate,
-          activeColor: activeColor,
-          inactiveColor: inactiveColor,
-          focusColor: focusColor,
-          hoverColor: hoverColor,
-          reactionColor: reactionColor,
-          inactiveReactionColor: inactiveReactionColor,
-          splashRadius: splashRadius,
-          onChanged: onChanged,
-          additionalConstraints: additionalConstraints,
-          vsync: vsync,
-          hasFocus: hasFocus,
-          hovering: hovering,
-        );
+    required super.inactiveColor,
+    super.focusColor,
+    super.hoverColor,
+    super.reactionColor,
+    super.inactiveReactionColor,
+    required super.splashRadius,
+    required super.additionalConstraints,
+    super.onChanged,
+    required super.hasFocus,
+    required super.hovering,
+    required super.vsync,
+  }) : _oldValue = value;
 
   bool? _oldValue;
   Color checkColor;
@@ -727,7 +708,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
     Color? inactiveReactionColor,
     required double splashRadius,
     ValueChanged<bool?>? onChanged,
-    required BoxConstraints additionalConstraints,
+    required super.additionalConstraints,
     required TickerProvider vsync,
     bool hasFocus = false,
     bool hovering = false,
@@ -745,8 +726,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
         _onChanged = onChanged,
         _hasFocus = hasFocus,
         _hovering = hovering,
-        _vsync = vsync,
-        super(additionalConstraints: additionalConstraints) {
+        _vsync = vsync {
     _tap = TapGestureRecognizer()
       ..onTapDown = _handleTapDown
       ..onTap = _handleTap

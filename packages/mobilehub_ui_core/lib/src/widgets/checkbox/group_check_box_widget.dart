@@ -12,7 +12,7 @@ typedef GroupCheckBoxBuilder<T> = Widget Function(
 
 class GroupCheckBoxWidget<T> extends StatefulWidget {
   const GroupCheckBoxWidget({
-    Key? key,
+    super.key,
     this.onSelected,
     this.defaultValue,
     required this.values,
@@ -25,11 +25,11 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
     this.direction = Axis.horizontal,
     this.expendTitle = false,
     this.position = PositionRadio.start,
-  })  : builderTitle = null,
-        super(key: key);
+    this.wrapAlignment,
+  }) : builderTitle = null;
 
   const GroupCheckBoxWidget.custom({
-    Key? key,
+    super.key,
     this.onSelected,
     this.defaultValue,
     required this.values,
@@ -43,7 +43,8 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
     required this.builderTitle,
     this.expendTitle = false,
     this.position = PositionRadio.start,
-  }) : super(key: key);
+    this.wrapAlignment,
+  });
 
   final ValueChanged<T?>? onSelected;
   final T? defaultValue;
@@ -58,6 +59,7 @@ class GroupCheckBoxWidget<T> extends StatefulWidget {
   final Widget Function(T data, bool isSelected)? builderTitle;
   final bool expendTitle;
   final PositionRadio position;
+  final WrapAlignment? wrapAlignment;
 
   @override
   State<GroupCheckBoxWidget<T>> createState() => _GroupCheckBoxWidgetState();
@@ -82,6 +84,16 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
   void initState() {
     super.initState();
     _selectedValue = widget.defaultValue;
+  }
+
+  @override
+  void didUpdateWidget(covariant GroupCheckBoxWidget<T> oldWidget) {
+    if (oldWidget.defaultValue != widget.defaultValue) {
+      setState(() {
+        _selectedValue = widget.defaultValue;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -116,7 +128,7 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
               final widgetItem = CheckBoxWidget<T>(
                 position: widget.position,
                 expendTitle: widget.expendTitle,
-                textWidget: Expanded(child: titleWidget),
+                textWidget: titleWidget,
                 isSelected: isSelected,
                 hasUnselect: widget.isRadioType == false,
                 onSelected: (bool isSelected) => _onSelected(isSelected, item),
@@ -190,7 +202,7 @@ class _GroupCheckBoxWidgetState<T> extends State<GroupCheckBoxWidget<T>> {
                 spacing: widget.spacing,
                 runSpacing: widget.spacing,
                 direction: widget.direction,
-                alignment: WrapAlignment.spaceBetween,
+                alignment: widget.wrapAlignment ?? WrapAlignment.spaceBetween,
                 children: items,
               ),
             if (widget.error != null) widget.error!,

@@ -82,38 +82,31 @@ class _ExpansionWidgetState extends State<ExpansionWidget>
           },
           child: widget.title,
         ),
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            final height = _heightSetItem ?? 0;
-            final dy = height - _animation.value * height;
-
-            return widget.turnOffAnimation == false
-                ? SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    child: child,
-                  )
-                : Transform.translate(
-                    offset: Offset(
-                      0,
-                      -dy,
-                    ),
-                    child: SizedBox(
-                      height: _heightSetItem == null
-                          ? (widget.isExpend ? null : 0)
-                          : _heightSetItem! * _animation.value,
-                      child: SingleChildScrollView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        child: child,
-                      ),
-                    ),
-                  );
-          },
-          child: SizedBox(
-            key: _keyWidget,
+        if (widget.turnOffAnimation == false)
+          SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             child: widget.child,
+          )
+        else
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return SizedBox(
+                height: _heightSetItem == null
+                    ? (widget.isExpend ? null : 0)
+                    : _heightSetItem! * _animation.value,
+                child: SingleChildScrollView(
+                  reverse: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: child,
+                ),
+              );
+            },
+            child: SizedBox(
+              key: _keyWidget,
+              child: widget.child,
+            ),
           ),
-        ),
       ],
     );
   }

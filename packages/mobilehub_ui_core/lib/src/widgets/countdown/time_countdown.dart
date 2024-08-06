@@ -7,12 +7,12 @@ class TimeCountDown extends StatelessWidget {
   final double paddingBottom;
 
   const TimeCountDown({
-    Key? key,
+    super.key,
     required this.timeRemain,
     this.size = 76.0,
     this.padding = 6.0,
     this.paddingBottom = 8.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

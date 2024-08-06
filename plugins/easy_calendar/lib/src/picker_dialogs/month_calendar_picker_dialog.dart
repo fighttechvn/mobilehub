@@ -37,7 +37,7 @@ class _MonthCalendarPickerDialogState extends State<MonthCalendarPickerDialog> {
           color: Colors.transparent,
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
             ),
             margin: EdgeInsets.symmetric(horizontal: 16),

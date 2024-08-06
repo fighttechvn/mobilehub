@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class FaderPageRoute<T> extends PageRoute<T> {
   FaderPageRoute({
     required this.builder,
-    RouteSettings? settings,
-  }) : super(settings: settings);
+    super.settings,
+  });
 
   @override
   Color get barrierColor => Colors.transparent;

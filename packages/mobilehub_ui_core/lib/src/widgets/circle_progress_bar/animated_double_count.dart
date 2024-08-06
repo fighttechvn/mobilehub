@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// A double as text with animation
 class AnimatedCount extends StatefulWidget {
   const AnimatedCount({
-    Key? key,
+    super.key,
     required this.count,
     this.fractionDigits = 2,
     required this.unit,
@@ -11,7 +11,7 @@ class AnimatedCount extends StatefulWidget {
     this.style,
     this.unitScaleFactor,
     this.curve = Curves.linear,
-  }) : super(key: key);
+  });
 
   /// The value itself
   final double count;

@@ -5,23 +5,21 @@ import 'group_check_box_widget.dart';
 
 class CheckboxFormField<T> extends FormField<T> {
   CheckboxFormField({
-    Key? key,
+    super.key,
     required Set<T> values,
-    T? initialValue,
+    super.initialValue,
     int? numberOfRow,
-    FormFieldValidator<T>? validator,
+    super.validator,
     ValueChanged<T?>? onSelected,
     double spacing = 8.0,
+    WrapAlignment? wrapAlignment,
     bool isRadioType = false,
     bool autovalidate = false,
     CheckboxBuilder<T>? checkBoxbuilder,
-    AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
+    AutovalidateMode super.autovalidateMode =
+        AutovalidateMode.onUserInteraction,
     GroupCheckBoxBuilder<T>? groupCheckBoxBuilder,
   }) : super(
-          key: key,
-          validator: validator,
-          autovalidateMode: autovalidateMode,
-          initialValue: initialValue,
           builder: (FormFieldState<T> state) {
             return GroupCheckBoxWidget<T>(
               defaultValue: initialValue,
@@ -37,6 +35,7 @@ class CheckboxFormField<T> extends FormField<T> {
                 state.validate();
               },
               spacing: spacing,
+              wrapAlignment: wrapAlignment,
               error: state.hasError && (state.errorText?.isNotEmpty ?? false)
                   ? Builder(
                       builder: (BuildContext context) => Padding(
@@ -56,24 +55,22 @@ class CheckboxFormField<T> extends FormField<T> {
         );
 
   CheckboxFormField.custom({
-    Key? key,
+    super.key,
     required List<T> values,
-    T? initialValue,
+    super.initialValue,
     int? numberOfRow,
-    FormFieldValidator<T>? validator,
+    super.validator,
     ValueChanged<T?>? onSelected,
     double spacing = 8.0,
+    WrapAlignment? wrapAlignment,
     bool isRadioType = false,
     bool autovalidate = false,
     CheckboxBuilder<T>? checkBoxbuilder,
-    AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
+    AutovalidateMode super.autovalidateMode =
+        AutovalidateMode.onUserInteraction,
     GroupCheckBoxBuilder<T>? groupCheckBoxBuilder,
     required Widget Function(T data, bool isSelected)? builderTitle,
   }) : super(
-          key: key,
-          validator: validator,
-          autovalidateMode: autovalidateMode,
-          initialValue: initialValue,
           builder: (FormFieldState<T> state) {
             return GroupCheckBoxWidget<T>.custom(
               builderTitle: builderTitle,
@@ -90,6 +87,7 @@ class CheckboxFormField<T> extends FormField<T> {
                 state.validate();
               },
               spacing: spacing,
+              wrapAlignment: wrapAlignment,
               error: state.hasError && (state.errorText?.isNotEmpty ?? false)
                   ? Builder(
                       builder: (BuildContext context) => Padding(

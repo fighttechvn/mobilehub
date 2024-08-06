@@ -26,4 +26,8 @@ extension BuildContextThemeExt on BuildContext {
   MediaQueryData get mediaData => MediaQuery.of(context);
 
   double get textScaleFactor => MediaQuery.textScalerOf(this).scale(1) / 1;
+
+  bool get isScaleBig => textScaleFactor > 1.2;
+
+  bool get isSmallDevice => MediaQuery.sizeOf(context).width < 400;
 }

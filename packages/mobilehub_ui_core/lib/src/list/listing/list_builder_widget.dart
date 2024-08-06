@@ -182,7 +182,6 @@ class _ListBuilderAndroid extends StatelessWidget {
   final bool isLoading;
 
   const _ListBuilderAndroid({
-    Key? key,
     this.onRefresh,
     this.scrollController,
     required this.builder,
@@ -194,7 +193,7 @@ class _ListBuilderAndroid extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.isLoading = false,
     required this.emptyWidget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

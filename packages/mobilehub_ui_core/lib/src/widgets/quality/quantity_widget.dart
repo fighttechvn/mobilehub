@@ -1,24 +1,32 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobilehub_core/mobilehub_core.dart';
 
 class QuantityWidget extends StatefulWidget {
   const QuantityWidget({
     super.key,
     this.controller,
-    this.max,
+    this.max = 99,
     this.min = 1,
     this.showTitle = true,
     this.showLabel = true,
     this.isColorTransparent = false,
     this.disable = false,
+    this.radius = 0,
+    this.value,
+    this.onChanged,
   });
 
   final ValueNotifier<int>? controller;
-  final int? max;
+  final int max;
   final int min;
   final bool? showTitle;
   final bool? showLabel;
   final bool? isColorTransparent;
   final bool? disable;
+  final double radius;
+  final int? value;
+  final void Function(int)? onChanged;
 
   @override
   State<QuantityWidget> createState() => _QuantityWidgetState();
@@ -26,15 +34,87 @@ class QuantityWidget extends StatefulWidget {
 
 class _QuantityWidgetState extends State<QuantityWidget> {
   late ValueNotifier<int> _quantityCtr;
+  final String _tagDebound = UniqueKey().toString();
+  final TextEditingController _controller = TextEditingController();
+  final _focusNode = FocusNode();
+
+  int _mathSize(int max) {
+    var valueCount = max * 1.0;
+    var countSize = 1;
+
+    while (valueCount >= 1) {
+      valueCount /= 10;
+
+      if (valueCount >= 1) {
+        countSize += 1;
+      }
+    }
+
+    // min is 2
+    if (countSize == 1) {
+      countSize = 2;
+    }
+
+    return countSize;
+  }
+
+  void _updateValueController(int value) {
+    if (value > widget.max) {
+      _controller.text = widget.max.toString();
+    } else if (value < widget.min) {
+      _controller.text = widget.min.toString();
+    } else {
+      _controller.text = value.toString();
+    }
+
+    widget.onChanged?.call(int.tryParse(_controller.text) ?? 0);
+  }
+
+  void _updateValueNotify(int value) {
+    if (value > widget.max) {
+      _quantityCtr.value = widget.max;
+    } else if (value < widget.min) {
+      _quantityCtr.value = widget.min;
+    } else {
+      _quantityCtr.value = value;
+    }
+    widget.onChanged?.call(_quantityCtr.value);
+  }
+
+  void _listenerFocusNode() {
+    if (_focusNode.hasFocus == false) {
+      final valueQuantity = int.tryParse(_controller.text);
+
+      if (valueQuantity != null) {
+        _updateValueNotify(valueQuantity);
+      } else {
+        _updateValueController(_quantityCtr.value);
+      }
+    }
+  }
 
   @override
   void initState() {
-    _quantityCtr = widget.controller ?? ValueNotifier<int>(1);
+    final defaultValue = widget.value ?? 1;
+    _quantityCtr = widget.controller ?? ValueNotifier<int>(defaultValue);
+    _controller.text =
+        widget.controller?.value.toString() ?? defaultValue.toString();
+    _focusNode.addListener(_listenerFocusNode);
     super.initState();
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+
+    _focusNode.removeListener(_listenerFocusNode);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final sizeTextField = 10.0 * _mathSize(widget.max) + 18;
+
     return AnimatedBuilder(
       animation: _quantityCtr,
       builder: (context, snapshot) {
@@ -64,7 +144,9 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                           ? null
                           : () {
                               if (_quantityCtr.value > 0) {
-                                _quantityCtr.value -= 1;
+                                final newValue = _quantityCtr.value - 1;
+                                _updateValueNotify(newValue);
+                                _updateValueController(newValue);
                               }
                             },
                   child: Container(
@@ -80,51 +162,54 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                         width: 1,
                         color: const Color(0xFFF0F0F0),
                       ),
+                      borderRadius: BorderRadius.circular(widget.radius),
                     ),
                     child: const Center(
-                      child: Text(
-                        '-',
-                        style: TextStyle(height: 1),
+                      child: Icon(
+                        CupertinoIcons.minus,
+                        size: 18,
                       ),
                     ),
                   ),
                 ),
                 Container(
+                  margin: const EdgeInsets.all(2),
                   constraints:
-                      const BoxConstraints(minWidth: 38, maxHeight: 38),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        width: 1,
-                        color: Color(0xFFF0F0F0),
-                      ),
-                      bottom: BorderSide(
-                        width: 1,
-                        color: Color(0xFFF0F0F0),
-                      ),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${_quantityCtr.value}',
-                      style: const TextStyle(fontSize: 14, height: 1),
-                    ),
+                      BoxConstraints(maxWidth: sizeTextField, maxHeight: 38),
+                  child: TextFormField(
+                    controller: _controller,
+                    focusNode: _focusNode,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      EasyDebounce.debounce(
+                        _tagDebound,
+                        const Duration(milliseconds: 400),
+                        () {
+                          if (value.isNotEmpty) {
+                            final valueQuantity = int.tryParse(value);
+
+                            if (valueQuantity != null) {
+                              _updateValueNotify(valueQuantity);
+                              _updateValueController(valueQuantity);
+                            } else {
+                              _updateValueController(_quantityCtr.value);
+                            }
+                          }
+                        },
+                      );
+                    },
                   ),
                 ),
                 GestureDetector(
                   onTap: widget.disable ?? false
                       ? null
-                      : (widget.max != null &&
-                              _quantityCtr.value >= widget.max!)
+                      : (_quantityCtr.value >= widget.max)
                           ? null
                           : () {
-                              if (widget.max != null) {
-                                if (_quantityCtr.value < widget.max!) {
-                                  _quantityCtr.value += 1;
-                                }
-                              } else {
-                                _quantityCtr.value += 1;
-                              }
+                              final newValue = _quantityCtr.value + 1;
+                              _updateValueNotify(newValue);
+                              _updateValueController(newValue);
                             },
                   child: Container(
                     width: 38,
@@ -132,17 +217,20 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                     decoration: BoxDecoration(
                       color: widget.isColorTransparent ?? true
                           ? Colors.transparent
-                          : (widget.max != null &&
-                                  _quantityCtr.value >= widget.max!)
+                          : (_quantityCtr.value >= widget.max)
                               ? Colors.grey
                               : Theme.of(context).primaryColor.withOpacity(.8),
                       border: Border.all(
                         width: 1,
                         color: const Color(0xFFF0F0F0),
                       ),
+                      borderRadius: BorderRadius.circular(widget.radius),
                     ),
                     child: const Center(
-                      child: Text('+', style: TextStyle(height: 1)),
+                      child: Icon(
+                        CupertinoIcons.add,
+                        size: 18,
+                      ),
                     ),
                   ),
                 ),

@@ -81,10 +81,10 @@ void main() {
 
 class TestCheckbox extends StatefulWidget {
   const TestCheckbox({
-    Key? key,
+    super.key,
     required this.activeColor,
     required this.inactiveColor,
-  }) : super(key: key);
+  });
 
   final Color activeColor;
   final Color inactiveColor;
