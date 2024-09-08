@@ -19,7 +19,7 @@ class WillPopScopeWidget extends StatelessWidget {
     return PopScope(
       canPop: canPop,
       child: child,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (didPop, data) async {
         if (didPop) {
           return;
         }

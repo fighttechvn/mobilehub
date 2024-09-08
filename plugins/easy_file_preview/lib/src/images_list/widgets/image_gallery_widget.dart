@@ -113,11 +113,11 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
   }
 }
 
-extension NullableStringIsNotNullOrEmptyExtension on String? {
+extension _NullableStringIsNotNullOrEmptyExtension on String? {
   bool get isNotNullOrEmpty => !isNullOrEmpty;
 }
 
-extension NullableStringIsNullOrEmptyExtension on String? {
+extension _NullableStringIsNullOrEmptyExtension on String? {
   /// Returns `true` if the String is either null or empty.
   bool get isNullOrEmpty => this?.isEmpty ?? true;
 }

@@ -6,8 +6,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../mobilehub_ui_core.dart';
-
 const Duration _kExpand = Duration(milliseconds: 200);
 
 /// A single-line [ListTile] with a trailing button that expands or collapses
@@ -282,9 +280,10 @@ class _AppExpansionTileState extends State<AppExpansionTile>
                           alignment: Alignment.centerRight,
                           child: Icon(
                             Icons.add,
-                            color: context.isDarkMode
-                                ? context.theme.iconTheme.color
-                                : widget.iconColor,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Theme.of(context).iconTheme.color
+                                    : widget.iconColor,
                           ),
                         ),
                       )

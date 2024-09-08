@@ -46,7 +46,9 @@ class _QrCodeScanWidgetState extends State<QrCodeScanWidget> {
       if (!_isDone) {
         _isDone = true;
 
-        Navigator.of(context).pop(scanData.code);
+        if (mounted) {
+          Navigator.of(context).pop(scanData.code);
+        }
       }
     });
   }

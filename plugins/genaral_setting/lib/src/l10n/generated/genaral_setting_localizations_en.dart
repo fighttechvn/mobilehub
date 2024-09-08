@@ -1,5 +1,7 @@
 import 'genaral_setting_localizations.dart';
 
+// ignore_for_file: type=lint
+
 /// The translations for English (`en`).
 class GenaralSettingLocalizationsEn extends GenaralSettingLocalizations {
   GenaralSettingLocalizationsEn([String locale = 'en']) : super(locale);

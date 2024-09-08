@@ -8,6 +8,8 @@ import 'package:intl/intl.dart' as intl;
 import 'sub_localizations_en.dart';
 import 'sub_localizations_vi.dart';
 
+// ignore_for_file: type=lint
+
 /// Callers can lookup localized strings with an instance of SubLocalizations
 /// returned by `SubLocalizations.of(context)`.
 ///

@@ -82,9 +82,11 @@ class _UserAvatarWidgetState<P> extends State<_UserAvatarWidget<P>> {
   void _onTapUpdate() {
     widget.onTapUpdate?.call().then((value) {
       if (value?.isNotEmpty ?? false) {
-        context
-            .read<UserAvatarBloc>()
-            .add(UploadAvatarEvent<P>(value!, param: widget.paramUpdate));
+        if (mounted) {
+          context
+              .read<UserAvatarBloc>()
+              .add(UploadAvatarEvent<P>(value!, param: widget.paramUpdate));
+        }
       }
     });
   }

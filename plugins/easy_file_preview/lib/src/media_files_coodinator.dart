@@ -6,6 +6,7 @@ import 'images_list/widgets/image_gallery_widget.dart';
 import 'media/media_preview_widget.dart';
 import 'pdf/view_pdf_screen.dart';
 import 'webview_preview_pdf/view_file_widget.dart';
+import 'webview_preview_pdf/webview_fullscreen.dart';
 
 extension ViewPdfCoodinator on BuildContext {
   Future<T?> startViewPdf<T>({
@@ -92,6 +93,17 @@ extension ViewPdfCoodinator on BuildContext {
               child: ViewFileWidget(
                 url: url,
               ),
+            )));
+  }
+
+  Future<T?> startWebView<T>({
+    String? title,
+    required String url,
+  }) {
+    return Navigator.of(this).push(MaterialPageRoute(
+        builder: (context) => WebviewFullscreen(
+              title: title,
+              url: url,
             )));
   }
 }

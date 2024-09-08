@@ -52,14 +52,22 @@ extension UserAvatarCoodinator on BuildContext {
         return selectorBuilder(
           () {
             pickedImage(DeviceMediaSource.camera, needCrop: useCrop)
-                .then((value) => Navigator.of(context).pop(value));
+                .then((value) {
+              if (mounted) {
+                Navigator.of(context).pop(value);
+              }
+            });
           },
           () {
             pickedImage(
               DeviceMediaSource.gallery,
               needCrop: useCrop,
               cropType: type,
-            ).then((value) => Navigator.of(context).pop(value));
+            ).then((value) {
+              if (mounted) {
+                Navigator.of(context).pop(value);
+              }
+            });
           },
         );
       },
