@@ -11,14 +11,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.4
+  flutter_bloc: ^9.1.0
 
   # Core
   device_media:
     path: ../device_media
   
   equatable: ^2.0.3
-  collection: 1.18.0
+  collection:
   imagewidget: ^1.1.0
   easy_device_media: 1.0.1
 

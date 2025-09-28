@@ -72,7 +72,7 @@ class StepperDecorationPainter extends BoxPainter {
 
     if (isSelected && showShadown) {
       final Paint shadowPaint = Paint()
-        ..color = Colors.grey.withOpacity(0.4)
+        ..color = Colors.grey.withValues(alpha: 0.4)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 5
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 15);

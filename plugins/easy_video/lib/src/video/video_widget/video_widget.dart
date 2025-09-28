@@ -141,7 +141,7 @@ class _VideoWidgetState extends State<VideoWidget>
               )
             : null,
         controlBarDecoration:
-            BoxDecoration(color: Colors.black.withOpacity(0.3)),
+            BoxDecoration(color: Colors.black.withValues(alpha: 0.3)),
         controlBarPadding: const EdgeInsets.all(0),
         controlsPadding: const EdgeInsets.all(4),
         settingsButtonAvailable: false,

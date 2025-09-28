@@ -69,9 +69,7 @@ extension _SwitchDirectionExt on SwitchingAnimation {
           animation,
           isReverse,
         );
-      default:
     }
-    return child;
   }
 
   Widget _buildHorizontalAnim(

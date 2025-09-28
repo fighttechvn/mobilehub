@@ -9,7 +9,7 @@ typedef SelectorItemBuilderReadOnly<T> = Widget Function(List<T> items);
 
 BoxShadow get _shadowHorizontalTextField => BoxShadow(
       blurRadius: 5,
-      color: const Color(0xff000000).withOpacity(0.1),
+      color: const Color(0xff000000).withValues(alpha: 0.1),
       offset: const Offset(0, 5),
       spreadRadius: 0,
     );

@@ -219,7 +219,9 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                           ? Colors.transparent
                           : (_quantityCtr.value >= widget.max)
                               ? Colors.grey
-                              : Theme.of(context).primaryColor.withOpacity(.8),
+                              : Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: .8),
                       border: Border.all(
                         width: 1,
                         color: const Color(0xFFF0F0F0),
