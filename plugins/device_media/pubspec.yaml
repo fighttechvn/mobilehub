@@ -14,7 +14,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   
-  intl: ^0.19.0
+  intl:
   imagewidget: ^1.1.0
   universal_platform: ^1.0.0+1
   easy_device_media: 1.0.1

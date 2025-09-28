@@ -32,16 +32,16 @@ class _CallingEffectWidgetState extends State<CallingEffectWidget>
       ..forward();
     animation = Tween(begin: 0.0, end: 1.0).animate(controller);
     _colorTween1 = ColorTween(
-      begin: Colors.white.withOpacity(0.5),
-      end: Colors.white.withOpacity(0.001),
+      begin: Colors.white.withValues(alpha: 0.5),
+      end: Colors.white.withValues(alpha: 0.001),
     ).animate(controller);
     _colorTween2 = ColorTween(
-      begin: Colors.white.withOpacity(0.75),
-      end: Colors.white.withOpacity(0.25),
+      begin: Colors.white.withValues(alpha: 0.75),
+      end: Colors.white.withValues(alpha: 0.25),
     ).animate(controller);
     _colorTween3 = ColorTween(
       begin: Colors.white,
-      end: Colors.white.withOpacity(0.5),
+      end: Colors.white.withValues(alpha: 0.5),
     ).animate(controller);
     super.initState();
   }

@@ -166,7 +166,7 @@ class UserAvatarUI extends StatelessWidget {
               height: size,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(radius),
-                color: Theme.of(context).primaryColor.withOpacity(0.9),
+                color: Theme.of(context).primaryColor.withValues(alpha: 0.9),
               ),
               child: Icon(
                 Icons.person,

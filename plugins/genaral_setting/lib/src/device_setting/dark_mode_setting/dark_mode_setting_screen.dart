@@ -65,7 +65,6 @@ class _DarkModeSettingScreenState extends State<DarkModeSettingScreen> {
                         case DeviceModeSettingsType.deviceSetting:
                           AdaptiveTheme.of(context).setSystem();
                           break;
-                        default:
                       }
                     },
                   ),

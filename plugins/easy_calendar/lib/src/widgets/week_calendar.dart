@@ -262,7 +262,7 @@ class _MonthTitleWidgetState extends State<MonthTitleWidget> {
                   ? null
                   : (widget.textStyle ?? textTheme.titleMedium)
                       ?.color
-                      ?.withOpacity(0.5)),
+                      ?.withValues(alpha: 0.5)),
         ),
       ),
     );

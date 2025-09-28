@@ -101,7 +101,7 @@ extension DeviceImageExtension on BuildContext {
   }) async {
     return showModalBottomSheet<T?>(
       context: this,
-      barrierColor: Colors.black.withOpacity(0.25),
+      barrierColor: Colors.black.withValues(alpha: 0.25),
       backgroundColor: Colors.white,
       clipBehavior: Clip.none,
       builder: (BuildContext context) {

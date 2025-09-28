@@ -108,9 +108,9 @@ class _VideoPostWidgetState extends State<VideoPostWidget> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Colors.black.withOpacity(0.01),
-                        Colors.black.withOpacity(0.25),
-                        Colors.black.withOpacity(0.01),
+                        Colors.black.withValues(alpha: 0.01),
+                        Colors.black.withValues(alpha: 0.25),
+                        Colors.black.withValues(alpha: 0.01),
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
